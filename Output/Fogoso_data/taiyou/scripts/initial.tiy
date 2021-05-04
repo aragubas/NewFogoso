@@ -1,0 +1,16 @@
+# Initial Script
+# ================
+# This script is called when WIC Engine starts.
+Jump "main"; 
+  
+$FUNCTION "main";
+    WriteLine "Hello World!";
+    WriteLine "From the first taiyou script ever made!";
+
+$END
+ 
+$FUNCTION "global_test";
+    WriteLine "This is a executed from a global function";
+
+$END
+ 

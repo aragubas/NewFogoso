@@ -1,0 +1,51 @@
+========== Log Started in: 22:43 ==========
+TaiyouInit ; Loading Dictionary File...
+TaiyouInit ; Loading Instructions Argument Size Dictionary
+TaiyouInit ; Listing Scripts on Script Path...
+TaiyouParser_Step1 ; Parsing Script [initial]
+TaiyouParser_Step1 ; Removed comment line
+TaiyouParser_Step1 ; Removed comment line
+TaiyouParser_Step1 ; Removed comment line
+TaiyouParser_Step1 ; Added line [Jump "main";] to next code revision
+TaiyouParser_Step1 ; Removed empty line
+TaiyouParser_Step1-FunctionBlock ; Found Function Block
+TaiyouParser_Step1-FunctionBlock ; Function is not global, ScriptName tag included.
+TaiyouParser_Step1-FunctionBlock ; Function Name[initial_main]
+TaiyouLineRevision ; Replacing with TSUP...
+ReplaceWithTSUP ; Replaced (WriteLine) with (001);
+TaiyouLineRevision ; Checking for EndLine Character Type Error
+TaiyouLineRevision ; Checking for ArgumentsSizeType  Errors
+TaiyouLineRevision ; LineRevision Completed
+TaiyouParser_Step1-FunctionBlock ; Added Instruction [001 "Hello World!"] to function block
+TaiyouLineRevision ; Replacing with TSUP...
+ReplaceWithTSUP ; Replaced (WriteLine) with (001);
+TaiyouLineRevision ; Checking for EndLine Character Type Error
+TaiyouLineRevision ; Checking for ArgumentsSizeType  Errors
+TaiyouLineRevision ; LineRevision Completed
+TaiyouParser_Step1-FunctionBlock ; Added Instruction [001 "From the first taiyou script ever made!"] to function block
+TaiyouParser_Step1-FunctionBlock ; Sucefully added function [initial_main]
+TaiyouParser_Step1 ; Removed empty line
+TaiyouParser_Step1-FunctionBlock ; Found Function Block
+TaiyouParser_Step1-FunctionBlock ; Function Name[global_test]
+TaiyouLineRevision ; Replacing with TSUP...
+ReplaceWithTSUP ; Replaced (WriteLine) with (001);
+TaiyouLineRevision ; Checking for EndLine Character Type Error
+TaiyouLineRevision ; Checking for ArgumentsSizeType  Errors
+TaiyouLineRevision ; LineRevision Completed
+TaiyouParser_Step1-FunctionBlock ; Added Instruction [001 "This is a executed from a global function"] to function block
+TaiyouParser_Step1-FunctionBlock ; Sucefully added function [global_test]
+TaiyouParser_Step1 ; Removed empty line
+TaiyouParser_Step2 ; Checking if function start was not left behind
+TaiyouParser_Step3 ; Code Revision
+TaiyouParser_Step4 ; Convert code to TaiyouLine objects
+TaiyouLineRevision ; Replacing with TSUP...
+ReplaceWithTSUP ; Replaced (Jump) with (005);
+TaiyouLineRevision ; Checking for EndLine Character Type Error
+TaiyouLineRevision ; Checking for ArgumentsSizeType  Errors
+TaiyouLineRevision ; LineRevision Completed
+TaiyouParser_Step4 ; Added line [005 "main"] to TaiyouLine
+TaiyouParser_Step5 ; Add Taiyou Line to LoadedScriptData list
+TaiyouInit ; Sucefully loaded all scripts.
+
+WIC Engine Version [FOGOSO_ABRIL_2021]
+Log Written at: 22:43 in 03/05/2021

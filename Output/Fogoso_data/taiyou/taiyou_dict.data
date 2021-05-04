@@ -1,0 +1,11 @@
+WriteLine;001
+CreateVar;002
+IntegerOperation;003
+EventHandler;004
+Jump;005
+SetOption;006
+JumpIf;007
+SetVarValue;008
+Halt;009
+HaltExec;00A
+HaltIfEqual;00B
