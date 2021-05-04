@@ -4,3 +4,14 @@ Output\Fogoso_data\system\logs\
 *.dll
 .pdb
 *.exe.manifest
+*.pdb
+Output/Fogoso.exe.config
+Output/Fogoso.vshost.exe.config
+Output/MonoGame.Framework.xml
+Output/SharpDX.Direct2D1.xml
+Output/SharpDX.Direct3D11.xml
+Output/SharpDX.DXGI.xml
+Output/SharpDX.MediaFoundation.xml
+Output/SharpDX.xml
+Output/SharpDX.XInput.xml
+Output/SharpDX.XAudio2.xml
