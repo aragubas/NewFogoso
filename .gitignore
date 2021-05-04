@@ -3,3 +3,4 @@ Output\Fogoso_data\system\logs\
 *.exe
 *.dll
 .pdb
+*.exe.manifest
