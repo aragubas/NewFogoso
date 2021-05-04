@@ -1,0 +1,33 @@
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\WIC.exe
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\WIC.pdb
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\obj\x86\Debug\WIC.csprojResolveAssemblyReference.cache
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\Content\arial_12.xnb
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\bin\Windows\x86\Debug\Content\default.xnb
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC-new\Content\arial_12.xnb
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC-new\Content\default.xnb
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC-new\World is Corrupted.exe
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC-new\World is Corrupted.pdb
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\obj\x86\Debug\World is Corrupted.exe
+C:\Users\Bazinga\Documents\Projects\WIC\WIC\obj\x86\Debug\World is Corrupted.pdb
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC-new\World is Corrupted.exe.config
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC\World is Corrupted.exe.config
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC\Content\arial_12.xnb
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC\Content\default.xnb
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC\World is Corrupted.exe
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC\World is Corrupted.pdb

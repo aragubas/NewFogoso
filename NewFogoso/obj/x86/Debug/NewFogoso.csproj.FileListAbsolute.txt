@@ -1,0 +1,10 @@
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC\World is Corrupted.exe.config
+C:\Users\Bazinga\Documents\ProjectsOutput\WIC\Fogoso.exe.config
+C:\Users\Bazinga\Documents\ProjectsOutput\NewFogoso\Fogoso.exe.config
+C:\Users\Bazinga\Documents\ProjectsOutput\NewFogoso\Content\arial_12.xnb
+C:\Users\Bazinga\Documents\ProjectsOutput\NewFogoso\Content\default.xnb
+C:\Users\Bazinga\Documents\ProjectsOutput\NewFogoso\Fogoso.exe
+C:\Users\Bazinga\Documents\ProjectsOutput\NewFogoso\Fogoso.pdb
+C:\Users\Bazinga\Documents\Projects\NewFogoso\NewFogoso\obj\x86\Debug\Fogoso.exe
+C:\Users\Bazinga\Documents\Projects\NewFogoso\NewFogoso\obj\x86\Debug\Fogoso.pdb
+C:\Users\Bazinga\Documents\Projects\NewFogoso\NewFogoso\obj\x86\Debug\NewFogoso.csprojResolveAssemblyReference.cache

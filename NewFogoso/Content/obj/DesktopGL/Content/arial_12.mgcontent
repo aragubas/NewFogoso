@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>/home/abacate/Projetos/Fogoso_DotNetCore/Content/arial_12.spritefont</SourceFile>
+  <SourceTime>2020-10-08T11:42:34.814474-03:00</SourceTime>
+  <DestFile>/home/abacate/Projetos/Fogoso_DotNetCore/Content/bin/DesktopGL/Content/arial_12.xnb</DestFile>
+  <DestTime>2021-02-22T17:47:56.893265-03:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2018-01-13T19:18:14-02:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2018-01-13T19:18:14-02:00</ProcessorTime>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

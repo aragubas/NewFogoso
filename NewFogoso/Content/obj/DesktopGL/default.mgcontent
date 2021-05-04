@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/default.spritefont</SourceFile>
+  <SourceTime>2021-05-03T18:24:41.8299908-03:00</SourceTime>
+  <DestFile>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/bin/DesktopGL/default.xnb</DestFile>
+  <DestTime>2021-05-03T18:24:51.6433882-03:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2018-12-08T14:35:54-02:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2018-12-08T14:35:54-02:00</ProcessorTime>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>
