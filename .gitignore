@@ -1,2 +1,5 @@
 Output\Fogoso_data\system\logs\
 *.log
+*.exe
+*.dll
+.pdb
