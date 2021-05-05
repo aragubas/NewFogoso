@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Fogoso.GameLogic.UI
         // Method
         protected virtual void OnButtonPress()
         {
+            Console.WriteLine("Button Pressed");
             if (ButtonPress != null) { ButtonPress(this); }
         }
 
@@ -28,10 +30,12 @@ namespace Fogoso.GameLogic.UI
         Vector2 Size;
         Vector2 Location;
         Rectangle ColisionWithOffset;
-        Rectangle cursorRect;
         int BorderSize = 2;
         Color _backColor;
         Color _foreColor;
+        MouseState oldState;
+        Rectangle cursorRect;
+        bool InactiveUpdateRan;
 
         public Button(Vector2 pLocation, string pText)
         {
@@ -49,11 +53,20 @@ namespace Fogoso.GameLogic.UI
 
             Rectangle = new Rectangle((int)Location.X - BorderSize, (int)Location.Y - BorderSize, (int)Size.X + BorderSize * 2, (int)Size.Y + BorderSize * 2);
 
-            // Initialize some stuff
-            cursorRect = new Rectangle(0, 0, 1, 1);
-
             // Set Default Colors
             SetColor(0);
+
+            OnlyUpdateWhenMouseHover = true;
+
+        }
+
+        public override void SetRectangle(Microsoft.Xna.Framework.Rectangle pRectangle)
+        {
+            base.SetRectangle(pRectangle);
+
+            Location = new Vector2(Rectangle.X, Rectangle.Y);
+            Location.X += BorderSize;
+            Location.Y += BorderSize;
 
         }
 
@@ -61,14 +74,29 @@ namespace Fogoso.GameLogic.UI
         {
             switch (State)
             {
+                case -1:
+                    _backColor = Color.FromNonPremultiplied(12, 12, 12, 200);
+                    _foreColor = Color.FromNonPremultiplied(92, 92, 92, 230);
+                    break;
+
                 case 0:
-                    _backColor = Color.FromNonPremultiplied(42, 42, 42, 100);
+                    _backColor = Color.FromNonPremultiplied(42, 42, 42, 200);
                     _foreColor = Color.FromNonPremultiplied(128, 128, 128, 230);
                     break;
 
                 case 1:
-                    _backColor = Color.FromNonPremultiplied(64, 64, 64, 100);
+                    _backColor = Color.FromNonPremultiplied(64, 64, 64, 200);
                     _foreColor = Color.FromNonPremultiplied(230, 230, 230, 255);
+                    break;
+
+                case 2:
+                    _backColor = Color.FromNonPremultiplied(94, 94, 94, 200);
+                    _foreColor = Color.FromNonPremultiplied(255, 255, 255, 255);
+                    break;
+
+                case 3:
+                    _backColor = Color.FromNonPremultiplied(255, 255, 255, 200);
+                    _foreColor = Color.FromNonPremultiplied(94, 94, 94, 255);
                     break;
 
             }
@@ -81,28 +109,46 @@ namespace Fogoso.GameLogic.UI
             spriteBatch.DrawString(Game1.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(Location.X, Location.Y), _foreColor);
         }
 
+        public override void InactiveUpdate()
+        {
+            if (!InactiveUpdateRan) { InactiveUpdateRan = true; } else { return; }
+            SetColor(-1);
+
+        }
+
         public override void Update()
         {
+            if (!IsEnabled) { SetColor(-1); }
             base.Update();
+            InactiveUpdateRan = false;
 
+            //Set Default Color
             SetColor(0);
-            
-            // Update Rectangles
-            cursorRect.Y = (int)GameInput.CursorPosition.Y;
-            cursorRect.X = (int)GameInput.CursorPosition.X;
-            /////////////////////////////////////////////////
-            ColisionWithOffset.X = (int)PositionOffset.X;
-            ColisionWithOffset.Y = (int)PositionOffset.Y;
-            ColisionWithOffset.Width = (int)Rectangle.Width;
-            ColisionWithOffset.Height = (int)Rectangle.Height;
 
+            MouseState newState = Mouse.GetState();
 
-            if (cursorRect.Intersects(ColisionWithOffset)) 
+            GameInput.CursorImage = "selection.png";
+            SetColor(1);
+
+            // Detect MouseDown Event
+            if (newState.LeftButton == ButtonState.Released)
             {
                 GameInput.CursorImage = "selection.png";
-                SetColor(1);
+                SetColor(2);
             }
 
+            // Detect MouseUp Event
+            if (newState.LeftButton == ButtonState.Released && oldState.LeftButton == ButtonState.Pressed)
+            {
+                GameInput.CursorImage = "selection.png";
+                SetColor(3);
+
+                // Call OnPress Event Handler
+                OnButtonPress();
+
+            }
+
+            oldState = newState;
 
         }
 

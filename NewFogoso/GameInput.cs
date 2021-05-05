@@ -465,7 +465,7 @@ namespace Fogoso
                 {
                     PressedWaxer.Add(KeyactionArg);
                     return true;
-                };
+                }; 
                 return false;
             }
 

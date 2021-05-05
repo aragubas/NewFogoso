@@ -113,14 +113,17 @@ namespace Fogoso
 
         }
 
+        // Restore Cursor Static Variables
+        public MouseState restoreCursorMouseState; 
+
         private void RestoreCursor()
         {
             GameInput.CursorImage = GameInput.defaultCursor;
 
             // Update Cursor Position
-            MouseState state = Mouse.GetState();
-            int X = state.X;
-            int Y = state.Y;
+            restoreCursorMouseState = Mouse.GetState();
+            int X = restoreCursorMouseState.X;
+            int Y = restoreCursorMouseState.Y;
 
             if (X >= Global.WindowWidth) { X = Global.WindowWidth; }
             if (Y >= Global.WindowHeight) { Y = Global.WindowHeight; }

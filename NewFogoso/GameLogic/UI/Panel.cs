@@ -15,22 +15,32 @@ namespace Fogoso.GameLogic.UI
         private Matrix PositionFix;
         private RasterizerState _rasterizerState;
         private AnimationController Animator;
+        public bool AutoSizeWhenAdd;
+        public int AutoSizePadding;
+        Rectangle cursorRect;
+        public Color PanelColor;
 
-        public Panel(Rectangle pRectangle) 
+        public Panel(Rectangle pRectangle, bool pAutoSizeWhenAdd=false, int pAutoSizePadding=2) 
         {
             ControlCollection = new List<UIControl>();
             _rasterizerState = new RasterizerState() { ScissorTestEnable = true };
             Animator = new AnimationController(1, 0, 0.08f, true, false, true, 0);
+            AutoSizeWhenAdd = pAutoSizeWhenAdd;
+            AutoSizePadding = pAutoSizePadding;
+            cursorRect = new Rectangle(0, 0, 1, 1);
+
+            PanelColor = Color.FromNonPremultiplied(32, 32, 32, 200);
 
             // Set Default Rectangle
             SetRectangle(pRectangle);
 
         }
 
-        public void SetRectangle(Rectangle pRectangle)
+
+        public override void SetRectangle(Rectangle pRectangle)
         {
+            base.SetRectangle(pRectangle);
             PositionFix = Matrix.CreateTranslation(pRectangle.X, pRectangle.Y, 0);
-            Rectangle = pRectangle;
 
         }
 
@@ -51,7 +61,8 @@ namespace Fogoso.GameLogic.UI
             spriteBatch.GraphicsDevice.ScissorRectangle = Rectangle;
              
             // Draw background
-            spriteBatch.Draw(Sprites.GetSprite("/base.png"), new Rectangle(0, 0, Rectangle.Width, Rectangle.Height), Color.FromNonPremultiplied(32, 32, 32, 64));
+            spriteBatch.Draw(Sprites.GetSprite("/base.png"), new Rectangle(0, 0, Rectangle.Width, Rectangle.Height), Color.FromNonPremultiplied(PanelColor.R + 100, PanelColor.G + 100, PanelColor.B + 100, PanelColor.A));
+            spriteBatch.Draw(Sprites.GetSprite("/base.png"), new Rectangle(1, 1, Rectangle.Width - 2, Rectangle.Height - 2), PanelColor);
 
             // Draw all UI Elements
             foreach (UIControl control in ControlCollection)
@@ -69,9 +80,19 @@ namespace Fogoso.GameLogic.UI
 
         public override void Update()
         {
+            base.Update();
+            
+            // Set cursor rect
+            cursorRect.Y = (int)GameInput.CursorPosition.Y;
+            cursorRect.X = (int)GameInput.CursorPosition.X;
+ 
             // Update UI Elements 
             foreach(UIControl control in ControlCollection)
             {
+                control.ColisionRect = new Rectangle(Rectangle.X + control.Rectangle.X, Rectangle.Y + control.Rectangle.Y, control.Rectangle.Width, control.Rectangle.Height);
+                bool MouseIsColiding = cursorRect.Intersects(control.ColisionRect);
+
+                if (control.OnlyUpdateWhenMouseHover && !MouseIsColiding) { control.InactiveUpdate();  continue; }
                 // Set position offset
                 control.PositionOffset.X = Rectangle.X;
                 control.PositionOffset.Y = Rectangle.Y;
@@ -82,12 +103,17 @@ namespace Fogoso.GameLogic.UI
             Animator.Update();
 
             SetMatrixScale(1, Animator.GetValue());
+        }
 
-            if (GameInput.GetInputState("DEBUG_TEST_1", false))
-            { 
-                Animator.Toggle();
-            }
+        public UIControl GetControlByTag(string pTag)
+        {
+            if (pTag == "unset") { throw new InvalidOperationException("GetControl by tag 'unset' is a invalid operation."); }
 
+            foreach (UIControl control in ControlCollection)
+            {
+                if (control.Tag == pTag) { return control; }
+            } 
+            return null; 
         }
 
         public void RemoveControl(UIControl control)
@@ -100,12 +126,48 @@ namespace Fogoso.GameLogic.UI
 
         }
 
-        public void AddControl(UIControl control)
+        public void AutoSize()
+        {
+            int autoWidth = 0;
+            int autoHeight = 0;
+
+            foreach (UIControl control in ControlCollection)
+            {
+                if (control.Rectangle.Width > autoWidth) { autoWidth = control.Rectangle.Width; }
+                if (control.Rectangle.Height > autoHeight) { autoHeight = control.Rectangle.Height; }
+
+            }
+
+            Rectangle.Width = autoWidth + AutoSizePadding;
+            Rectangle.Height = autoHeight + AutoSizePadding;
+
+        }
+
+        public void CenterHorizontally(UIControl pControl)
+        {
+            Rectangle rectCopy = pControl.Rectangle;
+            rectCopy.X = Rectangle.Width / 2 - rectCopy.Width / 2;
+
+            pControl.SetRectangle(rectCopy);
+
+
+        }
+
+        public void AddControl(UIControl control, string pTag="unset", bool AutoCenterHorizontally=false)
         {
             ControlCollection.Add(control);
+            control.Tag = pTag;
             control.Index = ControlCollection.Count - 1;
 
+            if (AutoSizeWhenAdd)
+            {
+                AutoSize();
+            }
 
+            if (AutoCenterHorizontally)
+            { 
+                CenterHorizontally(control);
+            }
         }
 
 
