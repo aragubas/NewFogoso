@@ -1,2 +1,2 @@
 # NewFogoso
- NewFogoso Game
+ Fogoso! a new type of clicker!
