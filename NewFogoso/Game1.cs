@@ -97,6 +97,7 @@ namespace Fogoso
             this.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / Convert.ToInt32(Registry.ReadKeyValue("/fps")));
 
             GameInput.Initialize();
+            Debug.Initialize();
 
             base.Initialize();
         }
@@ -179,6 +180,9 @@ namespace Fogoso
 
             // Draw GameInput HUD
             GameInput.Draw(spriteBatch);
+
+            // Draw Debug
+            Debug.RenderDebugInfo(spriteBatch);
 
             // FPS Counter
             _total_frames++;

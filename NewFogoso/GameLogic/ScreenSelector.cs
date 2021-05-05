@@ -59,7 +59,7 @@ namespace Fogoso.GameLogic
             switch (ScreenID)
             {
                 case 0:
-                    CurrentSelectedScreen = new Screens.Game();
+                    CurrentSelectedScreen = new Screens.MainMenu();
                     break;
 
                 default:

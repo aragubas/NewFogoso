@@ -24,8 +24,8 @@ namespace Fogoso.GameLogic.UI
         {
             ControlCollection = new List<UIControl>();
             _rasterizerState = new RasterizerState() { ScissorTestEnable = true };
-            Animator = new AnimationController(1, 0, 0.08f, true, false, true, 0);
-            AutoSizeWhenAdd = pAutoSizeWhenAdd;
+            Animator = new AnimationController(1, 0, 0.09f, true, false, true, 0);
+            AutoSizeWhenAdd = pAutoSizeWhenAdd; 
             AutoSizePadding = pAutoSizePadding;
             cursorRect = new Rectangle(0, 0, 1, 1);
 
@@ -36,17 +36,9 @@ namespace Fogoso.GameLogic.UI
 
         }
 
-
-        public override void SetRectangle(Rectangle pRectangle)
-        {
-            base.SetRectangle(pRectangle);
-            PositionFix = Matrix.CreateTranslation(pRectangle.X, pRectangle.Y, 0);
-
-        }
-
-        public void SetMatrixScale(float pScaleX, float pScaleY)
-        { 
-            PositionFix = Matrix.CreateTranslation(Rectangle.X, Rectangle.Y, 0) * Matrix.CreateScale(pScaleX, pScaleY, 0);
+        public void SetMatrix(int pTranslationX, int pTranslationY, float pScaleX, float pScaleY)
+        {  
+            PositionFix = Matrix.CreateScale(pScaleX, pScaleY, 0) * Matrix.CreateTranslation(pTranslationX, pTranslationY, 0);
         }
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
@@ -85,7 +77,7 @@ namespace Fogoso.GameLogic.UI
             // Set cursor rect
             cursorRect.Y = (int)GameInput.CursorPosition.Y;
             cursorRect.X = (int)GameInput.CursorPosition.X;
- 
+
             // Update UI Elements 
             foreach(UIControl control in ControlCollection)
             {
@@ -102,7 +94,7 @@ namespace Fogoso.GameLogic.UI
 
             Animator.Update();
 
-            SetMatrixScale(1, Animator.GetValue());
+            SetMatrix(Rectangle.X, Rectangle.Y, 1, Animator.GetValue());
         }
 
         public UIControl GetControlByTag(string pTag)
@@ -114,6 +106,21 @@ namespace Fogoso.GameLogic.UI
                 if (control.Tag == pTag) { return control; }
             } 
             return null; 
+        }
+
+        public Vector2 GetLastPos(bool AddWidth, bool AddHeight, int DefaultX=0, int DefaultY=0)
+        {
+            int LastY = DefaultY;
+            int LastX = DefaultX;
+
+            foreach (UIControl control in ControlCollection)
+            {
+                if (control.Rectangle.X > LastX) { LastX = control.Rectangle.X; if (AddWidth) { LastX += control.Rectangle.Width; } }
+                if (control.Rectangle.Y > LastY) { LastY = control.Rectangle.Y; if (AddHeight) { LastY += control.Rectangle.Height; } }
+
+            }
+
+            return new Vector2(LastX, LastY);
         }
 
         public void RemoveControl(UIControl control)
@@ -133,8 +140,8 @@ namespace Fogoso.GameLogic.UI
 
             foreach (UIControl control in ControlCollection)
             {
-                if (control.Rectangle.Width > autoWidth) { autoWidth = control.Rectangle.Width; }
-                if (control.Rectangle.Height > autoHeight) { autoHeight = control.Rectangle.Height; }
+                if (control.Rectangle.X + control.Rectangle.Width > autoWidth) { autoWidth = control.Rectangle.X + control.Rectangle.Width; }
+                if (control.Rectangle.Y + control.Rectangle.Height > autoHeight) { autoHeight = control.Rectangle.Y + control.Rectangle.Height; }
 
             }
 
