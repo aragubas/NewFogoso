@@ -1,6 +1,6 @@
 # Initial Script
 # ================
-# This script is called when WIC Engine starts.
+# This script is called when Fogoso Engine starts.
 Jump "main"; 
   
 $FUNCTION "main";

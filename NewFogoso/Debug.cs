@@ -34,6 +34,10 @@ namespace Fogoso
 
         public static void DebugThing(string Name, string Value)
         {
+            // Return if DebugMode is disabled
+            if (!Game1.DebugModeEnabled) { return; }
+
+            // Create a Debug item
             DebugItem sinas = new DebugItem(Name, Value);
 
             DebugStuff.Add(sinas);

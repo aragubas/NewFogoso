@@ -6,6 +6,18 @@ click, click, click, click [...]
 unlike other click, click, click[...] games if you make a wrong choice you lost
 you need to rethink your choises, dont go all clicky clicky on every button 
 You are owner of an mining company, you mine all type of stuff and do everthing to get money
+All events happens on aragubas
+
+-= Date System =-
+1 year has 64 months
+1 month has 32 weeks
+1 week has 7 days
+=- Time System -=
+1 day has 16 hours
+1 hour has 24 minutes
+1 minute has 30 seconds
+
+
 
 -= Perks about the game =-
 called "MoneyHoles" is a combination of items on spefic place that make maintenance go all high
@@ -15,18 +27,21 @@ these "MoneyHoles" can make your money go into red instantly
   
 N.  V     D                                                                                                 
 ==  ====  ==========================================================================================  
---0 t--1    = Create UI SubSystem with windowing and panels with docking and auto-arrangement stuff
---1 f---  = Prototype game environment 
---2 f---  = Start coding game environment
---3 f---  = Prototype Item arrangement system
---4 f---  = Start coding item arrangement system
---5 f---  = Prototype a store for buying items (test with first 3 items)
---6 f---  = Start coding store
---7 f---  = Prototype XP system
---8 f---  = Start coding XP system
---9 f---  = Add XP as requirement for store items
--10 f---  = Inventory System
--11 f---  = Start coding Fogoso's Date/Time system   
+--0 t--2  = Create UI SubSystem with windowing and panels with docking and auto-arrangement stuff
+--1 t---  = Prototype game environment 
+--2 t---  = Start coding game environment
+--3 ----  = Prototype Item arrangement system
+--4 ----  = Start coding item arrangement system
+--5 ----  = Prototype a store for buying items (test with first 3 items)
+--6 ----  = Start coding store
+--7 ----  = Prototype XP system
+--8 ----  = Start coding XP system
+--9 ----  = Add XP as requirement for store items
+-10 ----  = Inventory System
+-11 t---  = Start coding Fogoso's Date/Time system   
      
+[...]
+-50 ----  = Debug Profiler for Game Engine
+
 [...] 
-100 f---  = Linux and Android Port
+100 ----  = Linux and Android Port

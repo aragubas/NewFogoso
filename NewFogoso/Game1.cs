@@ -49,6 +49,7 @@ namespace Fogoso
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static Game1 Reference;
+        public static bool DebugModeEnabled;
 
         // Fps Counter
         int _total_frames = 0;
@@ -80,13 +81,12 @@ namespace Fogoso
             Taiyou.Event.RegisterEvent("init", "initial");
             Taiyou.Event.TriggerEvent("init");
 
-
+            // Load all Sprites, Sounds and Registry Keys
             Sprites.FindAllSprites();
             Sound.Initialize();
             Registry.Initialize();
 
-            GameLogic.ScreenSelector.Initialize();
-
+            // Set Window Width and Height variables
             Global.WindowWidth = Window.ClientBounds.Width;
             Global.WindowHeight = Window.ClientBounds.Height;
 
@@ -96,22 +96,23 @@ namespace Fogoso
             // Set Target FPS
             this.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / Convert.ToInt32(Registry.ReadKeyValue("/fps")));
 
+            // Set DebugMode variable
+            DebugModeEnabled = Registry.ReadKeyValue("/debug_mode").ToLower().Equals("true");
+
+            // Initialize GameInput and Debug
             GameInput.Initialize();
             Debug.Initialize();
 
-            base.Initialize();
-        }
+            // Screen Initialization
+            GameLogic.ScreenSelector.Initialize();
 
-        protected override void LoadContent()
-        {
-            // Create a new SpriteBatch, which can be used to draw textures.
+            // Create the Sprite Batch
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        }
+            // Set Default Window Title
+            Window.Title = Registry.ReadKeyValue("/default_window_title");
 
-        protected override void UnloadContent()
-        {
-
+            base.Initialize();
         }
 
         // Restore Cursor Static Variables
@@ -138,6 +139,9 @@ namespace Fogoso
 
         protected override void Update(GameTime gameTime)
         {
+            // Update Game Clock
+            GameLogic.AragubasTime.Update();
+
             if (!this.IsActive)
             {
                 return;
@@ -145,18 +149,23 @@ namespace Fogoso
             // Restore cursor
             RestoreCursor();
 
+
             // Update FPS Counter
-            _elapsed_time += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            // 1 Second has passed
-            if (_elapsed_time >= 1000.0f)
+            if (DebugModeEnabled)
             {
-                _fps = _total_frames;
-                _total_frames = 0;
-                _elapsed_time = 0;
-            }
+                _elapsed_time += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            Window.Title = "Fogoso - FPS:" + _fps;
+                // 1 Second has passed
+                if (_elapsed_time >= 1000.0f)
+                {
+                    _fps = _total_frames;
+                    _total_frames = 0;
+                    _elapsed_time = 0;
+                }
+
+                Window.Title = "Fogoso - Debug Mode FPS:" + _fps;
+
+            }
 
 
             GameLogic.ScreenSelector.Update();
@@ -182,10 +191,8 @@ namespace Fogoso
             GameInput.Draw(spriteBatch);
 
             // Draw Debug
-            Debug.RenderDebugInfo(spriteBatch);
+            if (DebugModeEnabled) { Debug.RenderDebugInfo(spriteBatch); _total_frames++; }
 
-            // FPS Counter
-            _total_frames++;
 
             base.Draw(gameTime);
         }

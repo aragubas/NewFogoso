@@ -55,8 +55,10 @@
   <ItemGroup>
     <Compile Include="Game1.cs" />
     <Compile Include="GameInput.cs" />
+    <Compile Include="GameLogic\AragubasTime.cs" />
     <Compile Include="GameLogic\GameObject.cs" />
     <Compile Include="GameLogic\ScreenSelector.cs" />
+    <Compile Include="GameLogic\Screens\GameMain.cs" />
     <Compile Include="GameLogic\Screens\MainMenu.cs" />
     <Compile Include="GameLogic\Screens\GameScreen.cs" />
     <Compile Include="GameLogic\TextBox\Cursor.cs" />
@@ -66,7 +68,8 @@
     <Compile Include="GameLogic\TextBox\TextBox.cs" />
     <Compile Include="GameLogic\TextBox\TextRenderer.cs" />
     <Compile Include="GameLogic\UI\Button.cs" />
-    <Compile Include="GameLogic\UI\Debug.cs" />
+    <Compile Include="Debug.cs" />
+    <Compile Include="GameLogic\UI\Label.cs" />
     <Compile Include="GameLogic\UI\Panel.cs" />
     <Compile Include="GameLogic\UI\UIControl.cs" />
     <Compile Include="Global.cs" />

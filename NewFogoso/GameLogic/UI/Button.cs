@@ -20,7 +20,6 @@ namespace Fogoso.GameLogic.UI
         // Method
         protected virtual void OnButtonPress()
         {
-            Console.WriteLine("Button Pressed");
             if (ButtonPress != null) { ButtonPress(this); }
         }
 
@@ -39,6 +38,9 @@ namespace Fogoso.GameLogic.UI
 
         public Button(Vector2 pLocation, string pText)
         {
+            // Change to Loading Cursor
+            GameInput.CursorImage = "loading.png";
+
             Text = pText;
 
             // Set minimum size
@@ -125,31 +127,20 @@ namespace Fogoso.GameLogic.UI
             //Set Default Color
             SetColor(0);
 
+            // Get New State
             MouseState newState = Mouse.GetState();
 
             GameInput.CursorImage = "selection.png";
             SetColor(1);
 
             // Detect MouseDown Event
-            if (newState.LeftButton == ButtonState.Released)
-            {
-                GameInput.CursorImage = "selection.png";
-                SetColor(2);
-            }
+            if (newState.LeftButton == ButtonState.Released) { SetColor(2); }
 
             // Detect MouseUp Event
-            if (newState.LeftButton == ButtonState.Released && oldState.LeftButton == ButtonState.Pressed)
-            {
-                GameInput.CursorImage = "selection.png";
-                SetColor(3);
+            if (newState.LeftButton == ButtonState.Released && oldState.LeftButton == ButtonState.Pressed) { SetColor(3); OnButtonPress(); }
 
-                // Call OnPress Event Handler
-                OnButtonPress();
-
-            }
-
+            // Set OldState
             oldState = newState;
-
         }
 
 

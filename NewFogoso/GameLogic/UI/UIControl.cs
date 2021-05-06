@@ -28,14 +28,31 @@ namespace Fogoso.GameLogic.UI
 
         }
 
+        /// <summary>
+        /// Update logic
+        /// </summary>
         public virtual void Update() { if (!IsVisible) { return; } }
 
+        /// <summary>
+        /// Update logic when inactive
+        /// </summary>
         public virtual void InactiveUpdate() { if (!IsVisible) { return; } }
 
+        /// <summary>
+        /// Draw the control
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public virtual void Draw(SpriteBatch spriteBatch) { if (!IsVisible || !IsEnabled) { return; } }
 
+        /// <summary>
+        /// On load
+        /// </summary>
         public virtual void OnLoad() { }
 
+        /// <summary> 
+        /// Set control rectangle (override for resizing logic)
+        /// </summary>
+        /// <param name="pRectangle"></param>
         public virtual void SetRectangle(Rectangle pRectangle) { Rectangle = pRectangle; }
 
 

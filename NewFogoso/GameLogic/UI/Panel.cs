@@ -14,7 +14,7 @@ namespace Fogoso.GameLogic.UI
         public List<UIControl> ControlCollection;
         private Matrix PositionFix;
         private RasterizerState _rasterizerState;
-        private AnimationController Animator;
+        public AnimationController Animator;
         public bool AutoSizeWhenAdd;
         public int AutoSizePadding;
         Rectangle cursorRect;
@@ -22,9 +22,12 @@ namespace Fogoso.GameLogic.UI
 
         public Panel(Rectangle pRectangle, bool pAutoSizeWhenAdd=false, int pAutoSizePadding=2) 
         {
+            // Change to Loading Cursor
+            GameInput.CursorImage = "loading.png";
+
             ControlCollection = new List<UIControl>();
             _rasterizerState = new RasterizerState() { ScissorTestEnable = true };
-            Animator = new AnimationController(1, 0, 0.09f, true, false, true, 0);
+            Animator = new AnimationController(1, 0, 0.09f, true, false, true, 0, true);
             AutoSizeWhenAdd = pAutoSizeWhenAdd; 
             AutoSizePadding = pAutoSizePadding;
             cursorRect = new Rectangle(0, 0, 1, 1);
@@ -70,21 +73,19 @@ namespace Fogoso.GameLogic.UI
 
         }
 
-        public override void Update()
+        private void UpdateElements()
         {
-            base.Update();
-            
             // Set cursor rect
             cursorRect.Y = (int)GameInput.CursorPosition.Y;
             cursorRect.X = (int)GameInput.CursorPosition.X;
 
             // Update UI Elements 
-            foreach(UIControl control in ControlCollection)
+            foreach (UIControl control in ControlCollection)
             {
                 control.ColisionRect = new Rectangle(Rectangle.X + control.Rectangle.X, Rectangle.Y + control.Rectangle.Y, control.Rectangle.Width, control.Rectangle.Height);
                 bool MouseIsColiding = cursorRect.Intersects(control.ColisionRect);
 
-                if (control.OnlyUpdateWhenMouseHover && !MouseIsColiding) { control.InactiveUpdate();  continue; }
+                if (control.OnlyUpdateWhenMouseHover && !MouseIsColiding) { control.InactiveUpdate(); continue; }
                 // Set position offset
                 control.PositionOffset.X = Rectangle.X;
                 control.PositionOffset.Y = Rectangle.Y;
@@ -92,6 +93,14 @@ namespace Fogoso.GameLogic.UI
                 control.Update();
             }
 
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (!Animator.GetEnabled()) { UpdateElements(); }
+            
             Animator.Update();
 
             SetMatrix(Rectangle.X, Rectangle.Y, 1, Animator.GetValue());

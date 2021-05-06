@@ -215,9 +215,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="8"
-     inkscape:cx="20.380095"
-     inkscape:cy="78.160445"
+     inkscape:zoom="1.8756036"
+     inkscape:cx="249.40368"
+     inkscape:cy="716.23385"
      inkscape:document-units="mm"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -240,7 +240,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -472,6 +472,204 @@
          x="17.859375"
          y="10.318749"
          style="stroke-width:0.264583">Cursor 17x23</tspan></text>
+    <rect
+       style="fill:#75808b;stroke:#d9d9f0;stroke-width:0.0778458;stroke-linecap:round;stroke-linejoin:round"
+       id="rect2366"
+       width="117.84093"
+       height="66.20446"
+       x="8.4314547"
+       y="148.93504" />
+    <rect
+       style="fill:#cccccc;stroke:#d9d9f0;stroke-width:0.0276911;stroke-linecap:round;stroke-linejoin:round"
+       id="rect915"
+       width="36.131088"
+       height="2.4830554"
+       x="34.249691"
+       y="149.4642" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.19496px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.054874"
+       x="37.007992"
+       y="142.97563"
+       id="text919"
+       transform="scale(0.94463941,1.058605)"><tspan
+         sodipodi:role="line"
+         id="tspan917"
+         x="37.007992"
+         y="142.97563"
+         style="stroke-width:0.054874">year 0 month 64 week 32 day 16</tspan></text>
+    <rect
+       style="fill:#cccccc;stroke:#d9d9f0;stroke-width:0.103488;stroke-linecap:round;stroke-linejoin:round"
+       id="rect921"
+       width="25.818237"
+       height="66.20446"
+       x="8.4314547"
+       y="148.93504" />
+    <rect
+       style="fill:#808080;stroke:#d9d9f0;stroke-width:0.0529167;stroke-linecap:round;stroke-linejoin:round"
+       id="rect923"
+       width="17.4625"
+       height="18.785416"
+       x="12.609324"
+       y="172.64456" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.50114px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0875283"
+       x="8.7626886"
+       y="153.8987"
+       id="text927"
+       transform="scale(1.0116464,0.98848772)"><tspan
+         sodipodi:role="line"
+         id="tspan925"
+         x="8.7626886"
+         y="153.8987"
+         style="stroke-width:0.0875283">$ 0,000,005</tspan><tspan
+         sodipodi:role="line"
+         x="8.7626886"
+         y="158.27512"
+         style="stroke-width:0.0875283"
+         id="tspan929">exp 1</tspan></text>
+    <rect
+       style="fill:#808080;stroke:#d9d9f0;stroke-width:0.0491726;stroke-linecap:round;stroke-linejoin:round"
+       id="rect931"
+       width="7.7411575"
+       height="3.8697085"
+       x="8.4314547"
+       y="211.26979" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.45482px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0613707"
+       x="8.6709309"
+       y="219.20717"
+       id="text935"
+       transform="scale(1.0239795,0.97658206)"><tspan
+         sodipodi:role="line"
+         id="tspan933"
+         x="8.6709309"
+         y="219.20717"
+         style="stroke-width:0.0613707">Store</tspan></text>
+    <rect
+       style="fill:#808080;stroke:#d9d9f0;stroke-width:0.0414184;stroke-linecap:round;stroke-linejoin:round"
+       id="rect931-8"
+       width="5.4921994"
+       height="3.8697085"
+       x="16.238758"
+       y="211.26979" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.45482px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0613707"
+       x="16.295404"
+       y="219.20717"
+       id="text935-3"
+       transform="scale(1.0239795,0.97658206)"><tspan
+         sodipodi:role="line"
+         id="tspan933-0"
+         x="16.295404"
+         y="219.20717"
+         style="stroke-width:0.0613707">Exp</tspan></text>
+    <rect
+       style="fill:#808080;stroke:#d9d9f0;stroke-width:0.0537879;stroke-linecap:round;stroke-linejoin:round"
+       id="rect931-8-1"
+       width="9.2625122"
+       height="3.8697085"
+       x="21.797104"
+       y="211.26979" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.45482px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0613707"
+       x="21.723585"
+       y="219.20717"
+       id="text935-3-3"
+       transform="scale(1.0239795,0.97658206)"><tspan
+         sodipodi:role="line"
+         id="tspan933-0-5"
+         x="21.723585"
+         y="219.20717"
+         style="stroke-width:0.0613707">Statics</tspan></text>
+    <rect
+       style="fill:#808080;stroke:#d9d9f0;stroke-width:0.0690154;stroke-linecap:round;stroke-linejoin:round"
+       id="rect931-8-1-1"
+       width="15.24935"
+       height="3.8697085"
+       x="34.778858"
+       y="210.74063" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.45482px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0613707"
+       x="34.401337"
+       y="218.66533"
+       id="text935-3-3-5"
+       transform="scale(1.0239795,0.97658206)"><tspan
+         sodipodi:role="line"
+         id="tspan933-0-5-4"
+         x="34.401337"
+         y="218.66533"
+         style="stroke-width:0.0613707">Space View</tspan></text>
+    <rect
+       style="fill:#808080;stroke:#d9d9f0;stroke-width:0.0529167;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1077"
+       width="87.178604"
+       height="53.040703"
+       x="36.11282"
+       y="155.31334" />
+    <rect
+       style="fill:#cccccc;stroke:#d9d9f0;stroke-width:0.0529167;stroke-linecap:round;stroke-linejoin:round"
+       id="rect1079"
+       width="26.802485"
+       height="11.849519"
+       x="38.652"
+       y="157.71144" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.40492px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0851231"
+       x="40.682732"
+       y="172.1628"
+       id="text1083"
+       transform="scale(1.0722318,0.93263416)"><tspan
+         sodipodi:role="line"
+         id="tspan1081"
+         x="40.682732"
+         y="172.1628"
+         style="stroke-width:0.0851231">Tropinete</tspan></text>
+    <path
+       style="fill:#333333;stroke:#d9d9f0;stroke-width:0.0529167;stroke-linecap:round;stroke-linejoin:round"
+       id="path1085"
+       sodipodi:type="arc"
+       sodipodi:cx="42.891861"
+       sodipodi:cy="164.88429"
+       sodipodi:rx="2.9425812"
+       sodipodi:ry="3.0423295"
+       sodipodi:start="0"
+       sodipodi:end="4.3586695"
+       sodipodi:arc-type="slice"
+       d="m 45.834442,164.88429 a 2.9425812,3.0423295 0 0 1 -2.596435,3.02121 2.9425812,3.0423295 0 0 1 -3.20729,-2.31042 2.9425812,3.0423295 0 0 1 1.841865,-3.56477 l 1.019279,2.85398 z" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.2866px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0321651"
+       x="47.682056"
+       y="160.69681"
+       id="text1083-0"
+       transform="scale(0.98733405,1.0128284)"><tspan
+         sodipodi:role="line"
+         x="47.682056"
+         y="160.69681"
+         style="stroke-width:0.0321651"
+         id="tspan1115">Tropinando a camionete</tspan><tspan
+         sodipodi:role="line"
+         x="47.682056"
+         y="162.30505"
+         style="stroke-width:0.0321651"
+         id="tspan1119" /><tspan
+         sodipodi:role="line"
+         x="47.682056"
+         y="163.91331"
+         style="stroke-width:0.0321651"
+         id="tspan1121">$ 0,5 p/s</tspan><tspan
+         sodipodi:role="line"
+         x="47.682056"
+         y="165.52156"
+         style="stroke-width:0.0321651"
+         id="tspan1125">Quantidade: 1</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"

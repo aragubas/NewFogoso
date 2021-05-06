@@ -39,26 +39,34 @@ namespace Fogoso.GameLogic.Screens
 {
     public abstract class GameScreen
     {
+        /// <summary>
+        /// A game screen used with Fogoso Game Engine
+        /// </summary>
         public GameScreen()
         {
 
-        }
+        } 
 
-        public virtual void Update()
-        {
+        /// <summary>
+        /// Screen Update logic
+        /// </summary>
+        public virtual void Update() { }
 
-        }
-
+        /// <summary>
+        /// Initialize screen code
+        /// </summary>
         public virtual void Initialize()
         {
+            // Change to loading cursor
+            GameInput.CursorImage = "loading.png";
 
         }
 
-
-        public virtual void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
+        /// <summary>
+        /// Draws the screen
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        public virtual void Draw(SpriteBatch spriteBatch) { }
 
 
     }

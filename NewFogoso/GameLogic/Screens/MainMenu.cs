@@ -19,9 +19,13 @@ namespace Fogoso.GameLogic.Screens
         Button NewSessionButton;
         Button SettingsButton;
 
+        bool SkipToInitialScreenToggle;
 
         public override void Initialize()
         {
+            // Change to Loading Cursor
+            GameInput.CursorImage = "loading.png";
+
             MainMenuPanel = new Panel(new Rectangle(50, 300, 2, 2), true, 7);
             PlayButton = new Button(new Vector2(2, 2), "Play");
 
@@ -70,14 +74,22 @@ namespace Fogoso.GameLogic.Screens
 
         public override void Update()
         {
+            if (!SkipToInitialScreenToggle) { SkipToInitialScreenToggle = true; SkipToInitialScreen(); }
             MainMenuPanel.Update();
             if (SubPanel != null) { SubPanel.Update(); }
 
-        } 
+        }
+
+        private void SkipToInitialScreen()
+        {
+            int Ceira = Convert.ToInt32(Registry.ReadKeyValue("/initial_screen"));
+            if (Ceira != 0) { ScreenSelector.SetCurrentScreen(Ceira); }
+
+        }
 
         public override string ToString()
         {
-            return "Fogoso Main Game Screen";
+            return "Fogoso Main Menu";
         }
 
     }

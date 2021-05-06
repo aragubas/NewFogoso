@@ -44,6 +44,7 @@ namespace Fogoso.UtilsObjects
         float AddCurve = 0;
         float Speed = 0;
         bool ResetAnimationCurve = false;
+        bool LoadingCursorWhenAnimating;
         public bool Ended = false;
         int State = 0;
         float MaxValue = 0;
@@ -59,8 +60,12 @@ namespace Fogoso.UtilsObjects
         /// <param name="pAutoEnable">If set to <c>true</c>Re-Enabled animation when ending.</param>
         /// <param name="InitialState">Initial state</param>
         public AnimationController(float pMaxValue, float pMinValue, float pAnimationSpeed,
-            bool pResetAnimationCurve, bool pAutoEnable = false,bool pLinearAnimation = false, int InitialState = 0)
+            bool pResetAnimationCurve, bool pAutoEnable = false,bool pLinearAnimation = false, int InitialState = 0,
+            bool pLoadingCursorWhenAnimating=false)
         {
+            // Change to Loading Cursor
+            GameInput.CursorImage = "loading.png";
+
             Enabled = true;
             State = InitialState;
             MaxValue = pMaxValue;
@@ -70,6 +75,7 @@ namespace Fogoso.UtilsObjects
             Speed = pAnimationSpeed;
             Value = MinValue;
             LinearAnimation = pLinearAnimation;
+            LoadingCursorWhenAnimating = pLoadingCursorWhenAnimating;
 
         }
 
@@ -109,6 +115,11 @@ namespace Fogoso.UtilsObjects
             return State;
         }
 
+        public bool GetEnabled()
+        {
+            return Enabled;
+        }
+
         public void Update()
         {
             if (!Enabled) { return; }
@@ -122,6 +133,7 @@ namespace Fogoso.UtilsObjects
                         Value += AddCurve;
                     }
                     else { Value += Speed; }
+                    if (LoadingCursorWhenAnimating) { GameInput.CursorImage = "loading.png"; }
 
 
                     if (Value >= MaxValue)
@@ -143,6 +155,7 @@ namespace Fogoso.UtilsObjects
                         Value -= AddCurve;
                     }
                     else { Value -= Speed; }
+                    if (LoadingCursorWhenAnimating) { GameInput.CursorImage = "loading.png"; }
 
                     if (Value <= MinValue)
                     {

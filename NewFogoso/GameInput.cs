@@ -364,14 +364,15 @@ namespace Fogoso
 
         public static void Initialize()
         {
-            System.Console.WriteLine("Loading Input contexts...");
+            Utils.ConsoleWriteWithTitle("GameInput", "Loading input context...");
+
             string InputContextFile = Registry.ReadKeyValue("/input_context");
 
             foreach (var Line in InputContextFile.Split(';'))
             {
                 if (Line.Length < 3 || Line.StartsWith("#"))
                 {
-                    System.Console.WriteLine("Skipped blank line");
+                    Utils.ConsoleWriteWithTitle("GameInput", "Blank line skipped");
                     continue;
 
                 }
@@ -382,7 +383,7 @@ namespace Fogoso
                 string ActionKeyboard = LineSplit[1];
                 string ActionJoypad = LineSplit[2].TrimEnd();
 
-                System.Console.WriteLine("Loaded input context {" + ActionName + "}");
+                Utils.ConsoleWriteWithTitle("GameInput", "Loaded {" + ActionName + "}");
 
                 InputKeyArguments_key.Add(ActionName);
                 InputKeyArgument NewWax = new InputKeyArgument(ActionName, ActionKeyboard, ActionJoypad);
@@ -412,7 +413,8 @@ namespace Fogoso
                 if (LastInputContextFindError != InputContext)
                 {
                     LastInputContextFindError = InputContext;
-                    System.Console.WriteLine("Cannot find InputContext : {" + InputContext + "}");
+                    Utils.ConsoleWriteWithTitle("GameInput", "Cannot find InputContext {" + InputContext+ "}");
+
                 }
                 return null;
             }
@@ -477,7 +479,7 @@ namespace Fogoso
         }
 
         private static void DrawCursor(SpriteBatch spriteBatch)
-        { 
+        {
             spriteBatch.Draw(Sprites.GetSprite("/cursor/" + CursorImage), CursorPosition, color: Color.White);
  
         }
