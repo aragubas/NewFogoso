@@ -17,13 +17,13 @@ namespace Fogoso.GameLogic.UI
         Vector2 lastTextSize;
 
         #region DrawBackgroundEventHandler
-        private delegate void DrawBackgroundEventHandler(Vector2 TextSize, SpriteBatch spriteBatch);
-        private event DrawBackgroundEventHandler DrawBackground;
+        public delegate void DrawBackgroundEventHandler(Rectangle Rect, SpriteBatch spriteBatch);
+        public event DrawBackgroundEventHandler DrawBackground;
 
         // Method
         protected virtual void OnDrawBackground(SpriteBatch spriteBatch)
         {
-            if (DrawBackground != null) { DrawBackground(GetTextSize(), spriteBatch); }
+            if (DrawBackground != null) { DrawBackground(new Rectangle((int)Position.X, (int)Position.Y, (int)lastTextSize.X, (int)lastTextSize.Y), spriteBatch); }
         }
 
         #endregion
@@ -35,7 +35,7 @@ namespace Fogoso.GameLogic.UI
             Position = pPosition;
 
             TextColor = Color.White;
-
+            lastTextSize = Font.MeasureString(Text);
         }
 
         public void SetTextColor(Color pNewColor)
@@ -60,6 +60,7 @@ namespace Fogoso.GameLogic.UI
         /// <param name="pNewText">New text string</param>
         public void SetText(string pNewText)
         {
+            if (Text == pNewText) { return; }
             Text = pNewText;
             lastTextSize = Font.MeasureString(Text);
 

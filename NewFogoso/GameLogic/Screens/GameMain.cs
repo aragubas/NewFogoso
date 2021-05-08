@@ -16,6 +16,7 @@ namespace Fogoso.GameLogic.Screens
         Panel LowerPanel;
         Label DateLabel;
         Label TimeLabel;
+        Label sinasLabel;
 
         public GameMain()
         {
@@ -27,6 +28,22 @@ namespace Fogoso.GameLogic.Screens
             LowerPanel = new Panel(new Rectangle(205, 50 + (Global.WindowHeight - 100) + 5, Global.WindowWidth - 210, 40));
             DateLabel = new Label(new Vector2(205, 5), Game1.Reference.Content.Load<SpriteFont>("default"), "amet");
             TimeLabel = new Label(new Vector2(205, 20), Game1.Reference.Content.Load<SpriteFont>("small"), "sit");
+
+
+            ClickerButton ceiraClickerButton = new ClickerButton(new Vector2(3, LeftPanel.Rectangle.Bottom));
+            Label sinas = new Label(new Vector2(5, 5), Game1.Reference.Content.Load<SpriteFont>("default"), "Loading...");
+
+            LeftPanel.AddControl(ceiraClickerButton, "ceira-clicker");
+            LeftPanel.AddControl(sinas, "ceira-label");
+            sinasLabel = sinas;
+
+            sinas.DrawBackground += sinas_DrawBackground;
+
+        }
+
+        void sinas_DrawBackground(Rectangle Rect, SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Sprites.GetSprite("/base.png"), Rect, Color.FromNonPremultiplied(120, 120, 120, 200));
 
         }
 
@@ -42,7 +59,6 @@ namespace Fogoso.GameLogic.Screens
             DateLabel.Draw(spriteBatch);
             TimeLabel.Draw(spriteBatch);
             spriteBatch.End();
-
         }
 
         public override void Update()
@@ -56,6 +72,8 @@ namespace Fogoso.GameLogic.Screens
 
             string TimeText = "Minute " + AragubasTime.Minute + " Second " + AragubasTime.Second;
             TimeLabel.SetText(TimeText);
+
+            sinasLabel.SetText("$ " + Global.Ceira.ToString("0.00") + "\nExp " + Global.Experience);
 
         }
 

@@ -67,6 +67,10 @@ namespace Fogoso
         public static int WindowWidth;
         public static int WindowHeight;
 
+        // Game Variables
+        public static float Ceira;
+        public static int Experience;
+
 
 
     }

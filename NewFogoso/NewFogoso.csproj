@@ -69,6 +69,7 @@
     <Compile Include="GameLogic\TextBox\TextRenderer.cs" />
     <Compile Include="GameLogic\UI\Button.cs" />
     <Compile Include="Debug.cs" />
+    <Compile Include="GameLogic\UI\ClickerButton.cs" />
     <Compile Include="GameLogic\UI\Label.cs" />
     <Compile Include="GameLogic\UI\Panel.cs" />
     <Compile Include="GameLogic\UI\UIControl.cs" />

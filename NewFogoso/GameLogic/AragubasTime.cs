@@ -16,7 +16,20 @@ namespace Fogoso.GameLogic
         public static int Minute;
         public static int Second;
         public static int Frames;
-         
+
+        public static void ResetTime()
+        {
+            Year = 0;
+            Month = 0;
+            Week = 0;
+            Day = 0;
+            Hour = 0;
+            Minute = 0;
+            Second = 0;
+            Frames = 0;
+
+        }
+
         public static void Update()
         {
             Frames += 1;

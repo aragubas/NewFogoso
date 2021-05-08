@@ -14,3 +14,4 @@ C:\Users\Bazinga\Documents\Projects\NewFogoso\Output\Content\default.xnb
 C:\Users\Bazinga\Documents\Projects\NewFogoso\Output\Fogoso.exe
 C:\Users\Bazinga\Documents\Projects\NewFogoso\Output\Fogoso.pdb
 C:\Users\Bazinga\Documents\Projects\NewFogoso\Output\Content\small.xnb
+C:\Users\Bazinga\Documents\Projects\NewFogoso\Output\Content\tyne.xnb

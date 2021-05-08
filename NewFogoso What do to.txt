@@ -24,8 +24,8 @@ called "MoneyHoles" is a combination of items on spefic place that make maintena
 these "MoneyHoles" can make your money go into red instantly
  
 -= What do to? =-
-  
-N.  V     D                                                                                                 
+   
+N.  V.    D.                                                                                                
 ==  ====  ==========================================================================================  
 --0 t--2  = Create UI SubSystem with windowing and panels with docking and auto-arrangement stuff
 --1 t---  = Prototype game environment 
@@ -39,7 +39,11 @@ N.  V     D
 --9 ----  = Add XP as requirement for store items
 -10 ----  = Inventory System
 -11 t---  = Start coding Fogoso's Date/Time system   
-     
+-12 ----  = Prototype Planet View
+-13 ----  = Code Planet View
+-14 ----  = Prototype Random event generator
+-15 ----  = Code Random Event Generator 
+      
 [...]
 -50 ----  = Debug Profiler for Game Engine
 
