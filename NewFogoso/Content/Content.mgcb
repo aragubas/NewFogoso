@@ -13,6 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin 12pt.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:12pt.spritefont
+
 #begin arial_12.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

@@ -45,6 +45,7 @@ namespace Fogoso
         public static List<SoundEffect> soundEffects = new List<SoundEffect>();
         public static List<string> soundEffects_name = new List<string>();
         public static List<SoundEffectInstance> SoundInstances = new List<SoundEffectInstance>();
+        public static List<SoundEffectInstance> DisposableSoundInstances = new List<SoundEffectInstance>();
         public static List<int> SoundInstancesID = new List<int>();
 
         public static SoundEffect LoadSoundFromFile(string FileName)
@@ -191,7 +192,18 @@ namespace Fogoso
 
         }
 
-        public static void PlaySound(string SoundKeyName)
+        public static void Update()
+        {
+            for (int i = 0; i < DisposableSoundInstances.Count; i++)
+            {
+                if (DisposableSoundInstances[i].State == SoundState.Stopped)
+                {
+                    DisposableSoundInstances[i].Dispose();
+                }
+            }
+        }
+
+        public static void PlaySound(string SoundKeyName, float pVolume=1, float pPanning=0)
         {
             SoundEffect Audio = GetSoundEffect(SoundKeyName);
 
@@ -211,7 +223,12 @@ namespace Fogoso
             try
             {
                 // Play loaded resouce
-                Audio.Play();
+                SoundEffectInstance ceira = Audio.CreateInstance();
+                ceira.Volume = pVolume;
+                ceira.Pan = pPanning;   
+                ceira.Play();
+                DisposableSoundInstances.Add(ceira);
+
             }
             catch (Exception ex)
             {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/small.spritefont</SourceFile>
-  <SourceTime>2021-05-06T00:15:36.2181572-03:00</SourceTime>
+  <SourceTime>2021-05-08T22:01:06.2132686-03:00</SourceTime>
   <DestFile>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/bin/DesktopGL/small.xnb</DestFile>
-  <DestTime>2021-05-07T20:15:33.7488189-03:00</DestTime>
+  <DestTime>2021-05-08T22:05:47.3703426-03:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2018-12-08T14:35:54-02:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

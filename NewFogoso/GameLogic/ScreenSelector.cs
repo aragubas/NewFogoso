@@ -41,15 +41,19 @@ namespace Fogoso.GameLogic
     public static class ScreenSelector
     {
         public static GameScreen CurrentSelectedScreen;
+        public static GameScreen CurrentBackgroundScreen;
+
 
         public static void Update()
         {
             CurrentSelectedScreen.Update();
-
+            if (CurrentBackgroundScreen != null) { CurrentBackgroundScreen.Update(); }
         }
 
         public static void Draw(SpriteBatch spriteBatch)
         {
+            if (CurrentBackgroundScreen != null) { CurrentBackgroundScreen.Draw(spriteBatch); }
+
             CurrentSelectedScreen.Draw(spriteBatch);
 
         }
@@ -80,11 +84,41 @@ namespace Fogoso.GameLogic
 
         }
 
+        public static void SetBackgroundScreen(int ScreenID)
+        {
+            // Change to Loading Cursor
+            GameInput.CursorImage = "loading.png";
+
+            switch (ScreenID)
+            {
+                case -1:
+                    CurrentBackgroundScreen = null;
+                    break;
+
+                case 0:
+                    CurrentBackgroundScreen = new Screens.Backgrounds.DollarSignBackground();
+                    break;
+
+                default: 
+                    throw new InvalidOperationException("The background screen id (" + ScreenID + ") is invalid.");
+
+            }
+
+            if (CurrentBackgroundScreen != null)
+            {
+                CurrentBackgroundScreen.Initialize(); 
+                Utils.ConsoleWriteWithTitle("ScreenSelector", "Current screen has been set to {" + CurrentSelectedScreen.ToString() + "} id {" + ScreenID.ToString() + "}");
+            }
+
+
+        }
+
+
         public static void Initialize()
         {
             // Set Initial Screen
             SetCurrentScreen(0);
-
+            SetBackgroundScreen(0);
 
 
         }

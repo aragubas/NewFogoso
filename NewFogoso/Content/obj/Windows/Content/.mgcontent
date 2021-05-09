@@ -4,12 +4,14 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/12pt.spritefont</File>
     <File>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/arial_12.spritefont</File>
     <File>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/default.spritefont</File>
     <File>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/small.spritefont</File>
     <File>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/tyne.spritefont</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

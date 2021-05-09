@@ -33,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -58,6 +59,7 @@
     <Compile Include="GameLogic\AragubasTime.cs" />
     <Compile Include="GameLogic\GameObject.cs" />
     <Compile Include="GameLogic\ScreenSelector.cs" />
+    <Compile Include="GameLogic\Screens\Backgrounds\DollarSignBackground.cs" />
     <Compile Include="GameLogic\Screens\GameMain.cs" />
     <Compile Include="GameLogic\Screens\MainMenu.cs" />
     <Compile Include="GameLogic\Screens\GameScreen.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Taiyou\Variable.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="UtilsObjects\AnimationController.cs" />
+    <Compile Include="UtilsObjects\ValueSmoother.cs" />
     <Compile Include="WindowManager.cs" />
     <Compile Include="WriteToLog\LogObject.cs" />
   </ItemGroup>

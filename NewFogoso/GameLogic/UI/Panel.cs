@@ -60,9 +60,10 @@ namespace Fogoso.GameLogic.UI
             spriteBatch.Draw(Sprites.GetSprite("/base.png"), new Rectangle(1, 1, Rectangle.Width - 2, Rectangle.Height - 2), PanelColor);
 
             // Draw all UI Elements
-            foreach (UIControl control in ControlCollection)
+            for (int i = 0; i < ControlCollection.Count; i++)
             {
-                control.Draw(spriteBatch);
+                ControlCollection[i].Draw(spriteBatch);
+                
             }
 
             // End Sprite Batch
@@ -80,17 +81,18 @@ namespace Fogoso.GameLogic.UI
             cursorRect.X = (int)GameInput.CursorPosition.X;
 
             // Update UI Elements 
-            foreach (UIControl control in ControlCollection)
+            for (int i = 0; i < ControlCollection.Count; i++)
             {
-                control.ColisionRect = new Rectangle(Rectangle.X + control.Rectangle.X, Rectangle.Y + control.Rectangle.Y, control.Rectangle.Width, control.Rectangle.Height);
-                bool MouseIsColiding = cursorRect.Intersects(control.ColisionRect);
+                ControlCollection[i].ColisionRect = new Rectangle(Rectangle.X + ControlCollection[i].Rectangle.X, Rectangle.Y + ControlCollection[i].Rectangle.Y, ControlCollection[i].Rectangle.Width, ControlCollection[i].Rectangle.Height);
+                bool MouseIsColiding = cursorRect.Intersects(ControlCollection[i].ColisionRect);
 
-                if (control.OnlyUpdateWhenMouseHover && !MouseIsColiding) { control.InactiveUpdate(); continue; }
+                if (ControlCollection[i].OnlyUpdateWhenMouseHover && !MouseIsColiding) { ControlCollection[i].InactiveUpdate(); continue; }
                 // Set position offset
-                control.PositionOffset.X = Rectangle.X;
-                control.PositionOffset.Y = Rectangle.Y;
+                ControlCollection[i].PositionOffset.X = Rectangle.X;
+                ControlCollection[i].PositionOffset.Y = Rectangle.Y;
 
-                control.Update();
+                ControlCollection[i].Update();
+                
             }
 
         }
@@ -110,10 +112,11 @@ namespace Fogoso.GameLogic.UI
         {
             if (pTag == "unset") { throw new InvalidOperationException("GetControl by tag 'unset' is a invalid operation."); }
 
-            foreach (UIControl control in ControlCollection)
-            {
-                if (control.Tag == pTag) { return control; }
-            } 
+            for (int i = 0; i < ControlCollection.Count; i++)
+            { 
+                if (ControlCollection[i].Tag == pTag) { return ControlCollection[i]; }
+                
+            }
             return null; 
         }
 
@@ -122,11 +125,11 @@ namespace Fogoso.GameLogic.UI
             int LastY = DefaultY;
             int LastX = DefaultX;
 
-            foreach (UIControl control in ControlCollection)
+            for (int i = 0; i < ControlCollection.Count; i++)
             {
-                if (control.Rectangle.X > LastX) { LastX = control.Rectangle.X; if (AddWidth) { LastX += control.Rectangle.Width; } }
-                if (control.Rectangle.Y > LastY) { LastY = control.Rectangle.Y; if (AddHeight) { LastY += control.Rectangle.Height; } }
-
+                if (ControlCollection[i].Rectangle.X > LastX) { LastX = ControlCollection[i].Rectangle.X; if (AddWidth) { LastX += ControlCollection[i].Rectangle.Width; } }
+                if (ControlCollection[i].Rectangle.Y > LastY) { LastY = ControlCollection[i].Rectangle.Y; if (AddHeight) { LastY += ControlCollection[i].Rectangle.Height; } }
+                
             }
 
             return new Vector2(LastX, LastY);
@@ -147,11 +150,11 @@ namespace Fogoso.GameLogic.UI
             int autoWidth = 0;
             int autoHeight = 0;
 
-            foreach (UIControl control in ControlCollection)
+            for (int i = 0; i < ControlCollection.Count; i++)
             {
-                if (control.Rectangle.X + control.Rectangle.Width > autoWidth) { autoWidth = control.Rectangle.X + control.Rectangle.Width; }
-                if (control.Rectangle.Y + control.Rectangle.Height > autoHeight) { autoHeight = control.Rectangle.Y + control.Rectangle.Height; }
-
+                if (ControlCollection[i].Rectangle.X + ControlCollection[i].Rectangle.Width > autoWidth) { autoWidth = ControlCollection[i].Rectangle.X + ControlCollection[i].Rectangle.Width; }
+                if (ControlCollection[i].Rectangle.Y + ControlCollection[i].Rectangle.Height > autoHeight) { autoHeight = ControlCollection[i].Rectangle.Y + ControlCollection[i].Rectangle.Height; }
+                
             }
 
             Rectangle.Width = autoWidth + AutoSizePadding;

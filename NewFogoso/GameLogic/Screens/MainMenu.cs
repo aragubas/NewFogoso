@@ -67,9 +67,9 @@ namespace Fogoso.GameLogic.Screens
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
             MainMenuPanel.Draw(spriteBatch);
             if (SubPanel != null) { SubPanel.Draw(spriteBatch); }
-
         }
 
         public override void Update()

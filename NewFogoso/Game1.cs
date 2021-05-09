@@ -167,11 +167,17 @@ namespace Fogoso
 
             }
 
-
+            // Update Current Screen
             GameLogic.ScreenSelector.Update();
 
+            // Update KeyboardObj
             GameLogic.TextBox.KeyboardInput.Update();
+            
+            // Update GameInput
             GameInput.Update();
+
+            // Update SoundSystem
+            Sound.Update();
 
             base.Update(gameTime);
         }

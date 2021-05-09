@@ -17,8 +17,11 @@ namespace Fogoso.GameLogic.UI
         string CeiraText;
         SpriteFont font;
         public int ScrollWax;
+        Color BackgroundColor;
+        Color ForegroundColor;
+        public float CeiraChangeValue;
 
-        public CeiraViewObj(string pCeiraText, Vector2 InitialPos)
+        public CeiraViewObj(string pCeiraText, Vector2 InitialPos, Color pBackgroundColor, Color pForegroundColor, float CeiraChange)
         {
             font = Game1.Reference.Content.Load<SpriteFont>("tyne");
 
@@ -29,6 +32,11 @@ namespace Fogoso.GameLogic.UI
 
             CeiraPosition = InitialPos;
             DestPosition = InitialPos;
+
+            BackgroundColor = pBackgroundColor;
+            ForegroundColor = pForegroundColor;
+
+            CeiraChangeValue = CeiraChange;
 
         }
 
@@ -50,10 +58,10 @@ namespace Fogoso.GameLogic.UI
         public void Draw(SpriteBatch spriteBatch)
         {
             // Draw Background
-            spriteBatch.Draw(Sprites.GetSprite("/base.png"), new Rectangle((int)CeiraPosition.X, (int)CeiraPosition.Y, (int)CeiraTextSize.X, (int)CeiraTextSize.Y), Color.White);
+            spriteBatch.Draw(Sprites.GetSprite("/base.png"), new Rectangle((int)CeiraPosition.X, (int)CeiraPosition.Y, (int)CeiraTextSize.X, (int)CeiraTextSize.Y), BackgroundColor);
             
             // Draw Text
-            spriteBatch.DrawString(font, CeiraText, CeiraPosition, Color.Black);
+            spriteBatch.DrawString(font, CeiraText, CeiraPosition, ForegroundColor);
 
         }
         
@@ -77,26 +85,34 @@ namespace Fogoso.GameLogic.UI
 
         }
 
-        public void AddCeira(string Text)
+        public void AddCeira(string Text, float CeiraChange=-1)
         {
-            CeiraViewer.Add(new CeiraViewObj(Text, new Vector2(Rectangle.X, Rectangle.Y))); 
+            CeiraViewer.Add(new CeiraViewObj(Text, new Vector2(Rectangle.X, Rectangle.Y), Color.White, Color.Black, CeiraChange));
+
         }
+
+
+        public void AddCeira(string Text, Color BackColor, Color ForeColor, float CeiraChange = -1)
+        {
+            CeiraViewer.Add(new CeiraViewObj(Text, new Vector2(Rectangle.X, Rectangle.Y), BackColor, ForeColor, CeiraChange));
+        }
+
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
 
-            foreach (var ceira in CeiraViewer)
+
+            for (int i = 0; i < CeiraViewer.Count; i++)
             {
-                ceira.Draw(spriteBatch);
+                CeiraViewer[i].Draw(spriteBatch);
+
             }
-             
+
         }
 
         public override void Update()
         {
-
-
             CeiraViewObj[] ceiraCopy = new CeiraViewObj[CeiraViewer.Count];
             CeiraViewer.CopyTo(ceiraCopy);
 
@@ -104,7 +120,7 @@ namespace Fogoso.GameLogic.UI
             {
                 ceira.ScrollWax += 1;
 
-                if (ceira.DestPosition.Y < -ceira.CeiraTextSize.Y) { CeiraViewer.Remove(ceira); continue; }
+                if (ceira.DestPosition.Y < -ceira.CeiraTextSize.Y) { Global.Ceira += ceira.CeiraChangeValue; if (ceira.CeiraChangeValue > 0) { Sound.PlaySound("click", 0.1f); } CeiraViewer.Remove(ceira); continue; }
 
 
 
@@ -113,19 +129,16 @@ namespace Fogoso.GameLogic.UI
 
             }
 
-            if (GameInput.GetInputState("MINING_PRIMARY", true) || GameInput.GetInputState("MINING_PRIMARY", false) ||
-                GameInput.GetInputState("MINING_SECONDARY", true) || GameInput.GetInputState("MINING_SECONDARY", false))
-            {  
-                Global.Ceira += CeiraPorSinas; 
-                AddCeira(Global.Ceira.ToString());
+            if (GameInput.GetInputState("MINING_PRIMARY", false) || GameInput.GetInputState("MINING_SECONDARY", false))
+            {
+                AddCeira(Convert.ToString(CeiraPorSinas), CeiraPorSinas);
                 AragubasTime.Frames += 20;
                 Random Oracle = new Random();
 
                 if (Oracle.Next(0, 100) == RandomSinas)
                 {
-                    AragubasTime.Frames += 30;
-                    Global.Ceira += CeiraPorSinas * 2;
-                    Console.WriteLine("Capeta");
+                    AragubasTime.Frames += AragubasTime.Frames * 2;
+                    AddCeira(Convert.ToString(CeiraPorSinas * 2), Color.Black, Color.White, CeiraPorSinas * 2);
 
                 }
 
@@ -134,10 +147,6 @@ namespace Fogoso.GameLogic.UI
                     LastMinute = AragubasTime.Minute; Global.Experience++;
                     Random ceira = new Random();
                     RandomSinas = ceira.Next(0, 100);
-
-
-
-                    AragubasTime.Frames += 50;
 
                 }
 

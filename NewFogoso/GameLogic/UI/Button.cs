@@ -20,6 +20,7 @@ namespace Fogoso.GameLogic.UI
         // Method
         protected virtual void OnButtonPress()
         {
+            Sound.PlaySound("hud/click", 0.2f);
             if (ButtonPress != null) { ButtonPress(this); }
         }
 

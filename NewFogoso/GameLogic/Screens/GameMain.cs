@@ -16,7 +16,8 @@ namespace Fogoso.GameLogic.Screens
         Panel LowerPanel;
         Label DateLabel;
         Label TimeLabel;
-        Label sinasLabel;
+        Label MoneyInfosLabel;
+        UtilsObjects.ValueSmoother ceira;
 
         public GameMain()
         {
@@ -24,8 +25,8 @@ namespace Fogoso.GameLogic.Screens
             GameInput.CursorImage = "loading.png";
 
             LeftPanel = new Panel(new Rectangle(0, 0, 200, Global.WindowHeight));
-            CenterPanel = new Panel(new Rectangle(205, 50, Global.WindowWidth - 210, Global.WindowHeight - 100));
-            LowerPanel = new Panel(new Rectangle(205, 50 + (Global.WindowHeight - 100) + 5, Global.WindowWidth - 210, 40));
+            CenterPanel = new Panel(new Rectangle(205, 35, Global.WindowWidth - 210, Global.WindowHeight - 85));
+            LowerPanel = new Panel(new Rectangle(205, 35 + (Global.WindowHeight - 85) + 5, Global.WindowWidth - 210, 40));
             DateLabel = new Label(new Vector2(205, 5), Game1.Reference.Content.Load<SpriteFont>("default"), "amet");
             TimeLabel = new Label(new Vector2(205, 20), Game1.Reference.Content.Load<SpriteFont>("small"), "sit");
 
@@ -35,15 +36,29 @@ namespace Fogoso.GameLogic.Screens
 
             LeftPanel.AddControl(ceiraClickerButton, "ceira-clicker");
             LeftPanel.AddControl(sinas, "ceira-label");
-            sinasLabel = sinas;
+            MoneyInfosLabel = sinas;
 
-            sinas.DrawBackground += sinas_DrawBackground;
+            sinas.DrawBackground += DrawLabelBackground;
+            DateLabel.DrawBackground += DrawLabelBackground;
+            TimeLabel.DrawBackground += DrawLabelBackground;
+
+            ceira = new UtilsObjects.ValueSmoother(5, 10);
 
         }
 
-        void sinas_DrawBackground(Rectangle Rect, SpriteBatch spriteBatch)
+        void DrawLabelBackground(Rectangle Rect, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprites.GetSprite("/base.png"), Rect, Color.FromNonPremultiplied(120, 120, 120, 200));
+            Color bgColor = Color.FromNonPremultiplied(120, 120, 120, 230);
+            
+            if (Global.Ceira < 0)
+            {
+                bgColor = Color.FromNonPremultiplied(215, 120, 80, 255);
+            }
+            Rectangle ceira = new Rectangle(Rect.X, Rect.Y, Rect.Width, Rect.Height);
+            ceira.Inflate(2, 2);
+
+            spriteBatch.Draw(Sprites.GetSprite("/base.png"), ceira, Color.FromNonPremultiplied(15, 15, 15, 100));
+            spriteBatch.Draw(Sprites.GetSprite("/base.png"), Rect, bgColor);
 
         }
 
@@ -63,6 +78,12 @@ namespace Fogoso.GameLogic.Screens
 
         public override void Update()
         {
+            if (GameInput.GetInputState("PAUSE_KEY", false))
+            {
+                ScreenSelector.SetCurrentScreen(0);
+                return;
+            }
+
             LeftPanel.Update();
             CenterPanel.Update();
             LowerPanel.Update();
@@ -73,7 +94,13 @@ namespace Fogoso.GameLogic.Screens
             string TimeText = "Minute " + AragubasTime.Minute + " Second " + AragubasTime.Second;
             TimeLabel.SetText(TimeText);
 
-            sinasLabel.SetText("$ " + Global.Ceira.ToString("0.00") + "\nExp " + Global.Experience);
+            // Refresh SmootObj Value
+            ceira.Update();
+            ceira.SetTargetValue(Global.Ceira);
+
+            // Refresh MoneyInfos Label
+            MoneyInfosLabel.SetText("$ " + ceira.GetValue().ToString("0.00") + "\nExp " + Global.Experience);
+
 
         }
 
