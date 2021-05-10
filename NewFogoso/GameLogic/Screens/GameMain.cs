@@ -27,12 +27,12 @@ namespace Fogoso.GameLogic.Screens
             LeftPanel = new Panel(new Rectangle(0, 0, 200, Global.WindowHeight));
             CenterPanel = new Panel(new Rectangle(205, 35, Global.WindowWidth - 210, Global.WindowHeight - 85));
             LowerPanel = new Panel(new Rectangle(205, 35 + (Global.WindowHeight - 85) + 5, Global.WindowWidth - 210, 40));
-            DateLabel = new Label(new Vector2(205, 5), Game1.Reference.Content.Load<SpriteFont>("default"), "amet");
-            TimeLabel = new Label(new Vector2(205, 20), Game1.Reference.Content.Load<SpriteFont>("small"), "sit");
+            DateLabel = new Label(new Vector2(205, 5), Main.Reference.Content.Load<SpriteFont>("default"), "amet");
+            TimeLabel = new Label(new Vector2(205, 20), Main.Reference.Content.Load<SpriteFont>("small"), "sit");
 
 
             ClickerButton ceiraClickerButton = new ClickerButton(new Vector2(3, LeftPanel.Rectangle.Bottom));
-            Label sinas = new Label(new Vector2(5, 5), Game1.Reference.Content.Load<SpriteFont>("default"), "Loading...");
+            Label sinas = new Label(new Vector2(5, 5), Main.Reference.Content.Load<SpriteFont>("default"), "Loading...");
 
             LeftPanel.AddControl(ceiraClickerButton, "ceira-clicker");
             LeftPanel.AddControl(sinas, "ceira-label");
@@ -42,7 +42,7 @@ namespace Fogoso.GameLogic.Screens
             DateLabel.DrawBackground += DrawLabelBackground;
             TimeLabel.DrawBackground += DrawLabelBackground;
 
-            ceira = new UtilsObjects.ValueSmoother(5, 10);
+            ceira = new UtilsObjects.ValueSmoother(3, 5, false);
 
         }
 

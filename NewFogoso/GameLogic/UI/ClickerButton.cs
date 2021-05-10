@@ -23,7 +23,7 @@ namespace Fogoso.GameLogic.UI
 
         public CeiraViewObj(string pCeiraText, Vector2 InitialPos, Color pBackgroundColor, Color pForegroundColor, float CeiraChange)
         {
-            font = Game1.Reference.Content.Load<SpriteFont>("tyne");
+            font = Main.Reference.Content.Load<SpriteFont>("tyne");
 
             string Result = Utils.WrapText(font, pCeiraText, 140);
 
@@ -75,7 +75,6 @@ namespace Fogoso.GameLogic.UI
         List<CeiraViewObj> CeiraViewer;
         int LastMinute;
         int RandomSinas;
-        float CeiraPorSinas = 0.5f;
 
         public ClickerButton(Vector2 pPosition)
         {
@@ -131,14 +130,14 @@ namespace Fogoso.GameLogic.UI
 
             if (GameInput.GetInputState("MINING_PRIMARY", false) || GameInput.GetInputState("MINING_SECONDARY", false))
             {
-                AddCeira(Convert.ToString(CeiraPorSinas), CeiraPorSinas);
+                AddCeira(Convert.ToString(Global.CeiraPerWorkunit), Global.CeiraPerWorkunit);
                 AragubasTime.Frames += 20;
                 Random Oracle = new Random();
 
                 if (Oracle.Next(0, 100) == RandomSinas)
                 {
                     AragubasTime.Frames += AragubasTime.Frames * 2;
-                    AddCeira(Convert.ToString(CeiraPorSinas * 2), Color.Black, Color.White, CeiraPorSinas * 2);
+                    AddCeira(Convert.ToString(Global.CeiraPerWorkunit * Global.CeiraWorkunitBonusMultiplier), Color.Black, Color.White, Global.CeiraPerWorkunit * Global.CeiraWorkunitBonusMultiplier);
 
                 }
 

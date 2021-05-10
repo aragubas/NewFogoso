@@ -336,6 +336,7 @@ namespace Fogoso
         public static string CursorImage = "arrow.png";
         public static readonly string defaultCursor = "arrow.png";
         public static Vector2 CursorPosition;
+        public static Rectangle CursorColision;
 
         // State Animation Change Variables
         #region StateChange Variables
@@ -533,7 +534,7 @@ namespace Fogoso
                 {
                     string ActionWax = Registry.ReadKeyValue("/gamepad_actions/" + Wax);
 
-                    spriteBatch.DrawString(Game1.Reference.Content.Load<SpriteFont>("default"), ActionWax, new Vector2(Position.X, Position.Y - TextOffset), Color.FromNonPremultiplied(230 - TextOffset, Opacity, Opacity, Opacity + 50), -0.7f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
+                    spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("default"), ActionWax, new Vector2(Position.X, Position.Y - TextOffset), Color.FromNonPremultiplied(230 - TextOffset, Opacity, Opacity, Opacity + 50), -0.7f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
 
                 }
 
@@ -642,6 +643,8 @@ namespace Fogoso
         {
             UpdateStateChangeAnim();
             UpdateInputViwerAnim();
+
+            CursorColision = new Rectangle((int)CursorPosition.X, (int)CursorPosition.Y, 1, 1);
 
             // Get GamePad Capabilities
             newCapabilities = GamePad.GetCapabilities(PlayerIndex.One);

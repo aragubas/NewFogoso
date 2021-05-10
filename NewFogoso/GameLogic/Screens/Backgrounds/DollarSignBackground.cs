@@ -10,26 +10,34 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
 {
     class DollarSignBackground : GameScreen
     {
-        Random ceira;
+        Random RandomMizer;
         float EffectMultiplier = 35f;
         Matrix ScreenTransform;
         Color GeneralColor;
         int ColorR;
         int ColorG;
         int ColorB;
-        UtilsObjects.ValueSmoother ceirinhaR;
-        UtilsObjects.ValueSmoother ceirinhaG;
-        UtilsObjects.ValueSmoother ceirinhaB;
+        UtilsObjects.ValueSmoother ColorRSmooth;
+        UtilsObjects.ValueSmoother ColorGSmooth;
+        UtilsObjects.ValueSmoother ColorBSmooth;
+        UtilsObjects.ValueSmoother BGXSmooth;
+        UtilsObjects.ValueSmoother BGYSmooth;
+        UtilsObjects.ValueSmoother BGZSmooth;
+
         int SinasTimer;
+        int SinasTimerMax = 5;
 
         public DollarSignBackground()
         {
-            ceira = new Random();
+            RandomMizer = new Random();
             ScreenTransform = Matrix.CreateTranslation(0, 0, 0);
 
-            ceirinhaR = new UtilsObjects.ValueSmoother(5, 20, true);
-            ceirinhaG = new UtilsObjects.ValueSmoother(5, 20, true);
-            ceirinhaB = new UtilsObjects.ValueSmoother(5, 20, true);
+            ColorRSmooth = new UtilsObjects.ValueSmoother(5, 20, true);
+            ColorGSmooth = new UtilsObjects.ValueSmoother(5, 20, true);
+            ColorBSmooth = new UtilsObjects.ValueSmoother(5, 20, true);
+            BGXSmooth = new UtilsObjects.ValueSmoother(500, 10, true);
+            BGYSmooth = new UtilsObjects.ValueSmoother(500, 10, true);
+            BGZSmooth = new UtilsObjects.ValueSmoother(500, 10, true);
             SinasTimer = 500;
 
         }
@@ -42,7 +50,7 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
             {
                 for (int y = 0; y < Global.WindowHeight / 13; y++)
                 {
-                    spriteBatch.DrawString(Game1.Reference.Content.Load<SpriteFont>("12pt"), "$", new Vector2(x * 15, y * 15), Color.FromNonPremultiplied(ColorR + y, ColorG + x, ColorB + y, 255));
+                    spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("12pt"), "$", new Vector2(x * 15, y * 15), Color.FromNonPremultiplied(ColorR + y, ColorG + x, ColorB + y, 255));
 
                 }
             }
@@ -53,27 +61,36 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
 
         public override void Update()
         {
-            ScreenTransform = Matrix.CreateTranslation((GameInput.CursorPosition.X / 2 - Global.WindowWidth / 2) / EffectMultiplier - 10, (GameInput.CursorPosition.Y / 2 - Global.WindowHeight / 2) / EffectMultiplier - 10, 0) * Matrix.CreateRotationZ(GameInput.CursorPosition.X / Global.WindowWidth / 50);
+            ScreenTransform = Matrix.CreateTranslation(BGXSmooth.GetValue(), BGYSmooth.GetValue(), 0) * Matrix.CreateRotationZ(BGZSmooth.GetValue());
 
             SinasTimer++;
 
-            ceirinhaR.Update();
-            ceirinhaG.Update();
-            ceirinhaB.Update();
+            ColorRSmooth.Update();
+            ColorGSmooth.Update();
+            ColorBSmooth.Update();
+            BGYSmooth.Update();
+            BGXSmooth.Update();
+            BGZSmooth.Update();
 
-
-            if (SinasTimer >= 500)
+            if (SinasTimer >= SinasTimerMax)
             {
                 SinasTimer = 0;
+                SinasTimerMax = RandomMizer.Next(20, 800);
 
-                ceirinhaR.SetTargetValue(ceira.Next(0, 255));
-                ceirinhaG.SetTargetValue(ceira.Next(0, 255));
-                ceirinhaB.SetTargetValue(ceira.Next(0, 255));
+                ColorRSmooth.SetTargetValue(RandomMizer.Next(0, 255));
+                ColorGSmooth.SetTargetValue(RandomMizer.Next(0, 255));
+                ColorBSmooth.SetTargetValue(RandomMizer.Next(0, 255));
+
+                BGXSmooth.SetTargetValue((GameInput.CursorPosition.X / 2 - Global.WindowWidth / 2) / EffectMultiplier - RandomMizer.Next(5, 8));
+                BGYSmooth.SetTargetValue((GameInput.CursorPosition.Y / 2 - Global.WindowHeight / 2) / EffectMultiplier - RandomMizer.Next(5, 8));
+                BGZSmooth.SetTargetValue(GameInput.CursorPosition.X / Global.WindowWidth / RandomMizer.Next(50, 60));
+
             }
 
-            ColorR = (int)ceirinhaR.GetValue();
-            ColorG = (int)ceirinhaG.GetValue();
-            ColorB = (int)ceirinhaB.GetValue();
+
+            ColorR = (int)ColorRSmooth.GetValue();
+            ColorG = (int)ColorGSmooth.GetValue();
+            ColorB = (int)ColorBSmooth.GetValue();
 
 
         }

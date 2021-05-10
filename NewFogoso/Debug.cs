@@ -35,7 +35,7 @@ namespace Fogoso
         public static void DebugThing(string Name, string Value)
         {
             // Return if DebugMode is disabled
-            if (!Game1.DebugModeEnabled) { return; }
+            if (!Main.DebugModeEnabled) { return; }
 
             // Create a Debug item
             DebugItem sinas = new DebugItem(Name, Value);
@@ -51,8 +51,8 @@ namespace Fogoso
             {
                 i++; 
                 string Text = "'" + Ceira.Name + "' = [" + Ceira.Value + "]";
-                spriteBatch.DrawString(Game1.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(6, 6 + (i * 15)), Color.Black);
-                spriteBatch.DrawString(Game1.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(5, 5 + (i * 15)), Color.Red);
+                spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(6, 6 + (i * 15)), Color.Black);
+                spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(5, 5 + (i * 15)), Color.Red);
 
             }
 

@@ -54,7 +54,7 @@ namespace Fogoso
         private static Texture2D LoadTexture2D_FromFile(string FileLocation)
         {
             FileStream fileStream = new FileStream(FileLocation, FileMode.Open);
-            Texture2D ValToReturn = Texture2D.FromStream(Game1.Reference.GraphicsDevice, fileStream);
+            Texture2D ValToReturn = Texture2D.FromStream(Main.Reference.GraphicsDevice, fileStream);
             fileStream.Dispose();
 
             return ValToReturn;

@@ -32,23 +32,33 @@
 
 */
 
+using Microsoft.Xna.Framework;
 using System;
 
 namespace Fogoso
 {
     class Program
     {
+        static Game GameReference;
         static void Main(string[] args)
         {
             Console.Clear();
             Console.WriteLine("Fogoso Engine v 1.0");
             Console.WriteLine("========================");
+            
+            // Write the current platform
+            Console.WriteLine("CurrentPlatform is: " + Global.OSName);
 
-            using (var Game = new Game1())
-            {
-                Game.Run();
-            }
+            // Do all initial checks to the Fogoso Engine FileSystem
+            Utils.InitialFSCheck();
 
+
+            // Create Game Reference
+            GameReference = new Main();
+
+            Console.WriteLine("Starting Game....");
+            GameReference.Run();
+            
 
         }
     }

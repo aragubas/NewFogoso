@@ -45,8 +45,8 @@ namespace Fogoso.GameLogic.UI
             Text = pText;
 
             // Set minimum size
-            MinWidth = (int)Game1.Reference.Content.Load<SpriteFont>("default").MeasureString(Text).X;
-            MinHeight = (int)Game1.Reference.Content.Load<SpriteFont>("default").MeasureString(Text).Y;
+            MinWidth = (int)Main.Reference.Content.Load<SpriteFont>("default").MeasureString(Text).X;
+            MinHeight = (int)Main.Reference.Content.Load<SpriteFont>("default").MeasureString(Text).Y;
 
             Location = pLocation;
             Location.X += BorderSize;
@@ -109,7 +109,7 @@ namespace Fogoso.GameLogic.UI
         {
             spriteBatch.Draw(Sprites.GetSprite("/base.png"), Rectangle, _backColor);
 
-            spriteBatch.DrawString(Game1.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(Location.X, Location.Y), _foreColor);
+            spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(Location.X, Location.Y), _foreColor);
         }
 
         public override void InactiveUpdate()

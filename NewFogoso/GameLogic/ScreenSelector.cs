@@ -73,6 +73,10 @@ namespace Fogoso.GameLogic
                     CurrentSelectedScreen = new Screens.GameMain();
                     break;
 
+                case 2:
+                    CurrentSelectedScreen = new Screens.EconomicalMap();
+                    break;
+
                 default:
                     throw new InvalidOperationException("The screen id (" + ScreenID + ") is invalid.");
 

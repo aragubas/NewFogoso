@@ -54,9 +54,11 @@
     <StartupObject>Fogoso.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game1.cs" />
+    <Compile Include="GameLogic\Screens\EconomicalMap.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="GameInput.cs" />
     <Compile Include="GameLogic\AragubasTime.cs" />
+    <Compile Include="GameLogic\AragubasTimeObject.cs" />
     <Compile Include="GameLogic\GameObject.cs" />
     <Compile Include="GameLogic\ScreenSelector.cs" />
     <Compile Include="GameLogic\Screens\Backgrounds\DollarSignBackground.cs" />

@@ -49,19 +49,19 @@ namespace Fogoso
             switch (Command)
             {
                 case 0:
-                    Game1.Reference.Window.Title = Argument;
+                    Main.Reference.Window.Title = Argument;
                     return;
 
                 case 1:
-                    Game1.Reference.Window.IsBorderless = Argument;
+                    Main.Reference.Window.IsBorderless = Argument;
                     return;
 
                 case 2:
-                    Game1.Reference.Window.AllowUserResizing = Argument;
+                    Main.Reference.Window.AllowUserResizing = Argument;
                     return;
 
                 case 3:
-                    Game1.Reference.Window.AllowAltF4 = Argument;
+                    Main.Reference.Window.AllowAltF4 = Argument;
                     return;
 
             }

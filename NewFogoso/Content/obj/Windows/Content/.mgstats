@@ -1,6 +1,1 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/12pt.spritefont","C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/12pt.xnb","FontDescriptionProcessor","SpriteFontContent",2019,37905,3,122694
-"C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/arial_12.spritefont","C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/arial_12.xnb","FontDescriptionProcessor","SpriteFontContent",2008,21521,0,1342768
-"C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/default.spritefont","C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/default.xnb","FontDescriptionProcessor","SpriteFontContent",2010,21522,0,1020465
-"C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/small.spritefont","C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/small.xnb","FontDescriptionProcessor","SpriteFontContent",2008,21522,0,0712938
-"C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/tyne.spritefont","C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/tyne.xnb","FontDescriptionProcessor","SpriteFontContent",2010,13330,0,0542024

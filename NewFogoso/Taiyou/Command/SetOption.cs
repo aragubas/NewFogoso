@@ -58,19 +58,19 @@ namespace Fogoso.Taiyou.Command
             switch (OptionName)
             {
                 case "FixedTimeStep":
-                    Game1.Reference.IsFixedTimeStep = Convert.ToBoolean(OptionValue);
+                    Main.Reference.IsFixedTimeStep = Convert.ToBoolean(OptionValue);
                     return 0;
 
                 case "MouseVisible":
-                    Game1.Reference.IsMouseVisible = Convert.ToBoolean(OptionValue);
+                    Main.Reference.IsMouseVisible = Convert.ToBoolean(OptionValue);
                     return 0;
 
                 case "WindowTitle":
-                    Game1.Reference.Window.Title = OptionValue;
+                    Main.Reference.Window.Title = OptionValue;
                     return 0;
 
                 case "WindowBorderless":
-                    Game1.Reference.Window.IsBorderless = Convert.ToBoolean(OptionValue);
+                    Main.Reference.Window.IsBorderless = Convert.ToBoolean(OptionValue);
                     return 0;
 
                 case "ReloadEverthing":

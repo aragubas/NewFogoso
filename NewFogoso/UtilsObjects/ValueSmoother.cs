@@ -44,15 +44,18 @@ namespace Fogoso.UtilsObjects
 
                 DeltaTarget = Input;
             }
+            
+            float IncreaseAmmount = DeltaTarget / ValueSmooth;
 
-            if (DeltaValue < DeltaTarget) { DeltaValue += DeltaTarget / DeltaValue / ValueSmooth; }
-
+            if (DeltaValue < DeltaTarget) { DeltaValue += Math.Abs(IncreaseAmmount); }
             if (!OtherWayAround) { if (DeltaValue > DeltaTarget) { DeltaValue = DeltaTarget; } }
             else
             {
-                if (DeltaValue > DeltaTarget) { DeltaValue -= ValueSmooth; }
-                if (DeltaValue > DeltaTarget * 2) { DeltaValue = DeltaTarget; }
+                if (DeltaValue > DeltaTarget) { DeltaValue -= Math.Abs(IncreaseAmmount); }
+
+                //if (DeltaValue < DeltaTarget) { DeltaValue = DeltaTarget; }
             }
+
 
         }
     }

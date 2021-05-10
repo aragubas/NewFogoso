@@ -18,7 +18,7 @@
 
 
 
-
+ 
    ####### BEGIN MONOGAME LICENSE #######
    THIS GAME-ENGINE WAS CREATED USING THE MONOGAME FRAMEWORK
    Github: https://github.com/MonoGame/MonoGame#license 
@@ -44,11 +44,11 @@ namespace Fogoso
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Main : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        public static Game1 Reference;
+        public static Main Reference;
         public static bool DebugModeEnabled;
 
         // Fps Counter
@@ -57,7 +57,7 @@ namespace Fogoso
         int _fps = 0;
 
 
-        public Game1()
+        public Main()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -71,10 +71,6 @@ namespace Fogoso
 
         protected override void Initialize()
         {
-            Console.WriteLine("CurrentPlatform is: " + Global.OSName);
-
-            // Do all initial checks to the WIC Engine FS
-            Utils.InitialFSCheck();
 
             // Load all the taiyou scripts
             Taiyou.Global.LoadTaiyouScripts();
@@ -85,6 +81,9 @@ namespace Fogoso
             Sprites.FindAllSprites();
             Sound.Initialize();
             Registry.Initialize();
+
+            // Set Window Static Reference
+            Global.GameWindowReference = Window;
 
             // Set Window Width and Height variables
             Global.WindowWidth = Window.ClientBounds.Width;

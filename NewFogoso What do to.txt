@@ -5,7 +5,7 @@ THIS FILE IS CONFIDENTIAL FOR NEW FOGOSO PROJECT.
 click, click, click, click [...]
 unlike other click, click, click[...] games if you make a wrong choice you lost
 you need to rethink your choises, dont go all clicky clicky on every button 
-You are owner of an mining company, you mine all type of stuff and do everthing to get money
+You are owner of an mining company at Araguba's Planet, you mine all type of stuff and do everthing to get money
 All events happens on aragubas
 
 -= Date System =-
@@ -17,12 +17,18 @@ All events happens on aragubas
 1 hour has 24 minutes
 1 minute has 30 seconds
 
+-= About Aragubas's Planet =-
+The planet aragubas is a blue planet with 3 dominant species
+the entire planet is governated by The Great Sinas, every discussion ends with his words
 
 
 -= Perks about the game =-
-called "MoneyHoles" is a combination of items on spefic place that make maintenance go all high
+called "MoneyHoles" is a combination of items on specific place that make maintenance go all high
 these "MoneyHoles" can make your money go into red instantly
- 
+
+Starting a new savegame brings a continental selection, each continemt has its parameter
+and each parameter affects gameplay, it will be also used for the "market view" item.  
+
 -= What do to? =-
    
 N.  V.    D.                                                                                                
@@ -38,8 +44,8 @@ N.  V.    D.
 --8 ----  = Start coding XP system
 --9 ----  = Add XP as requirement for store items
 -10 ----  = Inventory System
--11 t---  = Start coding Fogoso's Date/Time system   
--12 ----  = Prototype Planet View
+-11 t--2  = Start coding Fogoso's Date/Time system   
+-12 t--0  = Prototype Planet View
 -13 ----  = Code Planet View
 -14 ----  = Prototype Random event generator
 -15 ----  = Code Random Event Generator 
