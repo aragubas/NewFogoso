@@ -119,7 +119,7 @@ namespace Fogoso.GameLogic.UI
             {
                 ceira.ScrollWax += 1;
 
-                if (ceira.DestPosition.Y < -ceira.CeiraTextSize.Y) { Global.Ceira += ceira.CeiraChangeValue; if (ceira.CeiraChangeValue > 0) { Sound.PlaySound("click", 0.1f); } CeiraViewer.Remove(ceira); continue; }
+                if (ceira.DestPosition.Y < -ceira.CeiraTextSize.Y) { CurrentSessionData.Ceira += ceira.CeiraChangeValue; if (ceira.CeiraChangeValue > 0) { Sound.PlaySound("click", 0.1f); } CeiraViewer.Remove(ceira); continue; }
 
 
 
@@ -130,20 +130,20 @@ namespace Fogoso.GameLogic.UI
 
             if (GameInput.GetInputState("MINING_PRIMARY", false) || GameInput.GetInputState("MINING_SECONDARY", false))
             {
-                AddCeira(Convert.ToString(Global.CeiraPerWorkunit), Global.CeiraPerWorkunit);
+                AddCeira(Convert.ToString(CurrentSessionData.CeiraPerWorkunit), CurrentSessionData.CeiraPerWorkunit);
                 AragubasTime.Frames += 20;
                 Random Oracle = new Random();
 
                 if (Oracle.Next(0, 100) == RandomSinas)
                 {
                     AragubasTime.Frames += AragubasTime.Frames * 2;
-                    AddCeira(Convert.ToString(Global.CeiraPerWorkunit * Global.CeiraWorkunitBonusMultiplier), Color.Black, Color.White, Global.CeiraPerWorkunit * Global.CeiraWorkunitBonusMultiplier);
+                    AddCeira(Convert.ToString(CurrentSessionData.CeiraPerWorkunit * CurrentSessionData.CeiraWorkunitBonusMultiplier), Color.Black, Color.White, CurrentSessionData.CeiraPerWorkunit * CurrentSessionData.CeiraWorkunitBonusMultiplier);
 
                 }
 
                 if (LastMinute != AragubasTime.Minute) 
-                { 
-                    LastMinute = AragubasTime.Minute; Global.Experience++;
+                {
+                    LastMinute = AragubasTime.Minute; CurrentSessionData.Experience++;
                     Random ceira = new Random();
                     RandomSinas = ceira.Next(0, 100);
 

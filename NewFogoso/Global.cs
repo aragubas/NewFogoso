@@ -68,12 +68,6 @@ namespace Fogoso
         public static int WindowWidth;
         public static int WindowHeight;
 
-        // Game Variables
-        public static float Ceira = 2;
-        public static float CeiraPerWorkunit = 0.05f;
-        public static float CeiraWorkunitBonusMultiplier = 1.5f;
-        public static int Experience;
-
         public static GameWindow GameWindowReference;
 
 

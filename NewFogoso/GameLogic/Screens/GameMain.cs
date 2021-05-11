@@ -13,10 +13,10 @@ namespace Fogoso.GameLogic.Screens
     {
         Panel LeftPanel;
         Panel CenterPanel;
-        Panel LowerPanel;
         Label DateLabel;
         Label TimeLabel;
         Label MoneyInfosLabel;
+        ToolStripPanel TabsButton;
         UtilsObjects.ValueSmoother ceira;
 
         public GameMain()
@@ -26,13 +26,24 @@ namespace Fogoso.GameLogic.Screens
 
             LeftPanel = new Panel(new Rectangle(0, 0, 200, Global.WindowHeight));
             CenterPanel = new Panel(new Rectangle(205, 35, Global.WindowWidth - 210, Global.WindowHeight - 85));
-            LowerPanel = new Panel(new Rectangle(205, 35 + (Global.WindowHeight - 85) + 5, Global.WindowWidth - 210, 40));
             DateLabel = new Label(new Vector2(205, 5), Main.Reference.Content.Load<SpriteFont>("default"), "amet");
             TimeLabel = new Label(new Vector2(205, 20), Main.Reference.Content.Load<SpriteFont>("small"), "sit");
-
+            TabsButton = new ToolStripPanel(new Rectangle(205, 35 + (Global.WindowHeight - 85) + 5, Global.WindowWidth - 210, 40), true);
 
             ClickerButton ceiraClickerButton = new ClickerButton(new Vector2(3, LeftPanel.Rectangle.Bottom));
             Label sinas = new Label(new Vector2(5, 5), Main.Reference.Content.Load<SpriteFont>("default"), "Loading...");
+            Button InfosButton = new Button(new Vector2(5, 5), "Infos");
+            Button ItemsViewButton = new Button(new Vector2(5, 5), "Items");
+
+            TabsButton.AddControl(InfosButton, "infos-button");
+            TabsButton.AddControl(ItemsViewButton, "items-button");
+
+            for (int i = 0; i < 30; i++)
+            {
+                Button ceiraBUtton = new Button(new Vector2(5, 5), "ceira-" + i);
+
+                TabsButton.AddControl(ceiraBUtton, "enceirado");
+            }
 
             LeftPanel.AddControl(ceiraClickerButton, "ceira-clicker");
             LeftPanel.AddControl(sinas, "ceira-label");
@@ -50,7 +61,7 @@ namespace Fogoso.GameLogic.Screens
         {
             Color bgColor = Color.FromNonPremultiplied(120, 120, 120, 230);
             
-            if (Global.Ceira < 0)
+            if (CurrentSessionData.Ceira < 0)
             {
                 bgColor = Color.FromNonPremultiplied(215, 120, 80, 255);
             }
@@ -68,7 +79,7 @@ namespace Fogoso.GameLogic.Screens
 
             LeftPanel.Draw(spriteBatch);
             CenterPanel.Draw(spriteBatch);
-            LowerPanel.Draw(spriteBatch);
+            TabsButton.Draw(spriteBatch);
 
             spriteBatch.Begin();
             DateLabel.Draw(spriteBatch);
@@ -86,7 +97,7 @@ namespace Fogoso.GameLogic.Screens
 
             LeftPanel.Update();
             CenterPanel.Update();
-            LowerPanel.Update();
+            TabsButton.Update();
 
             string DateText = "Year " + AragubasTime.Year + " Month " + AragubasTime.Month + " Week " + AragubasTime.Week + " Day " + AragubasTime.Day;
             DateLabel.SetText(DateText);
@@ -96,10 +107,10 @@ namespace Fogoso.GameLogic.Screens
 
             // Refresh SmootObj Value
             ceira.Update();
-            ceira.SetTargetValue(Global.Ceira);
+            ceira.SetTargetValue(CurrentSessionData.Ceira);
 
             // Refresh MoneyInfos Label
-            MoneyInfosLabel.SetText("$ " + ceira.GetValue().ToString("0.00") + "\nExp " + Global.Experience);
+            MoneyInfosLabel.SetText("$ " + ceira.GetValue().ToString("0.00") + "\nExp " + CurrentSessionData.Experience);
 
 
         }

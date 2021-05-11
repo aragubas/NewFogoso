@@ -17,7 +17,6 @@ namespace Fogoso.GameLogic.UI
         public AnimationController Animator;
         public bool AutoSizeWhenAdd;
         public int AutoSizePadding;
-        Rectangle cursorRect;
         public Color PanelColor;
 
         public Panel(Rectangle pRectangle, bool pAutoSizeWhenAdd=false, int pAutoSizePadding=2) 
@@ -30,7 +29,6 @@ namespace Fogoso.GameLogic.UI
             Animator = new AnimationController(1, 0, 0.09f, true, false, true, 0, true);
             AutoSizeWhenAdd = pAutoSizeWhenAdd; 
             AutoSizePadding = pAutoSizePadding;
-            cursorRect = new Rectangle(0, 0, 1, 1);
 
             PanelColor = Color.FromNonPremultiplied(32, 32, 32, 200);
 
@@ -39,7 +37,7 @@ namespace Fogoso.GameLogic.UI
 
         }
 
-        public void SetMatrix(int pTranslationX, int pTranslationY, float pScaleX, float pScaleY)
+        private void SetMatrix(int pTranslationX, int pTranslationY, float pScaleX, float pScaleY)
         {  
             PositionFix = Matrix.CreateScale(pScaleX, pScaleY, 0) * Matrix.CreateTranslation(pTranslationX, pTranslationY, 0);
         }
@@ -76,20 +74,16 @@ namespace Fogoso.GameLogic.UI
 
         private void UpdateElements()
         {
-            // Set cursor rect
-            cursorRect.Y = (int)GameInput.CursorPosition.Y;
-            cursorRect.X = (int)GameInput.CursorPosition.X;
-
             // Update UI Elements 
             for (int i = 0; i < ControlCollection.Count; i++)
             {
                 ControlCollection[i].ColisionRect = new Rectangle(Rectangle.X + ControlCollection[i].Rectangle.X, Rectangle.Y + ControlCollection[i].Rectangle.Y, ControlCollection[i].Rectangle.Width, ControlCollection[i].Rectangle.Height);
-                bool MouseIsColiding = cursorRect.Intersects(ControlCollection[i].ColisionRect);
+                bool MouseIsColiding = GameInput.CursorColision.Intersects(ControlCollection[i].ColisionRect);
 
                 if (ControlCollection[i].OnlyUpdateWhenMouseHover && !MouseIsColiding) { ControlCollection[i].InactiveUpdate(); continue; }
                 // Set position offset
-                ControlCollection[i].PositionOffset.X = Rectangle.X;
-                ControlCollection[i].PositionOffset.Y = Rectangle.Y;
+                ControlCollection[i].PositionOffset.X = this.PositionOffset.X + Rectangle.X;
+                ControlCollection[i].PositionOffset.Y = this.PositionOffset.Y + Rectangle.Y;
 
                 ControlCollection[i].Update();
                 
