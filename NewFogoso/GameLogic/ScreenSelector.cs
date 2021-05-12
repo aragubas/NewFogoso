@@ -82,6 +82,7 @@ namespace Fogoso.GameLogic
 
             }
 
+            // Initialize Selected Screen
             CurrentSelectedScreen.Initialize();
 
             Utils.ConsoleWriteWithTitle("ScreenSelector", "Current screen has been set to {" + CurrentSelectedScreen.ToString() + "} id {" + ScreenID.ToString() + "}");
@@ -93,6 +94,7 @@ namespace Fogoso.GameLogic
             // Change to Loading Cursor
             GameInput.CursorImage = "loading.png";
 
+            // Screen Switch Logic
             switch (ScreenID)
             {
                 case -1:

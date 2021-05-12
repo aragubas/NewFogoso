@@ -119,7 +119,7 @@ namespace Fogoso
 
         private void RestoreCursor()
         {
-            GameInput.CursorImage = GameInput.defaultCursor;
+            if (GameInput.ReservedModeID == -1) { GameInput.CursorImage = GameInput.defaultCursor; }
 
             // Update Cursor Position
             restoreCursorMouseState = Mouse.GetState();

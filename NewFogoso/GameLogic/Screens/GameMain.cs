@@ -30,7 +30,7 @@ namespace Fogoso.GameLogic.Screens
             TimeLabel = new Label(new Vector2(205, 20), Main.Reference.Content.Load<SpriteFont>("small"), "sit");
             TabsButton = new ToolStripPanel(new Rectangle(205, 35 + (Global.WindowHeight - 85) + 5, Global.WindowWidth - 210, 40), true);
 
-            ClickerButton ceiraClickerButton = new ClickerButton(new Vector2(3, LeftPanel.Rectangle.Bottom));
+            ClickerViewer ceiraClickerButton = new ClickerViewer(new Vector2(3, LeftPanel.Rectangle.Bottom));
             Label sinas = new Label(new Vector2(5, 5), Main.Reference.Content.Load<SpriteFont>("default"), "Loading...");
             Button InfosButton = new Button(new Vector2(5, 5), "Infos");
             Button ItemsViewButton = new Button(new Vector2(5, 5), "Items");
@@ -38,7 +38,7 @@ namespace Fogoso.GameLogic.Screens
             TabsButton.AddControl(InfosButton, "infos-button");
             TabsButton.AddControl(ItemsViewButton, "items-button");
 
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Button ceiraBUtton = new Button(new Vector2(5, 5), "ceira-" + i);
 
@@ -99,10 +99,10 @@ namespace Fogoso.GameLogic.Screens
             CenterPanel.Update();
             TabsButton.Update();
 
-            string DateText = "Year " + AragubasTime.Year + " Month " + AragubasTime.Month + " Week " + AragubasTime.Week + " Day " + AragubasTime.Day;
+            string DateText = AragubasTime.GetDecadeNameWithYear() + " - " + AragubasTime.GetMonthName() + " - " + AragubasTime.Week + "," + AragubasTime.GetDayName();
             DateLabel.SetText(DateText);
 
-            string TimeText = "Minute " + AragubasTime.Minute + " Second " + AragubasTime.Second;
+            string TimeText = AragubasTime.Hour + " : " + AragubasTime.Minute + " : " + AragubasTime.Second;
             TimeLabel.SetText(TimeText);
 
             // Refresh SmootObj Value

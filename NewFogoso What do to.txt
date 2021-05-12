@@ -7,15 +7,36 @@ unlike other click, click, click[...] games if you make a wrong choice you lost
 you need to rethink your choises, dont go all clicky clicky on every button 
 You are owner of an mining company at Araguba's Planet, you mine all type of stuff and do everthing to get money
 All events happens on aragubas
-
+ 
 -= Date System =-
-1 year has 64 months
-1 month has 32 weeks
+1 year has 4 months
+1 month has 8 weeks
 1 week has 7 days
 =- Time System -=
-1 day has 16 hours
+1 day has 8 hours
 1 hour has 24 minutes
 1 minute has 30 seconds
+
+-= Month Names =-
+1 - Tropin
+2 - Jatubeiro
+3 - Crotela
+4 - Laubarin
+
+-= Day Names =-
+1 - Narilda
+2 - Doiize
+3 - Lalanida
+4 - Kronilha
+5 - Cacanildo
+6 - Scrolla
+7 - Abutrec
+
+
+-= Periods =-
+Octunder period is before the year 30
+After the year 35, is the Notrunda Period
+The Notrunda period last for 6 years before the Corrupted Period starts
 
 -= About Aragubas's Planet =-
 The planet aragubas is a blue planet with 3 dominant species
@@ -33,7 +54,7 @@ and each parameter affects gameplay, it will be also used for the "market view" 
    
 N.  V.    D.                                                                                                
 ==  ====  ==========================================================================================  
---0 t--2  = Create UI SubSystem with windowing and panels with docking and auto-arrangement stuff
+--0 t--3  = Create UI SubSystem with windowing and panels with docking and auto-arrangement stuff
 --1 t---  = Prototype game environment 
 --2 t---  = Start coding game environment
 --3 ----  = Prototype Item arrangement system
@@ -44,12 +65,12 @@ N.  V.    D.
 --8 ----  = Start coding XP system
 --9 ----  = Add XP as requirement for store items
 -10 ----  = Inventory System
--11 t--2  = Start coding Fogoso's Date/Time system   
+-11 t--3  = Start coding Fogoso's Date/Time system   
 -12 t--0  = Prototype Planet View
 -13 ----  = Code Planet View
 -14 ----  = Prototype Random event generator
 -15 ----  = Code Random Event Generator 
-      
+       
 [...]
 -50 ----  = Debug Profiler for Game Engine
 

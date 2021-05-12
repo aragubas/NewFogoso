@@ -26,7 +26,7 @@ namespace Fogoso.GameLogic.UI
 
             ControlCollection = new List<UIControl>();
             _rasterizerState = new RasterizerState() { ScissorTestEnable = true };
-            Animator = new AnimationController(1, 0, 0.09f, true, false, true, 0, true);
+            Animator = new AnimationController(1, 0, 0.09f, true, false, true, 0);
             AutoSizeWhenAdd = pAutoSizeWhenAdd; 
             AutoSizePadding = pAutoSizePadding;
 
@@ -168,6 +168,9 @@ namespace Fogoso.GameLogic.UI
 
         public void AddControl(UIControl control, string pTag="unset", bool AutoCenterHorizontally=false)
         {
+            // Set to loading cursor
+            GameInput.CursorImage = "loading.png";
+
             ControlCollection.Add(control);
             control.Tag = pTag;
             control.Index = ControlCollection.Count - 1;

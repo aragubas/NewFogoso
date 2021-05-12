@@ -331,6 +331,7 @@ namespace Fogoso
         public static List<string> InputKeyArguments_key = new List<string>();
         public static List<string> Waxer = new List<string>();
         public static List<string> PressedWaxer = new List<string>();
+        public static int ReservedModeID = -1;
 
         // Cursor
         public static string CursorImage = "arrow.png";
@@ -362,6 +363,12 @@ namespace Fogoso
 
 
         #endregion
+
+        public static int GenerateInputReservedID()
+        {
+            Random cierra = new Random();
+            return cierra.Next(-2147483647, 2147483647);
+        } 
 
         public static void Initialize()
         {

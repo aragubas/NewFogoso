@@ -75,15 +75,15 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
             if (SinasTimer >= SinasTimerMax)
             {
                 SinasTimer = 0;
-                SinasTimerMax = RandomMizer.Next(20, 800);
+                SinasTimerMax = RandomMizer.Next(20, 300);
 
-                ColorRSmooth.SetTargetValue(RandomMizer.Next(0, 255));
-                ColorGSmooth.SetTargetValue(RandomMizer.Next(0, 255));
-                ColorBSmooth.SetTargetValue(RandomMizer.Next(0, 255));
+                ColorRSmooth.SetTargetValue(RandomMizer.Next(0, 150));
+                ColorGSmooth.SetTargetValue(RandomMizer.Next(0, 150));
+                ColorBSmooth.SetTargetValue(RandomMizer.Next(0, 150));
 
-                BGXSmooth.SetTargetValue((GameInput.CursorPosition.X / 2 - Global.WindowWidth / 2) / EffectMultiplier - RandomMizer.Next(5, 8));
-                BGYSmooth.SetTargetValue((GameInput.CursorPosition.Y / 2 - Global.WindowHeight / 2) / EffectMultiplier - RandomMizer.Next(5, 8));
-                BGZSmooth.SetTargetValue(GameInput.CursorPosition.X / Global.WindowWidth / RandomMizer.Next(50, 60));
+                BGXSmooth.SetTargetValue((GameInput.CursorPosition.X / 2 - Global.WindowWidth / 2) / EffectMultiplier - RandomMizer.Next(5, 20));
+                BGYSmooth.SetTargetValue((GameInput.CursorPosition.Y / 2 - Global.WindowHeight / 2) / EffectMultiplier - RandomMizer.Next(5, 20));
+                BGZSmooth.SetTargetValue(GameInput.CursorPosition.X / Global.WindowWidth / RandomMizer.Next(50, 70));
 
             }
 

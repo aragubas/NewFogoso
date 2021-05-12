@@ -20,7 +20,7 @@ namespace Fogoso.GameLogic.UI
         // Method
         protected virtual void OnButtonPress()
         {
-            Sound.PlaySound("hud/click", 0.2f);
+            Sound.PlaySound("hud/click", 0.15f);
             if (ButtonPress != null) { ButtonPress(this); }
         }
 
@@ -29,13 +29,12 @@ namespace Fogoso.GameLogic.UI
         public string Text;
         Vector2 Size;
         Vector2 Location;
-        Rectangle ColisionWithOffset;
         int BorderSize = 2;
         Color _backColor;
         Color _foreColor;
         MouseState oldState;
-        Rectangle cursorRect;
         bool InactiveUpdateRan;
+        private bool MouseOverSoundPlayed;
 
         public Button(Vector2 pLocation, string pText)
         {
@@ -115,17 +114,25 @@ namespace Fogoso.GameLogic.UI
         public override void InactiveUpdate()
         {
             if (!InactiveUpdateRan) { InactiveUpdateRan = true; } else { return; }
+            MouseOverSoundPlayed = false;
             SetColor(-1);
 
         }
 
         public override void Update()
         {
-            if (!IsEnabled) { SetColor(-1); }
+            if (GameInput.ReservedModeID != -1) { SetColor(-1); return; }
             base.Update();
-            InactiveUpdateRan = false;
+            InactiveUpdateRan = false; 
 
-            //Set Default Color
+            if (!MouseOverSoundPlayed)
+            {
+                MouseOverSoundPlayed = true;
+                Sound.PlaySound("hud/select", 0.02f);
+
+            }
+
+            //Set Default Color 
             SetColor(0);
 
             // Get New State

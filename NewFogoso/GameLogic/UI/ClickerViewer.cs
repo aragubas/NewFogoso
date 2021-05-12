@@ -68,7 +68,7 @@ namespace Fogoso.GameLogic.UI
 
     }
 
-    class ClickerButton : UIControl
+    class ClickerViewer : UIControl
     {
 
         Color currentColor;
@@ -76,7 +76,7 @@ namespace Fogoso.GameLogic.UI
         int LastMinute;
         int RandomSinas;
 
-        public ClickerButton(Vector2 pPosition)
+        public ClickerViewer(Vector2 pPosition)
         {
             SetRectangle(new Rectangle((int)pPosition.X, (int)pPosition.Y, 1, 1));
             currentColor = Color.FromNonPremultiplied(250, 250, 250, 255);
