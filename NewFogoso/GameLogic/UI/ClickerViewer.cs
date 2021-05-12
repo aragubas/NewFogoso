@@ -137,7 +137,7 @@ namespace Fogoso.GameLogic.UI
                 if (Oracle.Next(0, 100) == RandomSinas)
                 {
                     AragubasTime.Frames += AragubasTime.Frames * 2;
-                    AddCeira(Convert.ToString(CurrentSessionData.CeiraPerWorkunit * CurrentSessionData.CeiraWorkunitBonusMultiplier), Color.Black, Color.White, CurrentSessionData.CeiraPerWorkunit * CurrentSessionData.CeiraWorkunitBonusMultiplier);
+                    AddCeira(Convert.ToString(CurrentSessionData.CeiraPerWorkunit * CurrentSessionData.CeiraWorkunitBonusMultiplier) + " Bonus!", Color.Black, Color.White, CurrentSessionData.CeiraPerWorkunit * CurrentSessionData.CeiraWorkunitBonusMultiplier);
 
                 }
 

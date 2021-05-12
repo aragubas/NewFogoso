@@ -32,13 +32,13 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
             RandomMizer = new Random();
             ScreenTransform = Matrix.CreateTranslation(0, 0, 0);
 
-            ColorRSmooth = new UtilsObjects.ValueSmoother(5, 20, true);
-            ColorGSmooth = new UtilsObjects.ValueSmoother(5, 20, true);
-            ColorBSmooth = new UtilsObjects.ValueSmoother(5, 20, true);
+            ColorRSmooth = new UtilsObjects.ValueSmoother(20, 20, true);
+            ColorGSmooth = new UtilsObjects.ValueSmoother(20, 20, true);
+            ColorBSmooth = new UtilsObjects.ValueSmoother(20, 20, true);
             BGXSmooth = new UtilsObjects.ValueSmoother(500, 10, true);
             BGYSmooth = new UtilsObjects.ValueSmoother(500, 10, true);
             BGZSmooth = new UtilsObjects.ValueSmoother(500, 10, true);
-            SinasTimer = 500;
+            SinasTimer = 5;
 
         }
 
@@ -75,15 +75,15 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
             if (SinasTimer >= SinasTimerMax)
             {
                 SinasTimer = 0;
-                SinasTimerMax = RandomMizer.Next(20, 300);
+                SinasTimerMax = RandomMizer.Next(RandomMizer.Next(0, 25), RandomMizer.Next(26, 500));
 
                 ColorRSmooth.SetTargetValue(RandomMizer.Next(0, 150));
                 ColorGSmooth.SetTargetValue(RandomMizer.Next(0, 150));
                 ColorBSmooth.SetTargetValue(RandomMizer.Next(0, 150));
 
-                BGXSmooth.SetTargetValue((GameInput.CursorPosition.X / 2 - Global.WindowWidth / 2) / EffectMultiplier - RandomMizer.Next(5, 20));
-                BGYSmooth.SetTargetValue((GameInput.CursorPosition.Y / 2 - Global.WindowHeight / 2) / EffectMultiplier - RandomMizer.Next(5, 20));
-                BGZSmooth.SetTargetValue(GameInput.CursorPosition.X / Global.WindowWidth / RandomMizer.Next(50, 70));
+                BGXSmooth.SetTargetValue((GameInput.CursorPosition.X / 2 - Global.WindowWidth / 2) / EffectMultiplier - RandomMizer.Next(5, 40));
+                BGYSmooth.SetTargetValue((GameInput.CursorPosition.Y / 2 - Global.WindowHeight / 2) / EffectMultiplier - RandomMizer.Next(5, 40));
+                BGZSmooth.SetTargetValue(GameInput.CursorPosition.X / Global.WindowWidth / RandomMizer.Next(50, 80));
 
             }
 
