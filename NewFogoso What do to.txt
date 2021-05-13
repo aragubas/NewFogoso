@@ -72,7 +72,7 @@ N.  V.    D.
 -15 ----  = Code Random Event Generator 
        
 [...]
--50 ----  = Debug Profiler for Game Engine
+-50 t---  = Debug Profiler for Game Engine
 
 [...] 
 100 ----  = Linux and Android Port

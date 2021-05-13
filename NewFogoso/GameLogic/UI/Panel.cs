@@ -17,7 +17,7 @@ namespace Fogoso.GameLogic.UI
         public AnimationController Animator;
         public bool AutoSizeWhenAdd;
         public int AutoSizePadding;
-        public Color PanelColor;
+        private Color PanelColor;
 
         public Panel(Rectangle pRectangle, bool pAutoSizeWhenAdd=false, int pAutoSizePadding=2) 
         {
@@ -41,6 +41,17 @@ namespace Fogoso.GameLogic.UI
         {  
             PositionFix = Matrix.CreateScale(pScaleX, pScaleY, 0) * Matrix.CreateTranslation(pTranslationX, pTranslationY, 0);
         }
+
+        public void SwitchControlCollection(List<UIControl> pNewControlCollection)
+        {
+            Animator.ForceState(0);
+            ControlCollection.Clear();
+            for (int i = 0; i < pNewControlCollection.Count; i++)
+            {
+                ControlCollection.Add(pNewControlCollection[i]);
+            }
+        }
+
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {

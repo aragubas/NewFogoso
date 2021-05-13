@@ -13,10 +13,6 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
         Random RandomMizer;
         float EffectMultiplier = 35f;
         Matrix ScreenTransform;
-        Color GeneralColor;
-        int ColorR;
-        int ColorG;
-        int ColorB;
         UtilsObjects.ValueSmoother ColorRSmooth;
         UtilsObjects.ValueSmoother ColorGSmooth;
         UtilsObjects.ValueSmoother ColorBSmooth;
@@ -50,7 +46,7 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
             {
                 for (int y = 0; y < Global.WindowHeight / 13; y++)
                 {
-                    spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("12pt"), "$", new Vector2(x * 15, y * 15), Color.FromNonPremultiplied(ColorR + y, ColorG + x, ColorB + y, 255));
+                    spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("12pt"), "$", new Vector2(x * 15, y * 15), Color.FromNonPremultiplied((int)ColorRSmooth.GetValue() + y, (int)ColorGSmooth.GetValue() + x, (int)ColorBSmooth.GetValue() + y, 255));
 
                 }
             }
@@ -77,22 +73,17 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
                 SinasTimer = 0;
                 SinasTimerMax = RandomMizer.Next(RandomMizer.Next(0, 25), RandomMizer.Next(26, 500));
 
+                // Set Smooth Target Value
                 ColorRSmooth.SetTargetValue(RandomMizer.Next(0, 150));
                 ColorGSmooth.SetTargetValue(RandomMizer.Next(0, 150));
                 ColorBSmooth.SetTargetValue(RandomMizer.Next(0, 150));
 
+                // Set Smooth Target Value
                 BGXSmooth.SetTargetValue((GameInput.CursorPosition.X / 2 - Global.WindowWidth / 2) / EffectMultiplier - RandomMizer.Next(5, 40));
                 BGYSmooth.SetTargetValue((GameInput.CursorPosition.Y / 2 - Global.WindowHeight / 2) / EffectMultiplier - RandomMizer.Next(5, 40));
                 BGZSmooth.SetTargetValue(GameInput.CursorPosition.X / Global.WindowWidth / RandomMizer.Next(50, 80));
 
             }
-
-
-            ColorR = (int)ColorRSmooth.GetValue();
-            ColorG = (int)ColorGSmooth.GetValue();
-            ColorB = (int)ColorBSmooth.GetValue();
-
-
         }
 
         public override void Initialize()

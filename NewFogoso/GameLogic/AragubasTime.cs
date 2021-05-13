@@ -35,12 +35,12 @@ namespace Fogoso.GameLogic
             if (Year < 25)
             {    
                 return "Octunder " + Convert.ToString(Math.Abs(Year - 25));
-            }
+            } 
             else if (Year < 35)
-            {
+            { 
                 return "Notrunda " + Convert.ToString(Math.Abs(Year - 35));
             }
-            else if (Year < 42)
+            else if (Year <= 42)
             { 
                 return "Corrupted " + Convert.ToString(Math.Abs(Year - 42));
             }
@@ -75,7 +75,7 @@ namespace Fogoso.GameLogic
                     return "Abutrec";
 
                 default:
-                    return "Invalid Day Name";
+                    return "Invalid";
             }
 
         }
@@ -97,14 +97,13 @@ namespace Fogoso.GameLogic
                     return "Laubarin";
 
                 default: 
-                    return "Invalid Month";
+                    return "Invalid";
             }
         }
 
         public static void Update()
         {
             Frames += 1;
-
 
             if (Frames >= Convert.ToInt32(Registry.ReadKeyValue("/fps"))) { Second += 1; Frames = 0; }
             if (Second >= 31) { Minute += 1; Second = 1; }
@@ -113,7 +112,7 @@ namespace Fogoso.GameLogic
             if (Day >= 8) { Week += 1; Day = 1; }
             if (Week >= 9) { Month += 1; Week = 1; }
             if (Month >= 5) { Year += 1; Month = 1; }
-
+            if (Year >= 42) { Year = 41; }
 
         }
 

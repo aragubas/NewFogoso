@@ -38,23 +38,38 @@ namespace Fogoso.GameLogic.Screens
             TabsButton.AddControl(InfosButton, "infos-button");
             TabsButton.AddControl(ItemsViewButton, "items-button");
 
-            for (int i = 0; i < 6; i++)
-            {
-                Button ceiraBUtton = new Button(new Vector2(5, 5), "ceira-" + i);
-
-                TabsButton.AddControl(ceiraBUtton, "enceirado");
-            }
-
             LeftPanel.AddControl(ceiraClickerButton, "ceira-clicker");
             LeftPanel.AddControl(sinas, "ceira-label");
             MoneyInfosLabel = sinas;
 
+            // Add Event Listeners
             sinas.DrawBackground += DrawLabelBackground;
             DateLabel.DrawBackground += DrawLabelBackground;
             TimeLabel.DrawBackground += DrawLabelBackground;
+            InfosButton.ButtonPress += InfosButton_ButtonPress;
+            ItemsViewButton.ButtonPress += ItemsViewButton_ButtonPress;
 
             ceira = new UtilsObjects.ValueSmoother(3, 5, false);
 
+        }
+
+        void ItemsViewButton_ButtonPress(Button sender)
+        {
+            List<UIControl> newControlCollection = new List<UIControl>();
+            ItemsView ceiraView = new ItemsView(new Rectangle(5, 5, 200, 200));
+
+            newControlCollection.Add(ceiraView);
+
+
+            CenterPanel.SwitchControlCollection(newControlCollection);
+        }
+
+        void InfosButton_ButtonPress(Button sender)
+        {
+            List<UIControl> newControlCollection = new List<UIControl>();
+
+
+            CenterPanel.SwitchControlCollection(newControlCollection);
         }
 
         void DrawLabelBackground(Rectangle Rect, SpriteBatch spriteBatch)

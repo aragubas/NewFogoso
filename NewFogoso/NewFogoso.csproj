@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="GameLogic\CurrentSessionData.cs" />
     <Compile Include="GameLogic\Screens\EconomicalMap.cs" />
+    <Compile Include="GameLogic\UI\ItemsView.cs" />
     <Compile Include="GameLogic\UI\MapSelector.cs" />
     <Compile Include="GameLogic\UI\ToolStripPanel.cs" />
     <Compile Include="Main.cs" />
