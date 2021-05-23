@@ -43,26 +43,27 @@ namespace Fogoso
     {
         // Os Name
         public static string OSName = Environment.OSVersion.Platform.ToString();
-
+         
         // Directories
-        public static string ContentFolder = "Fogoso_data\\";
-        public static string TaiyouDirectory = ContentFolder + "taiyou\\";
-        public static string TaiyouScriptsDirectory = ContentFolder + "taiyou\\scripts\\";
-        public static string SourceDirectory = ContentFolder + "source\\";
+        public static string OSSlash = "/";
+        public static string ContentFolder = "Fogoso_data" + OSSlash;
+        public static string TaiyouDirectory = ContentFolder + "taiyou" + OSSlash;
+        public static string TaiyouScriptsDirectory = ContentFolder + "taiyou" + OSSlash + "scripts" + OSSlash;
+        public static string SourceDirectory = ContentFolder + "source" + OSSlash;
         public static string BGM_SourceFolder = SourceDirectory + "bgm";
         public static string FONT_SourceFolder = SourceDirectory + "font";
         public static string IMAGE_SourceFolder = SourceDirectory + "image";
         public static string SOUND_SourceFolder = SourceDirectory + "sound";
         public static string REGISTRY_SourceFolder = SourceDirectory + "reg";
         public static string MAP_SourceFolder = SourceDirectory + "map";
-        public static string BIN_RootSourceFolder = SourceDirectory + "bin\\";
+        public static string BIN_RootSourceFolder = SourceDirectory + "bin" + OSSlash;
         public static string BIN_SourceFolder = BIN_RootSourceFolder + OSName;
-        public static string FSCheck_Folder = ContentFolder + "fs_check\\";
-        public static string System_Folder = ContentFolder + "system\\";
+        public static string FSCheck_Folder = ContentFolder + "fs_check" + OSSlash;
+        public static string System_Folder = ContentFolder + "system" + OSSlash;
         public static string SystemLog_Folder = System_Folder + "logs";
-
+ 
         // Version Match
-        public static string MatchVersion_CurrentVersionString = "FOGOSO_ABRIL_2021";
+        public static string MatchVersion_CurrentVersionString = "FOGOSO_MAY_2021";
 
         // Screen
         public static int WindowWidth;

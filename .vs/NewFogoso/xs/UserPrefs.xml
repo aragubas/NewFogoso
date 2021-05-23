@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{905B6B3B-33B1-49FB-B691-AE30F88CB4F5}|Default">
+  <MonoDevelop.Ide.ItemProperties.NewFogoso PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="NewFogoso/GameLogic/Screens/Backgrounds/DollarSignBackground.cs">
+    <Files>
+      <File FileName="NewFogoso/Main.cs" Line="105" Column="22" />
+      <File FileName="NewFogoso/GameLogic/Screens/Backgrounds/DollarSignBackground.cs" Line="61" Column="3" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="NewFogoso" expanded="True">
+            <Node name="NewFogoso" expanded="True">
+              <Node name="References" expanded="True" />
+              <Node name="GameLogic" expanded="True">
+                <Node name="Screens" expanded="True">
+                  <Node name="Backgrounds" expanded="True">
+                    <Node name="DollarSignBackground.cs" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

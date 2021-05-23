@@ -47,7 +47,7 @@ namespace Fogoso
 
         public static string ReadKeyValue(string KeyName)
         {
-            if (!KeyName.StartsWith("/", StringComparison.Ordinal)) { KeyName = KeyName.Insert(0, "/"); };
+            if (!KeyName.StartsWith("/", StringComparison.Ordinal)) { KeyName = KeyName.Insert(0, Global.OSSlash); };
             int KeyIndex = LoadedKeysNames.IndexOf(KeyName);
 
             try
@@ -69,7 +69,7 @@ namespace Fogoso
 
         public static void WriteKey(string KeyName, string KeyValue)
         {
-            File.WriteAllText(Global.REGISTRY_SourceFolder + "\\" + KeyName + ".data", KeyValue, new System.Text.UTF8Encoding());
+            File.WriteAllText(Global.REGISTRY_SourceFolder + Global.OSSlash + KeyName + ".data", KeyValue, new System.Text.UTF8Encoding());
 
         }
 
@@ -87,8 +87,8 @@ namespace Fogoso
                 string KeyNameFiltred = AllKeys[i].Replace(Global.REGISTRY_SourceFolder, "");
                 KeyNameFiltred = KeyNameFiltred.Replace(".data", "");
 
-                LoadedKeysNames.Add(KeyNameFiltred.Replace("\\", "/"));
-                LoadedKeysValues.Add(File.ReadAllText(Global.REGISTRY_SourceFolder + "\\" + KeyNameFiltred + ".data").Replace("\n", ""));
+                LoadedKeysNames.Add(KeyNameFiltred.Replace(Global.OSSlash, "/"));
+                LoadedKeysValues.Add(File.ReadAllText(Global.REGISTRY_SourceFolder + Global.OSSlash + KeyNameFiltred + ".data").Replace("\n", ""));
                 LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%n", Environment.NewLine);
                 LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%usr", Environment.UserName);
                 LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%current_dir", Environment.CurrentDirectory);

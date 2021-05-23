@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/small.spritefont</SourceFile>
-  <SourceTime>2021-05-08T22:01:06.2132686-03:00</SourceTime>
-  <DestFile>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/small.xnb</DestFile>
-  <DestTime>2021-05-08T22:05:59.2761364-03:00</DestTime>
+  <SourceFile>/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/small.spritefont</SourceFile>
+  <SourceTime>2021-05-08T22:01:06.213268-03:00</SourceTime>
+  <DestFile>/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/small.xnb</DestFile>
+  <DestTime>2021-05-14T21:47:32.092746-03:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
-  <ImporterTime>2018-12-08T14:35:54-02:00</ImporterTime>
+  <ImporterTime>2021-05-14T21:40:37.5341914-03:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
-  <ProcessorTime>2018-12-08T14:35:54-02:00</ProcessorTime>
+  <ProcessorTime>2021-05-14T21:40:37.5341914-03:00</ProcessorTime>
   <Parameters>
     <Key>PremultiplyAlpha</Key>
     <Value>True</Value>

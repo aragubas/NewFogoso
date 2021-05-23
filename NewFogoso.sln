@@ -1,22 +1,17 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewFogoso", "NewFogoso\NewFogoso.csproj", "{7F70D235-E00D-4B37-A8BD-47147D8E45A5}"
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewFogoso", "NewFogoso\NewFogoso.csproj", "{905B6B3B-33B1-49FB-B691-AE30F88CB4F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x86 = Debug|x86
-		Release|x86 = Release|x86
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7F70D235-E00D-4B37-A8BD-47147D8E45A5}.Debug|x86.ActiveCfg = Debug|x86
-		{7F70D235-E00D-4B37-A8BD-47147D8E45A5}.Debug|x86.Build.0 = Debug|x86
-		{7F70D235-E00D-4B37-A8BD-47147D8E45A5}.Release|x86.ActiveCfg = Release|x86
-		{7F70D235-E00D-4B37-A8BD-47147D8E45A5}.Release|x86.Build.0 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+		{905B6B3B-33B1-49FB-B691-AE30F88CB4F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{905B6B3B-33B1-49FB-B691-AE30F88CB4F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{905B6B3B-33B1-49FB-B691-AE30F88CB4F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{905B6B3B-33B1-49FB-B691-AE30F88CB4F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/arial_12.spritefont</SourceFile>
-  <SourceTime>2021-03-04T11:57:43.8294106-03:00</SourceTime>
-  <DestFile>C:/Users/Bazinga/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/arial_12.xnb</DestFile>
-  <DestTime>2021-05-08T22:05:59.0544523-03:00</DestTime>
+  <SourceFile>/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/arial_12.spritefont</SourceFile>
+  <SourceTime>2021-05-14T21:49:26.6662735-03:00</SourceTime>
+  <DestFile>/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/arial_12.xnb</DestFile>
+  <DestTime>2021-05-14T21:49:37.5380581-03:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
-  <ImporterTime>2018-12-08T14:35:54-02:00</ImporterTime>
+  <ImporterTime>2021-05-14T21:40:37.5341914-03:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
-  <ProcessorTime>2018-12-08T14:35:54-02:00</ProcessorTime>
+  <ProcessorTime>2021-05-14T21:40:37.5341914-03:00</ProcessorTime>
   <Parameters>
     <Key>PremultiplyAlpha</Key>
     <Value>True</Value>

@@ -89,14 +89,14 @@ namespace Fogoso
                 FileInfo info = new FileInfo(file);
                 string FileFullName = info.FullName;
                 string SpriteFiltedName = FileFullName.Replace(Environment.CurrentDirectory, "");
-                SpriteFiltedName = SpriteFiltedName.Replace(Global.IMAGE_SourceFolder + "\\", "");
+                SpriteFiltedName = SpriteFiltedName.Replace(Global.IMAGE_SourceFolder + Global.OSSlash, "");
 
                 int SpriteID = AllSpritedLoaded_Names.IndexOf(SpriteFiltedName);
 
                 if (SpriteID == -1 && info.Extension == ".png")
                 {
                     AllSpritedLoaded_Content.Add(LoadTexture2D_FromFile(FileFullName));
-                    AllSpritedLoaded_Names.Add(SpriteFiltedName.Replace("\\", "/"));
+                    AllSpritedLoaded_Names.Add(SpriteFiltedName.Replace(Global.OSSlash, "/"));
 
                     SpriteLog.Write(Utils.ConsoleWriteWithTitle("SpriteLoader", "Found [" + SpriteFiltedName + "]."));
 

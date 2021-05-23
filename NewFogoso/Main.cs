@@ -61,11 +61,10 @@ namespace Fogoso
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-
+             
             IsFixedTimeStep = true;
             this.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / 60);
-
+             
             Reference = this;
         }
 
@@ -110,7 +109,7 @@ namespace Fogoso
 
             // Set Default Window Title
             Window.Title = Registry.ReadKeyValue("/default_window_title");
-
+ 
             base.Initialize();
         }
 

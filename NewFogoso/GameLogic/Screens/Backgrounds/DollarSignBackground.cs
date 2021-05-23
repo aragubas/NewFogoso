@@ -39,9 +39,9 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
         }
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
-        { 
-            spriteBatch.Begin(transformMatrix: ScreenTransform);
-
+        {  
+            spriteBatch.Begin(transformMatrix:ScreenTransform);
+  
             for (int x = 0; x < Global.WindowWidth / 13; x++)
             {
                 for (int y = 0; y < Global.WindowHeight / 13; y++)
@@ -89,6 +89,7 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
         public override void Initialize()
         {
             base.Initialize();
+
         }
     }
 }
