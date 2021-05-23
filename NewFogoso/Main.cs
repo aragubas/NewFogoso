@@ -109,7 +109,14 @@ namespace Fogoso
 
             // Set Default Window Title
             Window.Title = Registry.ReadKeyValue("/default_window_title");
- 
+
+            // Force the correct video mode
+            this.graphics.IsFullScreen = false;
+            this.graphics.PreferredBackBufferWidth = Global.WindowWidth;
+            this.graphics.PreferredBackBufferHeight = Global.WindowHeight;
+            this.graphics.ApplyChanges();
+
+
             base.Initialize();
         }
 

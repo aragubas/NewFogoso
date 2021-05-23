@@ -1,16 +1,18 @@
 # Initial Script
 # ================
 # This script is called when Fogoso Engine starts.
+Var "Int", "LoopCount", "0";
+
 Jump "main"; 
   
 $FUNCTION "main";
-    WriteLine "Hello World!";
-    WriteLine "From the first taiyou script ever made!";
+    HaltIfEqual "#LoopCount$", "==", "10";
 
+    WriteLine "Hello World from the #LoopCount$ time.";
+
+    IntegerOperation "LoopCount", "+", "#1";
+
+    Jump "main";
 $END
  
-$FUNCTION "global_test";
-    WriteLine "This is a executed from a global function";
-
-$END
- 
+  

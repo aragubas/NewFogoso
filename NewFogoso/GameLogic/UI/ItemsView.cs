@@ -30,7 +30,6 @@ namespace Fogoso.GameLogic.UI
     {
         private Color PanelColor;
         List<ItemsViewItem> ItemsCollection;
-        Vector2 Scroll;
 
         public ItemsView(Rectangle pRectangle)
         {

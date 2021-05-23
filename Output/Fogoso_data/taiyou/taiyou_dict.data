@@ -1,5 +1,5 @@
 WriteLine;001
-CreateVar;002
+Var;002
 IntegerOperation;003
 EventHandler;004
 Jump;005

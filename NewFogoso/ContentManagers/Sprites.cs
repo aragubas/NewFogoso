@@ -38,7 +38,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Fogoso.WriteToLog;
-
+ 
 namespace Fogoso
 {
     public static class Sprites

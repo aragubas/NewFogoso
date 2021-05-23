@@ -89,12 +89,11 @@ namespace Fogoso.Taiyou.Command
             }
             else { ActuatorValue = Global.VarList[ActuatorIndex].Value; }
 
-
             if (!Regex.IsMatch(ActuatorValue, @"\d"))
             {
                 throw new IndexOutOfRangeException("Literals must start with '#' token. [" + OperatorVarName + "].");
             }
-
+ 
             int ActuatorInInteger = Convert.ToInt32(ActuatorValue);
 
             switch (MathOperation)
