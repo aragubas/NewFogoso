@@ -41,6 +41,7 @@ namespace Fogoso.Taiyou
         public static string TaiyouToken_FUNCTION_DECLARING = "$FUNCTION";
         public static string TaiyouToken_LINE_COMMENT = "#";
         public static string TaiyouToken_FUNCTION_SPACING = "    ";
-
+        public static string TaiyouReservedNames_SCRIPT_HEADER = "HEADER";
+  
     }
 }

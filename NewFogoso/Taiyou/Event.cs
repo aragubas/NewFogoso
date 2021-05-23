@@ -57,14 +57,14 @@ namespace Fogoso.Taiyou
             int EventID = EventListNames.IndexOf(EventName);
             if (EventID == -1)
             {
-                // Don't flood the console with the same event over and over
+                // Don't flood the console with the same event error over and over again
                 if (LastEventError != EventName)
                 {
                     LastEventError = EventName;
 
                     Console.WriteLine("Error: No event with name [" + EventName + "] has been registred.");
                 }
-
+   
 
                 return;
             }

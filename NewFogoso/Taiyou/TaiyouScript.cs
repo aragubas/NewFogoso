@@ -46,11 +46,12 @@ namespace Fogoso.Taiyou
         private string scriptName;
         private List<TaiyouLine> Code;
         public bool HaltExecution = false;
+        bool ScriptHeaderCalled;
 
         public TaiyouScript(string ScriptName, bool DirectCode = false, List<TaiyouLine> taiyouLines = null)
         {
             scriptName = ScriptName;
-
+ 
             // Find the script on Script List
             if (DirectCode)
             {
@@ -62,34 +63,35 @@ namespace Fogoso.Taiyou
             if (ScriptIndex == -1) { throw new EntryPointNotFoundException("the Taiyou Script (" + ScriptName + ") does not exist."); }
 
             SetCode(Global.LoadedTaiyouScripts_Data[ScriptIndex]);
-
+  
         }
-
+   
         private void SetCode(List<TaiyouLine> Lines)
         {
             Code = Lines;
 
-            foreach (var tiy in Code)
+            // Set parent script for all lines
+            for(int i = 0; i < Code.Count; i++)
             {
-                tiy.ParentScript = this;
+                Code[i].ParentScript = this;
             }
-
+ 
         }
 
         public int Interpret()
         {
             if (HaltExecution) { HaltExecution = false; }
+            if (!ScriptHeaderCalled) {ScriptHeaderCalled = true; Global.CallScriptHeader(scriptName); }
 
-
-            foreach (var line in Code)
+            for(int i = 0; i < Code.Count; i++)
             {
                 if (HaltExecution)
                 {
                     return 2;
                 }
 
-                int ReturnCode = line.call();
-
+                int ReturnCode = Code[i].call();
+  
                 if (ReturnCode != 0) { return ReturnCode; }
             }
 

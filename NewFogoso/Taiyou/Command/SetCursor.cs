@@ -38,39 +38,28 @@ using System.Linq;
 
 namespace Fogoso.Taiyou.Command
 {
-    public class SetVideoMode : TaiyouCommand
+    public class SetCursor : TaiyouCommand
     {
-        public SetVideoMode(string[] pArguments, string pScriptCaller, TaiyouLine pRootTaiyouLine)
+        public SetCursor(string[] pArguments, string pScriptCaller, TaiyouLine pRootTaiyouLine)
         {
             OriginalArguments = pArguments;
             ScriptCaller = pScriptCaller;
-            Title = "SetVideoMode";
+            Title = "SetCursor";
             RootTaiyouLine = pRootTaiyouLine;
 
         }
 
-        // SerVideoMode - Video mode changer
+        // SetCursor - In-Game cursor changer
         // ===================================
-        // 1 - Width
-        // 2 - Height
-        // 3 - Fullscreen
+        // 1 - Cursor res name
         public override int Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
-            int VideoModeWidth = Convert.ToInt32(GetArgument(Arguments, 0));
-            int VideoModeHeight = Convert.ToInt32(GetArgument(Arguments, 1));
-            bool VideoModeIsFullscreen = GetArgument(Arguments, 1).ToLower().Equals("true");
- 
-            Main.Reference.graphics.PreferredBackBufferWidth = VideoModeWidth;
-            Main.Reference.graphics.PreferredBackBufferHeight = VideoModeHeight;
-            Main.Reference.graphics.IsFullScreen = VideoModeIsFullscreen;
-            Main.Reference.graphics.ApplyChanges();
- 
-            Fogoso.Global.WindowWidth = VideoModeWidth;
-            Fogoso.Global.WindowHeight = VideoModeHeight;
-            Fogoso.Global.WindowIsFullcreen = VideoModeIsFullscreen;
+            string CursorResName = GetArgument(Arguments, 0);
 
+            GameInput.CursorImage = CursorResName;
+ 
             return 0;
         }
 

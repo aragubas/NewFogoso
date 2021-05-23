@@ -68,6 +68,7 @@ namespace Fogoso
         // Screen
         public static int WindowWidth;
         public static int WindowHeight;
+        public static bool WindowIsFullcreen;
 
         public static GameWindow GameWindowReference;
 

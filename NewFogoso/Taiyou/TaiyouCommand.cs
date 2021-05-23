@@ -49,7 +49,7 @@ namespace Fogoso.Taiyou
         {
             return 0;
         }
-
+ 
         public string[] ReplaceVarLiterals()
         {
             string[] pArguments = new string[OriginalArguments.Length];

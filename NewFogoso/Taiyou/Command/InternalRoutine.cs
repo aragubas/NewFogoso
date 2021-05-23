@@ -38,39 +38,41 @@ using System.Linq;
 
 namespace Fogoso.Taiyou.Command
 {
-    public class SetVideoMode : TaiyouCommand
+    public class InternalRoutine : TaiyouCommand
     {
-        public SetVideoMode(string[] pArguments, string pScriptCaller, TaiyouLine pRootTaiyouLine)
+        public InternalRoutine(string[] pArguments, string pScriptCaller, TaiyouLine pRootTaiyouLine)
         {
             OriginalArguments = pArguments;
             ScriptCaller = pScriptCaller;
-            Title = "SetVideoMode";
+            Title = "InternalRoutine";
             RootTaiyouLine = pRootTaiyouLine;
 
         }
 
-        // SerVideoMode - Video mode changer
-        // ===================================
-        // 1 - Width
-        // 2 - Height
-        // 3 - Fullscreen
+        // InternalFunc - Call a internal routine 
+        // =======================================
+        // 1 - Routine Name
+        //
+        // ----
+        // Avaliable Routines:
+        // 
+        
         public override int Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
-            int VideoModeWidth = Convert.ToInt32(GetArgument(Arguments, 0));
-            int VideoModeHeight = Convert.ToInt32(GetArgument(Arguments, 1));
-            bool VideoModeIsFullscreen = GetArgument(Arguments, 1).ToLower().Equals("true");
- 
-            Main.Reference.graphics.PreferredBackBufferWidth = VideoModeWidth;
-            Main.Reference.graphics.PreferredBackBufferHeight = VideoModeHeight;
-            Main.Reference.graphics.IsFullScreen = VideoModeIsFullscreen;
-            Main.Reference.graphics.ApplyChanges();
- 
-            Fogoso.Global.WindowWidth = VideoModeWidth;
-            Fogoso.Global.WindowHeight = VideoModeHeight;
-            Fogoso.Global.WindowIsFullcreen = VideoModeIsFullscreen;
+            switch(GetArgument(Arguments, 0).ToUpper())
+            {
+                case "UPDATE_INTERNAL_VARIABLES":
+                    Global.SetGlobalVariables();
+                    break;
 
+                default:
+                    Utils.ConsoleWriteWithTitle(Title, $"Invalid routine ({GetArgument(Arguments, 0).ToUpper()})");
+                    break;
+                     
+            }
+ 
             return 0;
         }
 

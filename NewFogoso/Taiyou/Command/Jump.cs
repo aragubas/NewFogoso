@@ -68,7 +68,11 @@ namespace Fogoso.Taiyou.Command
                 {
                     FunctionName = ScriptCaller + "_" + FunctionName;
                 }
-
+                if (FunctionName.StartsWith("global_", StringComparison.Ordinal))
+                {
+                    FunctionName = FunctionName.Replace("global_", "");
+                }
+   
 
                 int FunctionIndex = Global.Functions_Keys.IndexOf(FunctionName);
 
@@ -76,7 +80,7 @@ namespace Fogoso.Taiyou.Command
 
                 List<TaiyouLine> AllCode = Global.Functions_Data[FunctionIndex];
 
-                // Create an Script Instance
+                // Create a Temporary Script
                 FunctionToRun = new TaiyouScript("", true, Global.Functions_Data[FunctionIndex]);
 
             }

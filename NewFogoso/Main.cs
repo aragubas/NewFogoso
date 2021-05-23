@@ -46,7 +46,7 @@ namespace Fogoso
     /// </summary>
     public class Main : Game
     {
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static Main Reference;
         public static bool DebugModeEnabled;
@@ -73,9 +73,13 @@ namespace Fogoso
 
             // Load all the taiyou scripts
             Taiyou.Global.LoadTaiyouScripts();
+            
+            // Register Initialization Events
             Taiyou.Event.RegisterEvent("init", "initial");
+            Taiyou.Event.RegisterEvent("engine-update", "engine_update");
+            Taiyou.Event.RegisterEvent("init-video-mode", "initial_video_mode");
             Taiyou.Event.TriggerEvent("init");
-
+ 
             // Load all Sprites, Sounds and Registry Keys
             Sprites.FindAllSprites();
             Sound.Initialize();
@@ -83,11 +87,7 @@ namespace Fogoso
 
             // Set Window Static Reference
             Global.GameWindowReference = Window;
-
-            // Set Window Width and Height variables
-            Global.WindowWidth = Window.ClientBounds.Width;
-            Global.WindowHeight = Window.ClientBounds.Height;
-
+            
             // Initialize Textbox Instance
             GameLogic.TextBox.KeyboardInput.Initialize(this, 120, 5);
 
@@ -110,11 +110,8 @@ namespace Fogoso
             // Set Default Window Title
             Window.Title = Registry.ReadKeyValue("/default_window_title");
 
-            // Force the correct video mode
-            this.graphics.IsFullScreen = false;
-            this.graphics.PreferredBackBufferWidth = Global.WindowWidth;
-            this.graphics.PreferredBackBufferHeight = Global.WindowHeight;
-            this.graphics.ApplyChanges();
+            // Set default video mode
+            Taiyou.Event.TriggerEvent("init-video-mode");
 
 
             base.Initialize();
@@ -153,6 +150,7 @@ namespace Fogoso
             }
             // Restore cursor
             RestoreCursor();
+            Taiyou.Event.TriggerEvent("engine-update");
 
 
             // Update FPS Counter

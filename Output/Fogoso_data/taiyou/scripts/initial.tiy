@@ -1,18 +1,18 @@
 # Initial Script
-# ================
-# This script is called when Fogoso Engine starts.
-Var "Int", "LoopCount", "0";
+##################
+# This script is called when Fogoso Engine starts. (At this point, no resource is currently loaded.)
+######################################################################################################
+
+$FUNCTION "@HEADER";
+    WriteLine "Called from Script Header";
+    WriteLine "Initial script.";
+
+$END
 
 Jump "main"; 
-  
+   
 $FUNCTION "main";
-    HaltIfEqual "#LoopCount$", "==", "10";
-
-    WriteLine "Hello World from the #LoopCount$ time.";
-
-    IntegerOperation "LoopCount", "+", "#1";
-
-    Jump "main";
+    WriteLine "Taiyou has been started";
 $END
- 
+  
   

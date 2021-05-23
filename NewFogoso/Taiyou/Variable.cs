@@ -49,90 +49,50 @@ namespace Fogoso.Taiyou
             Tag = VarTag;
             Type = varType;
             SearchPattern = "$" + VarTag + "$";
-
+   
             // Set the variable Generic Type
-            SetVarGeneticType(varType);
+            SetVarGenericType(varType);
+   
+            // Check for literals
+            try{
+                if (Convert.ToString(varValue).StartsWith("$", StringComparison.Ordinal))
+                { 
+                    int VarIndex = Global.VarList_Keys.IndexOf(varValue.Remove(0, 1));
+                    if (VarIndex == -1) { throw new Exception("Cannot find variable [" + varValue + "]."); }
+                    Variable varWax = Global.VarList[VarIndex];
 
-            if (Convert.ToString(varValue).StartsWith("$", StringComparison.Ordinal))
-            {
-                int VarIndex = Global.VarList_Keys.IndexOf(varValue.Remove(0, 1));
-                if (VarIndex == -1) { throw new Exception("Cannot find variable [" + varValue + "]."); }
-                Variable varWax = Global.VarList[VarIndex];
+                    if (varWax.GenericVarType != GenericVarType) { throw new Exception("Cannot copy destination variable to current variable since they are different types of variable."); }
 
-                if (varWax.GenericVarType != GenericVarType) { throw new Exception("Cannot copy destination variable to current variable since they are different types of variable."); }
-
-                Value = Global.VarList[VarIndex].Value;
-                return;
-            }
-
-            // Set the Value
-            try
-            {
-                switch (varType)
-                {
-                    case "Bool":
-                        Value = Convert.ToBoolean(varValue);
-                        break;
-
-                    case "Int":
-                        Value = Convert.ToInt32(varValue);
-                        break;
-
-                    case "Float":
-                        Value = float.Parse(varValue);
-                        break;
-
-                    case "String":
-                        Value = Convert.ToString(varValue);
-                        break;
-
-                    default:
-                        throw new ArgumentException("Variable type [" + varType + "] is invalid.");
-
+                    Value = Global.VarList[VarIndex].Value;
+                    return;
                 }
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("\n\n####################");
-                Console.WriteLine(ex.Message);
-                Console.WriteLine("VarTag: " + Tag);
-                Console.WriteLine("VarType: " + Type);
-                Console.WriteLine("VarValue: " + Value);
-                Console.WriteLine("SeachPattern: " + SearchPattern);
-                Console.WriteLine("== Arguments ==");
-                Console.WriteLine("VarType: " + varType);
-                Console.WriteLine("VarValue: " + varValue);
-                Console.WriteLine("VarType: " + varType);
-                Console.WriteLine("VarTag: " + VarTag);
-                Console.WriteLine("####################\n\n");
-
-                throw ex;
-            }
-
+ 
+            }catch(ArgumentException) {throw new Exception("INTERNAL ERROR!\nError in literal conversion (Cannot convert value to string).");}
+   
+            SetValue(varValue);
         }
 
         /// <summary>
         /// Set the variable generic type
         /// </summary>
         /// <param name="input">Input.</param>
-        private void SetVarGeneticType(string input)
+        private void SetVarGenericType(string input)
         {
-            switch (input)
+            switch (input.ToLower())
             {
-                case "Bool":
+                case "bool":
                     GenericVarType = "Boolean";
                     break;
 
-                case "Int":
+                case "int":
                     GenericVarType = "Number";
                     break;
 
-                case "Float":
+                case "float":
                     GenericVarType = "Number";
                     break;
 
-                case "String":
+                case "string":
                     GenericVarType = "String";
                     break;
 
@@ -142,12 +102,12 @@ namespace Fogoso.Taiyou
             }
 
         }
-
+ 
         /// <summary>
         /// Returns the value
         /// </summary>
         /// <returns>The value.</returns>
-        public dynamic Get_Value()
+        public dynamic GetValue()
         {
             return Value;
         }
@@ -161,23 +121,23 @@ namespace Fogoso.Taiyou
         /// Set the Variable value
         /// </summary>
         /// <param name="NewValue">New value.</param>
-        public void Set_Value(dynamic NewValue)
+        public void SetValue(dynamic NewValue)
         {
-            switch (Type)
+            switch (Type.ToLower())
             {
-                case "String":
+                case "string":
                     Value = Convert.ToString(NewValue);
                     return;
 
-                case "Int":
+                case "int":
                     Value = Convert.ToInt32(NewValue);
                     return;
 
-                case "Float":
+                case "float":
                     Value = float.Parse(NewValue);
                     return;
 
-                case "Bool":
+                case "bool":
                     Value = Convert.ToBoolean(NewValue);
                     return;
 

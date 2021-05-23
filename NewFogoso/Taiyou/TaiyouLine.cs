@@ -99,6 +99,18 @@ namespace Fogoso.Taiyou
                     FunctionCall = new Command.HaltIfEqual(Arguments, ScriptOfOrigin, this);
                     break;
 
+                case "00C":
+                    FunctionCall = new Command.SetVideoMode(Arguments, ScriptOfOrigin, this);
+                    break;
+
+                case "00D":
+                    FunctionCall = new Command.SetCursor(Arguments, ScriptOfOrigin, this);
+                    break;
+ 
+                case "00E":
+                    FunctionCall = new Command.InternalRoutine(Arguments, ScriptOfOrigin, this);
+                    break;
+ 
 
                 default:
                     Console.WriteLine("Taiyou.Interpreter : Unknow TSUP (" + CommandCode + ")");

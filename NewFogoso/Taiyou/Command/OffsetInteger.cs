@@ -37,10 +37,7 @@ namespace Fogoso.Taiyou.Command
 {
     public static class OffsetInteger
     {
-        // This functions has 3 Arguments
-        // All is needed
-        // ----------------------------------
-
+        
         public static void call(string[] Args, string CallerScript)
         {
             string OperatorVarName = Utils.GetSubstring(Args[0], '"');
@@ -54,7 +51,7 @@ namespace Fogoso.Taiyou.Command
 
             // Check if OperatorVariable is an integer
             if (OperatorVariable.Type != "Int") { throw new Exception("Operator variable is not an integer."); }
-            OperatorValue = OperatorVariable.Get_Value();
+            OperatorValue = OperatorVariable.GetValue();
 
 
             // Get the OffsetAmmount from Variable
@@ -63,7 +60,7 @@ namespace Fogoso.Taiyou.Command
                 int OffsetAmountVarIndex = Global.VarList_Keys.IndexOf(OffsetAmount.Remove(0, 1));
                 if (Global.VarList[OffsetAmountVarIndex].Type != "Int") { throw new Exception("OffserAmmount variable is not an integer"); }
 
-                iOffsetAmount = Global.VarList[OffsetAmountVarIndex].Get_Value();
+                iOffsetAmount = Global.VarList[OffsetAmountVarIndex].GetValue();
             }
             else
             {
@@ -71,7 +68,7 @@ namespace Fogoso.Taiyou.Command
             }
 
 
-            OperatorVariable.Set_Value(OperatorValue + iOffsetAmount);
+            OperatorVariable.SetValue(OperatorValue + iOffsetAmount);
 
         }
 

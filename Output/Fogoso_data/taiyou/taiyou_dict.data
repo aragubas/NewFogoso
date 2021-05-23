@@ -9,3 +9,6 @@ SetVarValue;008
 Halt;009
 HaltExec;00A
 HaltIfEqual;00B
+SetVideoMode;00C
+SetCursor;00D
+InternalRoutine;00E

@@ -114,7 +114,6 @@ namespace Fogoso.Taiyou.Command
 
     public class EventHandler : TaiyouCommand
     {
-        // JIT Variables
         bool Initialized = false;
         EventHandlerOperation Operator;
 
@@ -128,6 +127,12 @@ namespace Fogoso.Taiyou.Command
 
         }
 
+        // Event Handler
+        //================
+        // 1 - Operator (Add, Remove, Call)
+        // 2 - Event Name
+        // (optional) 3 - Event Script
+
         public override int Call()
         {
             string[] Arguments = ReplaceVarLiterals();
@@ -135,7 +140,7 @@ namespace Fogoso.Taiyou.Command
             if (!Initialized)
             {
                 Initialized = true;
-
+ 
                 string vOperator = GetArgument(Arguments, 0);
                 string EventName = GetArgument(Arguments, 1);
                 string EventScript = "null";

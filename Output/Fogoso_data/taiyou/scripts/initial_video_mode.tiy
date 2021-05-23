@@ -1,0 +1,6 @@
+# SetVideoMode
+################
+# This script will be executed after initial for setting up video mode.
+##########################################################################
+
+SetVideoMode "800", "480", "False";

@@ -1,0 +1,10 @@
+# Engine Update
+##########################
+# This script is called every frame, before Screen Update
+###########################################################
+
+
+# Update Internal Variables
+InternalRoutine "UPDATE_INTERNAL_VARIABLES";
+
+

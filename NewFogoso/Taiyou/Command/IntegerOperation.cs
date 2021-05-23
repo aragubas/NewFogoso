@@ -68,7 +68,7 @@ namespace Fogoso.Taiyou.Command
             if (OperatorIndex == -1) { throw new IndexOutOfRangeException("Cannot find the variable [" + OperatorVarName + "]."); }
             Variable OperatorVariable = Global.VarList[OperatorIndex];
             if (OperatorVariable.Type != "Int") { throw new Exception("Variable [" + OperatorVarName + "] is not an Integer."); }
-            var OperatorValue = OperatorVariable.Get_Value();
+            var OperatorValue = OperatorVariable.GetValue();
 
             if (!Regex.IsMatch(Convert.ToString(OperatorVariable.Value), @"\d"))
             {
@@ -99,23 +99,23 @@ namespace Fogoso.Taiyou.Command
             switch (MathOperation)
             {
                 case "+":
-                    Global.VarList[OperatorIndex].Set_Value(OperatorValue + ActuatorInInteger);
+                    Global.VarList[OperatorIndex].SetValue(OperatorValue + ActuatorInInteger);
                     break;
 
                 case "-":
-                    Global.VarList[OperatorIndex].Set_Value(OperatorValue - ActuatorInInteger);
+                    Global.VarList[OperatorIndex].SetValue(OperatorValue - ActuatorInInteger);
                     break;
 
                 case "/":
-                    Global.VarList[OperatorIndex].Set_Value(OperatorValue / ActuatorInInteger);
+                    Global.VarList[OperatorIndex].SetValue(OperatorValue / ActuatorInInteger);
                     break;
 
                 case "*":
-                    Global.VarList[OperatorIndex].Set_Value(OperatorValue * ActuatorInInteger);
+                    Global.VarList[OperatorIndex].SetValue(OperatorValue * ActuatorInInteger);
                     break;
 
                 case "%":
-                    Global.VarList[OperatorIndex].Set_Value(OperatorValue % ActuatorInInteger);
+                    Global.VarList[OperatorIndex].SetValue(OperatorValue % ActuatorInInteger);
                     break;
 
                 default:

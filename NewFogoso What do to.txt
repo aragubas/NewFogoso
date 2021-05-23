@@ -1,5 +1,7 @@
-THIS FILE IS CONFIDENTIAL FOR NEW FOGOSO PROJECT.
+THIS FILE CONTAINS CONFIDENTIAL INFOS FOR NEW FOGOSO PROJECT.
 2021 - Aragubas
+
+# Screen Resolution is 800, 480
 
 -= Whats that about? =-
 click, click, click, click [...]

@@ -63,19 +63,19 @@ namespace Fogoso.Taiyou.Command
             switch (NewValueType)
             {
                 case "String":
-                    OperatorVariable.Set_Value(Convert.ToString(NewValue));
+                    OperatorVariable.SetValue(Convert.ToString(NewValue));
                     return 0;
 
                 case "Bool":
-                    OperatorVariable.Set_Value(Convert.ToBoolean(NewValue));
+                    OperatorVariable.SetValue(Convert.ToBoolean(NewValue));
                     return 0;
 
                 case "Float":
-                    OperatorVariable.Set_Value(float.Parse(NewValue));
+                    OperatorVariable.SetValue(float.Parse(NewValue));
                     return 0;
 
                 case "Int":
-                    OperatorVariable.Set_Value(Convert.ToInt32(NewValue));
+                    OperatorVariable.SetValue(Convert.ToInt32(NewValue));
                     return 0;
 
                 default:
