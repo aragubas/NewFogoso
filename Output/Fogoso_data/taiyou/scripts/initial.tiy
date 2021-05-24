@@ -2,17 +2,10 @@
 ##################
 # This script is called when Fogoso Engine starts. (At this point, no resource is currently loaded.)
 ######################################################################################################
-
-$FUNCTION "@HEADER";
-    WriteLine "Called from Script Header";
-    WriteLine "Initial script.";
-
-$END
-
+ 
 Jump "main"; 
    
 $FUNCTION "main";
     WriteLine "Taiyou has been started";
+    SetOption "WINDOW_TITLE", "Fogoso - Loading Resources...";
 $END
-  
-  

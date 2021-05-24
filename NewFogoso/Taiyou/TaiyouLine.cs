@@ -111,6 +111,14 @@ namespace Fogoso.Taiyou
                     FunctionCall = new Command.InternalRoutine(Arguments, ScriptOfOrigin, this);
                     break;
  
+                case "00F":
+                    FunctionCall = new Command.CallScript(Arguments, ScriptOfOrigin, this);
+                    break;
+ 
+                case "00G":
+                    FunctionCall = new Command.DebugVariable(Arguments, ScriptOfOrigin, this);
+                    break;
+ 
 
                 default:
                     Console.WriteLine("Taiyou.Interpreter : Unknow TSUP (" + CommandCode + ")");

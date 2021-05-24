@@ -54,7 +54,7 @@ namespace Fogoso
         // Fps Counter
         int _total_frames = 0;
         float _elapsed_time = 0.0f;
-        int _fps = 0;
+        public int _fps = 0;
 
 
         public Main()
@@ -106,10 +106,7 @@ namespace Fogoso
 
             // Create the Sprite Batch
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // Set Default Window Title
-            Window.Title = Registry.ReadKeyValue("/default_window_title");
-
+ 
             // Set default video mode
             Taiyou.Event.TriggerEvent("init-video-mode");
 
@@ -117,43 +114,19 @@ namespace Fogoso
             base.Initialize();
         }
 
-        // Restore Cursor Static Variables
-        public MouseState restoreCursorMouseState; 
-
-        private void RestoreCursor()
-        {
-            if (GameInput.ReservedModeID == -1) { GameInput.CursorImage = GameInput.defaultCursor; }
-
-            // Update Cursor Position
-            restoreCursorMouseState = Mouse.GetState();
-            int X = restoreCursorMouseState.X;
-            int Y = restoreCursorMouseState.Y;
-
-            if (X >= Global.WindowWidth) { X = Global.WindowWidth; }
-            if (Y >= Global.WindowHeight) { Y = Global.WindowHeight; }
-            if (X <= 0) { X = 0; }
-            if (Y <= 0) { Y = 0; }
-
-            GameInput.CursorPosition.X = X;
-            GameInput.CursorPosition.Y = Y;
-
-        }
-
         protected override void Update(GameTime gameTime)
         {
-            // Update Game Clock
-            GameLogic.AragubasTime.Update();
+            base.Update(gameTime);
 
             if (!this.IsActive)
             {
                 return;
             }
             // Restore cursor
-            RestoreCursor();
             Taiyou.Event.TriggerEvent("engine-update");
 
-
-            // Update FPS Counter
+ 
+            // Update FPS Counter (if debug enabled)
             if (DebugModeEnabled)
             {
                 _elapsed_time += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -165,24 +138,7 @@ namespace Fogoso
                     _total_frames = 0;
                     _elapsed_time = 0;
                 }
-
-                Window.Title = "Fogoso - Debug Mode FPS:" + _fps;
-
-            }
-
-            // Update Current Screen
-            GameLogic.ScreenSelector.Update();
-
-            // Update KeyboardObj
-            GameLogic.TextBox.KeyboardInput.Update();
-            
-            // Update GameInput
-            GameInput.Update();
-
-            // Update SoundSystem
-            Sound.Update();
-
-            base.Update(gameTime);
+            }            
         }
 
         protected override void Draw(GameTime gameTime)

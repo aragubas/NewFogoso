@@ -50,11 +50,25 @@ namespace Fogoso.Taiyou.Command
 
         }
 
+        // JumpIf - Essential Logic Block
+        // =======================================
+        // 1 - Comparator 1
+        // 2 - Comparation Type ('==', '!=', '>=', '<=', '<', '>')
+        // 3 - Comparator 2
+        // 4 - Function to call if true
+        // 5 - (optional) Function to call if false
+        // 
+        // ----
+        // Avaliable Routines:
+        // ----
+        // UPDATE_INTERNAL_VARIABLE  |  Update interval variables (such as video mode, cursor position etc.)
+ 
         bool ArgumentsSet = false;
         string pComparator1;
         string pComparatorType;
         string pComparator2;
         string pFunctionToCall;
+        string pFunctionToCallIfFalse;
 
         public override int Call()
         {
@@ -66,6 +80,7 @@ namespace Fogoso.Taiyou.Command
 
                 pComparatorType = GetArgument(Arguments, 1).ToLower();
                 pFunctionToCall = GetArgument(Arguments, 3);
+                try{ pFunctionToCallIfFalse = GetArgument(Arguments, 4); } catch(IndexOutOfRangeException) { pFunctionToCallIfFalse = ""; }
             }
             pComparator1 = GetArgument(Arguments, 0);
             pComparator2 = GetArgument(Arguments, 2);
@@ -76,7 +91,13 @@ namespace Fogoso.Taiyou.Command
                     if (pComparator1 == pComparator2)
                     {
                         // Do Action
-                        return CallFunctionIsRight(pFunctionToCall);
+                        return CallFunction(pFunctionToCall);
+                        
+                    }else{
+                        if (pFunctionToCallIfFalse != "")
+                        {
+                            return CallFunction(pFunctionToCallIfFalse);
+                        }
                     }
                     break;
 
@@ -84,7 +105,12 @@ namespace Fogoso.Taiyou.Command
                     if (pComparator1 != pComparator2)
                     {
                         // Do Action
-                        return CallFunctionIsRight(pFunctionToCall);
+                        return CallFunction(pFunctionToCall);
+                    }else{
+                        if (pFunctionToCallIfFalse != "")
+                        {
+                            return CallFunction(pFunctionToCallIfFalse);
+                        }
                     }
                     break;
 
@@ -93,7 +119,12 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) >= float.Parse(pComparator2))
                     {
                         // Do Action
-                        return CallFunctionIsRight(pFunctionToCall);
+                        return CallFunction(pFunctionToCall);
+                    }else{
+                        if (pFunctionToCallIfFalse != "")
+                        {
+                            return CallFunction(pFunctionToCallIfFalse);
+                        }
                     }
                     break;
 
@@ -101,7 +132,12 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) > float.Parse(pComparator2))
                     {
                         // Do Action
-                        return CallFunctionIsRight(pFunctionToCall);
+                        return CallFunction(pFunctionToCall);
+                    }else{
+                        if (pFunctionToCallIfFalse != "")
+                        {
+                            return CallFunction(pFunctionToCallIfFalse);
+                        }
                     }
                     break;
 
@@ -110,7 +146,12 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) <= float.Parse(pComparator2))
                     {
                         // Do Action
-                        return CallFunctionIsRight(pFunctionToCall);
+                        return CallFunction(pFunctionToCall);
+                    }else{
+                        if (pFunctionToCallIfFalse != "")
+                        {
+                            return CallFunction(pFunctionToCallIfFalse);
+                        }
                     }
                     break;
 
@@ -118,10 +159,19 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) < float.Parse(pComparator2))
                     {
                         // Do Action
-                        return CallFunctionIsRight(pFunctionToCall);
+                        return CallFunction(pFunctionToCall);
+                    }else{
+                        if (pFunctionToCallIfFalse != "")
+                        {
+                            return CallFunction(pFunctionToCallIfFalse);
+                        }
                     }
                     break;
 
+                default:
+                    Utils.ConsoleWriteWithTitle("TaiyouCommand.JumpIf", $"Invalid comparation type {pComparatorType}");
+                    break;
+ 
             }
 
             return 0;
@@ -130,8 +180,9 @@ namespace Fogoso.Taiyou.Command
         bool FunctionCallInitiated = false;
         TaiyouScript FunctionToRun;
 
-        private int CallFunctionIsRight(string FunctionToCall)
+        private int CallFunction(string FunctionToCall)
         {
+            // Create a temporary script
             if (!FunctionCallInitiated)
             {
                 FunctionCallInitiated = true;
@@ -149,7 +200,7 @@ namespace Fogoso.Taiyou.Command
 
                 // Create an Script Instance
                 FunctionToRun = new TaiyouScript("", true, Global.Functions_Data[FunctionIndex]);
-
+ 
             }
 
             return FunctionToRun.Interpret();

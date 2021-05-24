@@ -38,8 +38,64 @@ using System.Linq;
 
 namespace Fogoso.Taiyou.Command
 {
+
     public class InternalRoutine : TaiyouCommand
     {
+        internal abstract class Routine
+        {
+            public virtual void Run() { }
+        }
+ 
+        internal class UPDATE_INTERNAL_VARIABLES : Routine
+        {
+            public override void Run()
+            {
+                Global.SetGlobalVariables();
+            }
+        }
+ 
+        internal class UPDATE_SCREEN_SELECTOR : Routine
+        {
+            public override void Run()
+            {
+                GameLogic.ScreenSelector.Update();                
+            }
+        }
+ 
+        internal class UPDATE_GAME_INPUT : Routine
+        {
+            public override void Run()
+            {
+                GameInput.Update();
+            }
+        }
+
+        internal class UPDATE_KEYBOARD_OBJ : Routine
+        {
+            public override void Run()
+            {
+                GameLogic.TextBox.KeyboardInput.Update();
+            }
+        }
+
+        internal class UPDATE_SOUND_SYSTEM : Routine
+        {
+            public override void Run()
+            {
+                Sound.Update();
+            }
+        }
+
+        internal class UPDATE_ARAGUBAS_TIME : Routine
+        {
+            public override void Run()
+            {
+                GameLogic.AragubasTime.Update();
+            }
+        }
+
+
+        Routine selectedRoutine;
         public InternalRoutine(string[] pArguments, string pScriptCaller, TaiyouLine pRootTaiyouLine)
         {
             OriginalArguments = pArguments;
@@ -55,24 +111,56 @@ namespace Fogoso.Taiyou.Command
         //
         // ----
         // Avaliable Routines:
-        // 
-        
+        // ----
+        // UPDATE_INTERNAL_VARIABLE | Update interval variables (such as video mode, cursor position etc.)
+        // UPDATE_SCREEN_SELECTOR   | Update current active screen and background
+        // UPDATE_GAME_INPUT        | Update input handling system
+        // UPDATE_KEYBOARD_OBJ      | Update keyboard obj
+        // UPDATE_SOUND_SYSTEM      | Update sound system
+        // UPDATE_ARAGUBAS_TIME     | Update aragubas time
+          
         public override int Call()
         {
-            string[] Arguments = ReplaceVarLiterals();
-
-            switch(GetArgument(Arguments, 0).ToUpper())
+            if (selectedRoutine == null)
             {
-                case "UPDATE_INTERNAL_VARIABLES":
-                    Global.SetGlobalVariables();
-                    break;
+                string[] Arguments = ReplaceVarLiterals();
 
-                default:
-                    Utils.ConsoleWriteWithTitle(Title, $"Invalid routine ({GetArgument(Arguments, 0).ToUpper()})");
-                    break;
-                     
+ 
+                switch(GetArgument(Arguments, 0).ToUpper())
+                {
+                    case "UPDATE_INTERNAL_VARIABLES":
+                        selectedRoutine = new UPDATE_INTERNAL_VARIABLES();
+                        break;
+
+                    case "UPDATE_SCREEN_SELECTOR":
+                        selectedRoutine = new UPDATE_SCREEN_SELECTOR();
+                        break;
+
+                    case "UPDATE_GAME_INPUT":
+                        selectedRoutine = new UPDATE_GAME_INPUT();
+                        break;
+
+                    case "UPDATE_KEYBOARD_OBJ":
+                        selectedRoutine = new UPDATE_KEYBOARD_OBJ();
+                        break;
+
+                    case "UPDATE_SOUND_SYSTEM":
+                        selectedRoutine = new UPDATE_SOUND_SYSTEM();
+                        break;
+
+                    case "UPDATE_ARAGUBAS_TIME":
+                        selectedRoutine = new UPDATE_ARAGUBAS_TIME();
+                        break;
+     
+                    default:
+                        Utils.ConsoleWriteWithTitle(Title, $"Invalid routine ({GetArgument(Arguments, 0).ToUpper()})");
+                        break;
+                        
+                }
+
             }
  
+            if (selectedRoutine != null) { selectedRoutine.Run(); }
             return 0;
         }
 

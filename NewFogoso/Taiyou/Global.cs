@@ -37,6 +37,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Fogoso.WriteToLog;
+using Microsoft.Xna.Framework.Input;
 
 namespace Fogoso.Taiyou
 {
@@ -184,7 +185,7 @@ namespace Fogoso.Taiyou
             {
                 // Set the Script Name
                 string ScriptName = AllScripts[i].Replace(Fogoso.Global.TaiyouScriptsDirectory, "");
-                ScriptName = ScriptName.Replace(".tiy", "");
+                ScriptName = ScriptName.Replace(".tiy", "").Replace(Fogoso.Global.OSSlash, ".");
                 LoadedTaiyouScripts.Add(ScriptName);
 
                 // ##########################################
@@ -193,7 +194,7 @@ namespace Fogoso.Taiyou
                 TaiyouLog.Write(Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "Reading Script [" + ScriptName + "]"));
  
                 // Define some variables
-                string ReadText = File.ReadAllText(Fogoso.Global.TaiyouScriptsDirectory + ScriptName + ".tiy", new System.Text.UTF8Encoding());
+                string ReadText = File.ReadAllText(Fogoso.Global.TaiyouScriptsDirectory + ScriptName.Replace(".", Fogoso.Global.OSSlash) + ".tiy", new System.Text.UTF8Encoding());
                 string[] ReadTextLines = ReadText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
                 List<string> CorrectTextLines = new List<string>();
                 List<TaiyouLine> ParsedCode = new List<TaiyouLine>();
@@ -235,7 +236,7 @@ namespace Fogoso.Taiyou
                             TaiyouLog.Write(Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Function is script header"));
                             FunctionName = $"{ScriptName}_HEADER";
                             LastFuncIsFunctionHeader = true;
-      
+       
                             IsReadingFunctionLine = true;
                             FunctionHeaderDeclared = true;
 
@@ -244,7 +245,7 @@ namespace Fogoso.Taiyou
 
                             continue;
 
-                        }
+                        } 
                         // Check if function is global
                         else if (!FunctionName.StartsWith("global_", StringComparison.Ordinal))
                         {
@@ -257,9 +258,9 @@ namespace Fogoso.Taiyou
                             TaiyouLog.Write(Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Non-Global Function Name[" + LastFuncLineName + "]"));
 
                             continue;
-
-                        }
-
+ 
+                        } 
+                        // Handle global functions
                         else if (FunctionName.StartsWith("global_", StringComparison.Ordinal))
                         {
                             TaiyouLog.Write(Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Function is not global, ScriptName tag included."));
@@ -276,7 +277,7 @@ namespace Fogoso.Taiyou
                     
                         continue;
                     }
- 
+     
                     // Read the function code
                     if (IsReadingFunctionLine)
                     {
@@ -290,14 +291,14 @@ namespace Fogoso.Taiyou
                                 Copyied.Add(item);
                             }
 
-                            // Last function
+                            // Add last function to Function Buffer
                             if (!LastFuncIsFunctionHeader)
                             {
                                 Functions_Data.Add(Copyied);
                                 Functions_Keys.Add(LastFuncLineName);
                                 TaiyouLog.Write(Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Sucefully added function [" + LastFuncLineName + "]"));
-                             
-                            }else{
+                                  
+                            }else{ // Add last script header to ScriptHeader Buffer
                                 ScriptHeaders_Data.Add(Copyied);
                                 ScriptHeaders_Keys.Add(ScriptName);
                                 TaiyouLog.Write(Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionHeader", "Sucefully added function header."));
@@ -524,7 +525,23 @@ namespace Fogoso.Taiyou
             SetVariable("int", "Internal.GameWindow.Width", Fogoso.Global.WindowWidth.ToString());
             SetVariable("int", "Internal.GameWindow.Height", Fogoso.Global.WindowHeight.ToString());
             SetVariable("bool", "Internal.GameWindow.Fullscreen", Fogoso.Global.WindowIsFullcreen.ToString());
-              
+            
+            // Enviroment Variables
+            SetVariable("bool", "Internal.Environment.DebugMode", Main.DebugModeEnabled.ToString());
+            SetVariable("int", "Internal.Environment.FPS", Main.Reference._fps.ToString());
+            
+            // GameInput Variables
+            SetVariable("string", "Internal.GameInput.Cursor.Default", GameInput.defaultCursor);
+            SetVariable("string", "Internal.GameInput.Cursor", GameInput.CursorImage);
+            SetVariable("string", "Internal.GameInput.Cursor.X", GameInput.CursorPosition.X.ToString());
+            SetVariable("string", "Internal.GameInput.Cursor.Y", GameInput.CursorPosition.Y.ToString());
+            SetVariable("string", "Internal.GameInput.Cursor.ReservedID", GameInput.ReservedModeID.ToString());
+
+            // Raw cursor position
+            SetVariable("int", "Internal.Raw.CursorX", Mouse.GetState().X.ToString());
+            SetVariable("int", "Internal.Raw.CursorY", Mouse.GetState().Y.ToString());
+ 
+
         }
  
         public static void SetVariable(string VarType, string VarTag, string VarValue)

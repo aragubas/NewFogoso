@@ -38,11 +38,7 @@ namespace Fogoso.Taiyou.Command
 {
     internal abstract class EventHandlerOperation
     {
-        public virtual void Run()
-        {
-
-        }
-
+        public virtual void Run() { }
     }
 
     internal class AddOperation : EventHandlerOperation

@@ -48,6 +48,22 @@ namespace Fogoso.Taiyou.Command
 
         }
 
+        // JumpIf - Set internal engine values
+        // =======================================
+        // 1 - Option Name
+        // 2 - Value
+        // 
+        // ----
+        // Avaliable Options:
+        // ----
+        // FIXED_TIME_STEP   | If FPS should be locked or not
+        // MOUSE_VISIBLE     | If cursor should be visible or not
+        // WINDOW_TITLE      | Window Title
+        // WINDOW_BORDERLESS | If window should be borderless or not
+        // RELOAD            | Reload the game engine
+        // CURSOR_IMAGE      | Set Cursor Image
+ 
+
         public override int Call()
         {
             string[] Arguments = ReplaceVarLiterals();
@@ -55,28 +71,40 @@ namespace Fogoso.Taiyou.Command
             string OptionName = GetArgument(Arguments, 0);
             string OptionValue = GetArgument(Arguments, 1);
 
-            switch (OptionName)
+            switch (OptionName.ToUpper())
             {
-                case "FixedTimeStep":
+                case "FIXED_TIME_STEP":
                     Main.Reference.IsFixedTimeStep = Convert.ToBoolean(OptionValue);
                     return 0;
 
-                case "MouseVisible":
+                case "MOUSE_VISIBLE":
                     Main.Reference.IsMouseVisible = Convert.ToBoolean(OptionValue);
                     return 0;
 
-                case "WindowTitle":
+                case "WINDOW_TITLE":
                     Main.Reference.Window.Title = OptionValue;
                     return 0;
 
-                case "WindowBorderless":
+                case "WINDOW_BORDERLESS":
                     Main.Reference.Window.IsBorderless = Convert.ToBoolean(OptionValue);
                     return 0;
 
-                case "ReloadEverthing":
+                case "RELOAD":
                     Global.Reload();
                     return 0;
 
+                case "CURSOR_IMAGE":
+                    GameInput.CursorImage = OptionValue;
+                    return 0;
+
+                case "CURSOR_X":
+                    GameInput.CursorPosition.X = Convert.ToInt32(OptionValue);
+                    return 0;
+   
+                case "CURSOR_Y":
+                    GameInput.CursorPosition.Y = Convert.ToInt32(OptionValue);
+                    return 0;
+ 
 
                 default:
                     throw new ArgumentOutOfRangeException("Invalid argument: [" + OptionName + "]");

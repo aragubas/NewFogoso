@@ -48,6 +48,13 @@ namespace Fogoso.Taiyou.Command
 
         }
 
+        // === Set value of other variable ===
+        // 1 - OperatorVarName
+        // 2 - New Value Type
+        // 3 - New Value
+        //
+
+
         public override int Call()
         {
             string[] Arguments = ReplaceVarLiterals();
