@@ -46,16 +46,15 @@ namespace Fogoso
         public static void RenderDebugInfo(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            int i = 0;
-            foreach (DebugItem Ceira in DebugStuff)
+
+            for(int i = 0; i < DebugStuff.Count; i++)
             {
-                i++; 
-                string Text = "'" + Ceira.Name + "' = [" + Ceira.Value + "]";
+                string Text = "'" + DebugStuff[i].Name + "' = [" + DebugStuff[i].Value + "]";
                 spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(6, 6 + (i * 15)), Color.Black);
                 spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(5, 5 + (i * 15)), Color.Red);
 
             }
-
+ 
             spriteBatch.End();
             DebugStuff.Clear();
 

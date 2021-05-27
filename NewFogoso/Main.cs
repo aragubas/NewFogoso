@@ -51,6 +51,7 @@ namespace Fogoso
         public static Main Reference;
         public static bool DebugModeEnabled;
 
+
         // Fps Counter
         int _total_frames = 0;
         float _elapsed_time = 0.0f;
@@ -76,10 +77,22 @@ namespace Fogoso
             
             // Register Initialization Events
             Taiyou.Event.RegisterEvent("init", "initial");
-            Taiyou.Event.RegisterEvent("engine-update", "engine_update");
             Taiyou.Event.RegisterEvent("init-video-mode", "initial_video_mode");
             Taiyou.Event.TriggerEvent("init");
+
+            // Create the Sprite Batch
+            spriteBatch = new SpriteBatch(GraphicsDevice);
  
+            // Set default video mode
+            Taiyou.Event.TriggerEvent("init-video-mode");
+
+            LoadContent();
+
+            base.Initialize();
+        }
+  
+        private new void LoadContent()
+        {
             // Load all Sprites, Sounds and Registry Keys
             Sprites.FindAllSprites();
             Sound.Initialize();
@@ -104,14 +117,8 @@ namespace Fogoso
             // Screen Initialization
             GameLogic.ScreenSelector.Initialize();
 
-            // Create the Sprite Batch
-            spriteBatch = new SpriteBatch(GraphicsDevice);
- 
-            // Set default video mode
-            Taiyou.Event.TriggerEvent("init-video-mode");
 
 
-            base.Initialize();
         }
 
         protected override void Update(GameTime gameTime)
@@ -122,10 +129,9 @@ namespace Fogoso
             {
                 return;
             }
-            // Restore cursor
-            Taiyou.Event.TriggerEvent("engine-update");
-
- 
+            // Trigger Engine Update Event
+            Taiyou.StaticlyLinkedEvents.EventUpdateInterpreterInstance.Interpret();
+  
             // Update FPS Counter (if debug enabled)
             if (DebugModeEnabled)
             {
@@ -138,20 +144,17 @@ namespace Fogoso
                     _total_frames = 0;
                     _elapsed_time = 0;
                 }
-            }            
+            }      
         }
-
+          
         protected override void Draw(GameTime gameTime)
         {
-            if (!this.IsActive)
-            {
-                return;
-            }
+            if (!this.IsActive) { return; }
 
             GraphicsDevice.Clear(Color.Black);
-
+ 
             GameLogic.ScreenSelector.Draw(spriteBatch);
-
+    
             // Draw GameInput HUD
             GameInput.Draw(spriteBatch);
 

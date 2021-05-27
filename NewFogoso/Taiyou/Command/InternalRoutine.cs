@@ -48,50 +48,37 @@ namespace Fogoso.Taiyou.Command
  
         internal class UPDATE_INTERNAL_VARIABLES : Routine
         {
-            public override void Run()
-            {
-                Global.SetGlobalVariables();
-            }
+            public override void Run() => Global.SetGlobalVariables();
         }
  
         internal class UPDATE_SCREEN_SELECTOR : Routine
         {
-            public override void Run()
-            {
-                GameLogic.ScreenSelector.Update();                
-            }
+            public override void Run() => GameLogic.ScreenSelector.Update();
         }
  
         internal class UPDATE_GAME_INPUT : Routine
         {
-            public override void Run()
-            {
-                GameInput.Update();
-            }
+            public override void Run() => GameInput.Update();
         }
 
         internal class UPDATE_KEYBOARD_OBJ : Routine
         {
-            public override void Run()
-            {
-                GameLogic.TextBox.KeyboardInput.Update();
-            }
+            public override void Run() => GameLogic.TextBox.KeyboardInput.Update();
         }
 
         internal class UPDATE_SOUND_SYSTEM : Routine
         {
-            public override void Run()
-            {
-                Sound.Update();
-            }
+            public override void Run() => Sound.Update();
         }
 
         internal class UPDATE_ARAGUBAS_TIME : Routine
         {
-            public override void Run()
-            {
-                GameLogic.AragubasTime.Update();
-            }
+            public override void Run() => GameLogic.AragubasTime.Update();
+        }
+
+        internal class INIT_STATIC_EVENTS : Routine
+        {
+            public override void Run() => Taiyou.StaticlyLinkedEvents.LoadEvents();
         }
 
 
@@ -118,7 +105,8 @@ namespace Fogoso.Taiyou.Command
         // UPDATE_KEYBOARD_OBJ      | Update keyboard obj
         // UPDATE_SOUND_SYSTEM      | Update sound system
         // UPDATE_ARAGUBAS_TIME     | Update aragubas time
-          
+        // INIT_STATIC_EVENTS       | Initialize Staticly Linked Events
+
         public override int Call()
         {
             if (selectedRoutine == null)
@@ -151,7 +139,11 @@ namespace Fogoso.Taiyou.Command
                     case "UPDATE_ARAGUBAS_TIME":
                         selectedRoutine = new UPDATE_ARAGUBAS_TIME();
                         break;
-     
+
+                    case "INIT_STATIC_EVENTS":
+                        selectedRoutine = new INIT_STATIC_EVENTS();
+                        break;
+         
                     default:
                         Utils.ConsoleWriteWithTitle(Title, $"Invalid routine ({GetArgument(Arguments, 0).ToUpper()})");
                         break;

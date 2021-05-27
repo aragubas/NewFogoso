@@ -15,7 +15,7 @@ namespace Fogoso
         static void Main()
         { 
             Console.WriteLine("NewFogoso DotNet Core - 'May 22' 2021\n" + 
-                              "================================");
+                              "========================================");
 
             // Create Game Instance
             Game gameInstance = new Main();

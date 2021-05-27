@@ -40,7 +40,6 @@ using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Fogoso.WriteToLog;
 
 namespace Fogoso
 {
@@ -157,9 +156,7 @@ namespace Fogoso
 
         public static void InitialFSCheck()
         {
-            LogObject FSCheck_Log = new LogObject("FSCheck_initial_check");
-
-            FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Checking ContentFolder..."));
+            ConsoleWriteWithTitle("FSCheck", "Checking ContentFolder...");
 
             // ############
             // # Pass 1   #
@@ -167,9 +164,7 @@ namespace Fogoso
             // Check if ContentFolder exists
             if (!Directory.Exists(Global.ContentFolder))
             {
-                FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nContentFolder does not exist."));
-                // Close the LogFile
-                FSCheck_Log.FinishLog(true);
+                ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nContentFolder does not exist.");
 
                 //MessageBox.Show("Cannot find the ContentFolder.\nPath: " + Global.ContentFolder + "\n\nAborting Main Thread...", "InitialFSCheck", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 string Message = "Cannot find the ContentFolder.\nPath: " + Global.ContentFolder + "\n\nAborting Main Thread...";
@@ -181,7 +176,7 @@ namespace Fogoso
             // # Pass 2   #
             // ############
             // Check if ContentFolder version matches with Hardcoded one
-            FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Checking ContentFolder Version..."));
+            ConsoleWriteWithTitle("FSCheck", "Checking ContentFolder Version...");
 
             // Check if Metadata File Exists
             string MetaFilePath = Environment.CurrentDirectory + "/" + Global.ContentFolder + "data_packpage.metadata";
@@ -189,9 +184,7 @@ namespace Fogoso
 
             if (!File.Exists(MetaFilePath))
             {
-                FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nContentFolder Metadata File does not exist."));
-                // Close the LogFile
-                FSCheck_Log.FinishLog(true);
+                ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nContentFolder Metadata File does not exist.");
 
                 //MessageBox.Show("Cannot find the ContentFolder MetadataFile.\nPath: " + Global.ContentFolder + "\n\nAborting Main Thread...", "InitialFSCheck", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 string Message = "Cannot find the ContentFolder MetadataFile.\nPath: " + Global.ContentFolder + "\n\nAborting Main Thread...";
@@ -207,9 +200,8 @@ namespace Fogoso
             // Check if MetadataFile is not empty
             if (FileRead.Length < 1)
             {
-                FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nContentFolder Metadata File is empty."));
+                ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nContentFolder Metadata File is empty.");
                 // Close the LogFile
-                FSCheck_Log.FinishLog(true);
 
                 //MessageBox.Show("The ContentFolder MetadataFile is corrupted or empty.\n\nAborting Main Thread...", "InitialFSCheck", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 string Message = "The ContentFolder MetadataFile is corrupted or empty.\n\nAborting Main Thread...";
@@ -220,14 +212,12 @@ namespace Fogoso
             // Check if there is a Version Match
             if (FileRead[0] == Global.MatchVersion_CurrentVersionString)
             {
-                FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "ContentFolder Version matches with Hardcoded [" + Global.MatchVersion_CurrentVersionString + "]"));
+                ConsoleWriteWithTitle("FSCheck", "ContentFolder Version matches with Hardcoded [" + Global.MatchVersion_CurrentVersionString + "]");
 
             }
             else // If not, throw an error
             {
-                FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nContentFolder does not matches with Hardcoded [" + Global.MatchVersion_CurrentVersionString + "]"));
-                // Close the LogFile
-                FSCheck_Log.FinishLog(true);
+                ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nContentFolder does not matches with Hardcoded [" + Global.MatchVersion_CurrentVersionString + "]");
 
                 //MessageBox.Show("The current ContentFolder is from a different version of WIC Engine.\n\nAborting Main Thread...", "InitialFSCheck", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 string Message = "The current ContentFolder is from a different version of WIC Engine.\n\nAborting Main Thread...";
@@ -239,7 +229,7 @@ namespace Fogoso
             // # Pass 3   #
             // ############
             // Check if Internal Folders Exists
-            FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Checking SubDirectories..."));
+            ConsoleWriteWithTitle("FSCheck", "Checking SubDirectories...");
 
             bool EverthingOk = true;
 
@@ -254,9 +244,7 @@ namespace Fogoso
 
             if (!EverthingOk)
             {
-                FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nThis content folder is not valid"));
-                // Close the LogFile
-                FSCheck_Log.FinishLog(true);
+                ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nThis content folder is not valid");
 
                 //MessageBox.Show("The current ContentFolder is missing some of Required Content Directories.\n\nAborting Main Thread...", "InitialFSCheck", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 string Message = "The current ContentFolder is missing some of Required Content Directories.\n\nAborting Main Thread...";
@@ -276,9 +264,7 @@ namespace Fogoso
 
             if (!File.Exists(SupportedBinPlaftormsFile))
             {
-                FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Fatal Error\nThis current ContentFolder is missing [platforms.data] in bin directory."));
-                // Close the LogFile
-                FSCheck_Log.FinishLog(true);
+                ConsoleWriteWithTitle("FSCheck", "Fatal Error\nThis current ContentFolder is missing [platforms.data] in bin directory.");
 
                 //MessageBox.Show("The current ContentFolder is missing [platforms.data] in bin directory.\n\nAborting Main Thread...", "InitialFSCheck", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 string Message = "The current ContentFolder is missing [platforms.data] in bin directory.\n\nAborting Main Thread...";
@@ -303,7 +289,7 @@ namespace Fogoso
             // == Current platform is not supported
             if (!CurrentOSFound)
             {
-                FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nThe current ContentFolder does not has binnaries for the current os."));
+                ConsoleWriteWithTitle("FSCheck", "Fatal Error!\nThe current ContentFolder does not has binnaries for the current os.");
 
                 string Message = "The current ContentFolder does not has binnaries for the current OS\nThe program can crash anytime if it requires an missing binnary\n\nAborting Main Thread...";
                 Environment.FailFast(Message);
@@ -312,14 +298,12 @@ namespace Fogoso
             }
 
             // Check if Binnary Folder Exists
-            FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Checking if Binnaries folder exist..."));
+            ConsoleWriteWithTitle("FSCheck", "Checking if Binnaries folder exist...");
 
             // Check if Binnary folder for current OS exists
             if (!Directory.Exists(Global.BIN_SourceFolder))
             {
-                FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "Fatal Error\nThe current ContentFolder is missing binnary directory."));
-                // Close the LogFile
-                FSCheck_Log.FinishLog(true);
+                ConsoleWriteWithTitle("FSCheck", "Fatal Error\nThe current ContentFolder is missing binnary directory.");
 
                 string Message = "The current ContentFolder is missing binnary directory.\n\nAborting Main Thread...";
                 //MessageBox.Show("The current ContentFolder is missing binnary directory.\n\nAborting Main Thread...", "InitialFSCheck", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -328,18 +312,14 @@ namespace Fogoso
             }
 
 
-            FSCheck_Log.Write(ConsoleWriteWithTitle("FSCheck", "FSCheck has been completed."));
-            // Close the LogFile
-            FSCheck_Log.FinishLog(false);
+            ConsoleWriteWithTitle("FSCheck", "FSCheck has been completed.");
 
         }
 
-        public static string ConsoleWriteWithTitle(string Title, string Text)
+        public static void ConsoleWriteWithTitle(string Title, string Text)
         {
-            string Result = Title + " ; " + Text;
-            Console.WriteLine(Result);
-
-            return Result;
+            if (!Main.DebugModeEnabled){ return; }
+            Console.WriteLine($"{Title} ; {Text}");
         }
 
         public static string SplitIntoLines(string Input, char pSplit)

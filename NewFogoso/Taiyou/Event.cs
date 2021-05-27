@@ -38,6 +38,27 @@ using System.Threading;
 
 namespace Fogoso.Taiyou
 {
+    public static class StaticlyLinkedEvents
+    {
+        public static TaiyouScript EventUpdateInterpreterInstance;
+
+
+        public static void LoadEvents()
+        {
+            try
+            {
+                EventUpdateInterpreterInstance = new TaiyouScript("static-event-update", true, Taiyou.Global.GetScript("engine_update"));
+ 
+            }catch(ArgumentNullException)
+            {
+                System.Console.WriteLine("Error while loading staticly linked events.\nYour installation may be corrupted.");
+                Environment.Exit(2);
+            }
+
+
+        }
+    }
+
     public static class Event
     {
         // Lists

@@ -35,9 +35,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Fogoso.WriteToLog;
  
 namespace Fogoso
 {
@@ -78,11 +76,9 @@ namespace Fogoso
 
         public static void FindAllSprites()
         {
-            LogObject SpriteLog = new LogObject("SpriteLoader");
-
             // First, we need to list all files on SPRITES directory
             string[] AllSprites = Directory.GetFiles(Global.IMAGE_SourceFolder, "*.png", SearchOption.AllDirectories);
-            SpriteLog.Write(Utils.ConsoleWriteWithTitle("SpriteLoader", "Listing all sprites..."));
+            Utils.ConsoleWriteWithTitle("SpriteLoader", "Listing all sprites...");
 
             foreach (var file in AllSprites)
             {
@@ -98,15 +94,13 @@ namespace Fogoso
                     AllSpritedLoaded_Content.Add(LoadTexture2D_FromFile(FileFullName));
                     AllSpritedLoaded_Names.Add(SpriteFiltedName.Replace(Global.OSSlash, "/"));
 
-                    SpriteLog.Write(Utils.ConsoleWriteWithTitle("SpriteLoader", "Found [" + SpriteFiltedName + "]."));
+                    Utils.ConsoleWriteWithTitle("SpriteLoader", "Found [" + SpriteFiltedName + "].");
 
                 }
 
             }
 
-            SpriteLog.Write(Utils.ConsoleWriteWithTitle("SpriteLoader", "Operation Completed"));
-
-            SpriteLog.FinishLog(false);
+            Utils.ConsoleWriteWithTitle("SpriteLoader", "Operation Completed");
 
         }
 
@@ -124,7 +118,7 @@ namespace Fogoso
                 return GetSprite(Registry.ReadKeyValue("/missing_texture"));
             }
             return AllSpritedLoaded_Content[AllSpritedLoaded_Names.IndexOf(SpriteName)]; // Return the correct sprite
-
+ 
         }
 
 
