@@ -15,9 +15,9 @@ All events happens on aragubas
 1 month has 8 weeks
 1 week has 7 days
 =- Time System -=
-1 day has 8 hours
-1 hour has 24 minutes
-1 minute has 30 seconds
+1 day has 4 hours
+1 hour has 12 minutes
+1 minute has 12 seconds
 
 -= Month Names =-
 1 - Tropin

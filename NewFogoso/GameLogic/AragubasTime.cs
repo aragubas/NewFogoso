@@ -106,14 +106,14 @@ namespace Fogoso.GameLogic
             Frames += 1;
 
             if (Frames >= Convert.ToInt32(Registry.ReadKeyValue("/fps"))) { Second += 1; Frames = 0; }
-            if (Second >= 31) { Minute += 1; Second = 1; }
-            if (Minute >= 25) { Hour += 1; Minute = 1; }
-            if (Hour >= 9) { Day += 1; Hour = 1; }
-            if (Day >= 8) { Week += 1; Day = 1; }
-            if (Week >= 9) { Month += 1; Week = 1; }
+            if (Second >= 13) { Minute += 1; Second = 1; }
+            if (Minute >= 13) { Hour += 1; Minute = 1; }
+            if (Hour >= 8) { Day += 1; Hour = 1; }
+            if (Day >= 5) { Week += 1; Day = 1; }
+            if (Week >= 6) { Month += 1; Week = 1; }
             if (Month >= 5) { Year += 1; Month = 1; }
             if (Year >= 42) { Year = 41; }
-
+ 
         }
 
 

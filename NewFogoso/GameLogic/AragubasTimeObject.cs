@@ -9,40 +9,49 @@ namespace Fogoso.GameLogic
 
     class AragubasTimeObject
     {
-        public int Year = 0;
-        public int Month = 0;
-        public int Week = 0;
-        public int Day = 0;
-        public int Hour = 0;
-        public int Minute = 0;
+        int Year = 0;
+        int Month = 0;
+        int Week = 0;
+        int Day = 0;
+        int Hour = 0;
+        int Minute = 0;
+        int offsetYear = 0;
+        int offsetMonth = 0;
+        int offsetWeek = 0;
+        int offsetDay = 0;
+        int offsetHour = 0;
+        int offsetMinute = 0;
 
         public AragubasTimeObject(int pMinuteOffset, int pHourOffset, int pDayOffset, int pWeekOffset, int pMonthOffset, int pYearOffset)
         {
-            // Change to loading cursor
-            GameInput.CursorImage = "loading.png";
+            offsetYear = pYearOffset;
+            offsetMonth = pMonthOffset;
+            offsetWeek = pWeekOffset;
+            offsetDay = pDayOffset;
+            offsetHour = pHourOffset;
+            offsetMinute = pMinuteOffset;
 
-            Year = AragubasTime.Year + pYearOffset;
-            Month = AragubasTime.Month + pMonthOffset;
-            Week = AragubasTime.Week + pWeekOffset;
-            Day = AragubasTime.Day + pDayOffset;
-            Hour = AragubasTime.Hour + pHourOffset;
-            Minute = AragubasTime.Minute + pMinuteOffset;
+            ResetTime();
+ 
+        }
+
+        public void ResetTime()
+        {
+            Year = AragubasTime.Year + offsetYear;
+            Month = AragubasTime.Month + offsetMonth;
+            Week = AragubasTime.Week + offsetWeek;
+            Day = AragubasTime.Day + offsetDay;
+            Hour = AragubasTime.Hour + offsetHour;
+            Minute = AragubasTime.Minute + offsetMinute;
 
         }
 
-        public bool TimeTriggered()
-        { 
-            bool PassOne = Year == AragubasTime.Year;
-            bool PassTwo = Month == AragubasTime.Month;
-            bool PassThree = Week == AragubasTime.Week;
-            bool PassSix = Day == AragubasTime.Day;
-            bool PassFour = Hour == AragubasTime.Hour;
-            bool PassFive = Minute >= AragubasTime.Minute;
-
-            return PassOne && PassTwo && PassThree && PassFour && PassFive && PassSix;
-
-        }
-
-
+        public bool TimeYear() { return AragubasTime.Year >= Year; }
+        public bool TimeMonth() { return AragubasTime.Month >= Month; }
+        public bool TimeWeek() { return AragubasTime.Week >= Week; }
+        public bool TimeDay() { return AragubasTime.Day >= Day; }
+        public bool TimeHour() { return AragubasTime.Hour >= Hour; }
+        public bool TimeMinute() { return AragubasTime.Minute >= Minute; }
+ 
     }
 }

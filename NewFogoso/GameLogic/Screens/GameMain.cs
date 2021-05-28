@@ -18,6 +18,7 @@ namespace Fogoso.GameLogic.Screens
         Label MoneyInfosLabel;
         ToolStripPanel TabsButton;
         UtilsObjects.ValueSmoother ceira;
+        ClickerViewer refClickerViewer;
 
         public GameMain()
         {
@@ -30,7 +31,7 @@ namespace Fogoso.GameLogic.Screens
             TimeLabel = new Label(new Vector2(205, 20), Main.Reference.Content.Load<SpriteFont>("small"), "sit");
             TabsButton = new ToolStripPanel(new Rectangle(205, 35 + (Global.WindowHeight - 85) + 5, Global.WindowWidth - 210, 40), true);
 
-            ClickerViewer ceiraClickerButton = new ClickerViewer(new Vector2(3, LeftPanel.Rectangle.Bottom));
+            refClickerViewer = new ClickerViewer(new Vector2(3, LeftPanel.Rectangle.Bottom));
             Label sinas = new Label(new Vector2(5, 5), Main.Reference.Content.Load<SpriteFont>("default"), "Loading...");
             Button InfosButton = new Button(new Vector2(5, 5), "Infos");
             Button ItemsViewButton = new Button(new Vector2(5, 5), "Items");
@@ -38,7 +39,7 @@ namespace Fogoso.GameLogic.Screens
             TabsButton.AddControl(InfosButton, "infos-button");
             TabsButton.AddControl(ItemsViewButton, "items-button");
 
-            LeftPanel.AddControl(ceiraClickerButton, "ceira-clicker");
+            LeftPanel.AddControl(refClickerViewer, "clicker-viewer");
             LeftPanel.AddControl(sinas, "ceira-label");
             MoneyInfosLabel = sinas;
 
@@ -125,8 +126,11 @@ namespace Fogoso.GameLogic.Screens
             ceira.SetTargetValue(CurrentSessionData.Ceira);
 
             // Refresh MoneyInfos Label
-            MoneyInfosLabel.SetText("$ " + ceira.GetValue().ToString("0.00") + "\nExp " + CurrentSessionData.Experience);
-
+            if (refClickerViewer != null)
+            {
+                MoneyInfosLabel.SetText($"$ {ceira.GetValue().ToString("0.00")}\nExp {CurrentSessionData.Experience}\nIncome: {refClickerViewer.EstimatedIncome.ToString("0.00")}");
+            }
+ 
 
         }
 

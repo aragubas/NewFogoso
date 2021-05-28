@@ -39,10 +39,20 @@ namespace Fogoso
 
             // Create a Debug item
             DebugItem sinas = new DebugItem(Name, Value);
+            int SinasIndex = DebugStuff.IndexOf(sinas);
+  
+            if (SinasIndex != -1)
+            {
+                DebugStuff[SinasIndex].Value = Value;
+                return;
+                 
+            }else
+            {
+                DebugStuff.Add(sinas);
+            }
 
-            DebugStuff.Add(sinas);
         }
-
+ 
         public static void RenderDebugInfo(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();

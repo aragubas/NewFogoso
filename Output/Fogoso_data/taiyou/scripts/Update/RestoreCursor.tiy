@@ -26,9 +26,6 @@ JumpIf "#RestoreCursor.CursorY$", ">=", "#Internal.GameWindow.Height$", "SetYToH
 
 SetOption "CURSOR_X", "#RestoreCursor.CursorX$";
 SetOption "CURSOR_Y", "#RestoreCursor.CursorY$";
- 
-DebugVar "RestoreCursor.CursorX";
-DebugVar "RestoreCursor.CursorY";
 
  
 # Set cursor to default one
