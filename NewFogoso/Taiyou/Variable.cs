@@ -35,16 +35,46 @@
 using System;
 namespace Fogoso.Taiyou
 {
+    public enum VariableType : byte
+    {
+        String,
+        Integer,
+        Float,
+        Boolean
+    }
+ 
     public class Variable
     {
         // Object Properties
-        public string Type;
+        public VariableType Type;
         public string Tag;
-        public dynamic Value;
+        public object Value;
         public string SearchPattern;
         public string GenericVarType;
 
-        public Variable(string varType, dynamic varValue, string VarTag)
+        public static VariableType StringToVarType(string VarTypeString)
+        {
+            switch(VarTypeString.ToLower())
+            {
+                case "string":
+                    return VariableType.String;
+
+                case "int":
+                    return VariableType.Integer;
+
+                case "float":
+                    return VariableType.Float;
+
+                case "bool":
+                    return VariableType.Boolean;
+
+                default:
+                    Utils.ConsoleWriteWithTitle("VariableType.StringToVarType", $"Invalid variable type {VarTypeString}.", true);
+                    throw new InvalidOperationException($"Invalid variable type {VarTypeString}.");
+            }
+        }
+
+        public Variable(VariableType varType, dynamic varValue, string VarTag)
         {
             Tag = VarTag;
             Type = varType;
@@ -76,23 +106,23 @@ namespace Fogoso.Taiyou
         /// Set the variable generic type
         /// </summary>
         /// <param name="input">Input.</param>
-        private void SetVarGenericType(string input)
+        private void SetVarGenericType(VariableType input)
         {
-            switch (input.ToLower())
-            {
-                case "bool":
+            switch (input)
+            { 
+                case VariableType.Boolean:
                     GenericVarType = "Boolean";
                     break;
 
-                case "int":
+                case VariableType.Integer:
                     GenericVarType = "Number";
                     break;
 
-                case "float":
+                case VariableType.Float:
                     GenericVarType = "Number";
                     break;
 
-                case "string":
+                case VariableType.String:
                     GenericVarType = "String";
                     break;
 
@@ -121,24 +151,24 @@ namespace Fogoso.Taiyou
         /// Set the Variable value
         /// </summary>
         /// <param name="NewValue">New value.</param>
-        public void SetValue(dynamic NewValue)
+        public void SetValue(object NewValue)
         {
-            switch (Type.ToLower())
+            switch (Type)
             {
-                case "string":
-                    Value = Convert.ToString(NewValue);
+                case VariableType.String:
+                    Value = NewValue.ToString();
                     return;
 
-                case "int":
-                    Value = Convert.ToInt32(NewValue);
+                case VariableType.Integer:
+                    Value = Int32.Parse(NewValue.ToString());
                     return;
 
-                case "float":
-                    Value = float.Parse(NewValue);
+                case VariableType.Float:
+                    Value = float.Parse(NewValue.ToString());
                     return;
 
-                case "bool":
-                    Value = Convert.ToBoolean(NewValue);
+                case VariableType.Boolean:
+                    Value = NewValue.ToString().ToLower().Equals("true");
                     return;
 
                 default:

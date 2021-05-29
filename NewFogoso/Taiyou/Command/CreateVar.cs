@@ -81,9 +81,8 @@ namespace Fogoso.Taiyou.Command
             if (VarID != -1) { return 0; }
 
 
-            Global.VarList.Add(new Variable(VarType, VarDefaultValue, VarTag));
+            Global.VarList.Add(new Variable(Variable.StringToVarType(VarType), VarDefaultValue, VarTag));
             Global.VarList_Keys.Add(VarTag);
-            Console.WriteLine("Variable Created");
             return 0;
         }
 

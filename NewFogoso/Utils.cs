@@ -54,10 +54,10 @@ namespace Fogoso
         {
             string[] RectCode = StringToConver.Split(',');
 
-            int RectX = Convert.ToInt32(RectCode[0]);
-            int RectY = Convert.ToInt32(RectCode[1]);
-            int RectW = Convert.ToInt32(RectCode[2]);
-            int RectH = Convert.ToInt32(RectCode[3]);
+            int RectX = Int32.Parse(RectCode[0]);
+            int RectY = Int32.Parse(RectCode[1]);
+            int RectW = Int32.Parse(RectCode[2]);
+            int RectH = Int32.Parse(RectCode[3]);
 
             return new Rectangle(RectX, RectY, RectW, RectH);
         }
@@ -79,10 +79,10 @@ namespace Fogoso
 
             string[] ColorCodes = StringToConver.Split(',');
 
-            Color_R = Convert.ToInt32(ColorCodes[0]);
-            Color_G = Convert.ToInt32(ColorCodes[1]);
-            Color_B = Convert.ToInt32(ColorCodes[2]);
-            if (ColorAlphaOveride != -255) { Color_A = ColorAlphaOveride; } else { Color_A = Convert.ToInt32(ColorCodes[3]); }
+            Color_R = Int32.Parse(ColorCodes[0]);
+            Color_G = Int32.Parse(ColorCodes[1]);
+            Color_B = Int32.Parse(ColorCodes[2]);
+            if (ColorAlphaOveride != -255) { Color_A = ColorAlphaOveride; } else { Color_A = Int32.Parse(ColorCodes[3]); }
 
             ColorToReturn = Color.FromNonPremultiplied(Color_R, Color_G, Color_B, Color_A);
 
@@ -130,7 +130,7 @@ namespace Fogoso
         /// <param name="Spliter">Spliter.</param>
         public static string GetSubstring(string Input, char Spliter)
         {
-            return Input.Substring(Input.IndexOf(Spliter) + 1, Input.LastIndexOf(Spliter) - 1).Replace(Convert.ToString(Spliter), "");
+            return Input.Substring(Input.IndexOf(Spliter) + 1, Input.LastIndexOf(Spliter) - 1).Replace(Spliter.ToString(), "");
         }
 
         /// <summary>
@@ -316,9 +316,9 @@ namespace Fogoso
 
         }
 
-        public static void ConsoleWriteWithTitle(string Title, string Text)
+        public static void ConsoleWriteWithTitle(string Title, string Text, bool OverrideDebugMode=false)
         {
-            if (!Main.DebugModeEnabled){ return; }
+            if (!Main.DebugModeEnabled && !OverrideDebugMode){ return; } 
             Console.WriteLine($"{Title} ; {Text}");
         }
 

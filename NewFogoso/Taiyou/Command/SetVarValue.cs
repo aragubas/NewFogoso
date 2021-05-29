@@ -82,7 +82,7 @@ namespace Fogoso.Taiyou.Command
                     return 0;
 
                 case "Int":
-                    OperatorVariable.SetValue(Convert.ToInt32(NewValue));
+                    OperatorVariable.SetValue(Int32.Parse(NewValue));
                     return 0;
 
                 default:

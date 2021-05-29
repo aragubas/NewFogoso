@@ -50,8 +50,10 @@ namespace Fogoso.GameLogic.Screens
             InfosButton.ButtonPress += InfosButton_ButtonPress;
             ItemsViewButton.ButtonPress += ItemsViewButton_ButtonPress;
 
-            ceira = new UtilsObjects.ValueSmoother(3, 5, false);
-
+            ceira = new UtilsObjects.ValueSmoother(3, 20, false);
+ 
+            // Open Item View
+            ItemsViewButton_ButtonPress(null);
         }
 
         void ItemsViewButton_ButtonPress(Button sender)
@@ -83,7 +85,7 @@ namespace Fogoso.GameLogic.Screens
             }
             Rectangle ceira = new Rectangle(Rect.X, Rect.Y, Rect.Width, Rect.Height);
             ceira.Inflate(2, 2);
-
+  
             spriteBatch.Draw(Sprites.GetSprite("/base.png"), ceira, Color.FromNonPremultiplied(15, 15, 15, 100));
             spriteBatch.Draw(Sprites.GetSprite("/base.png"), Rect, bgColor);
 
@@ -96,7 +98,7 @@ namespace Fogoso.GameLogic.Screens
             LeftPanel.Draw(spriteBatch);
             CenterPanel.Draw(spriteBatch);
             TabsButton.Draw(spriteBatch);
-
+ 
             spriteBatch.Begin();
             DateLabel.Draw(spriteBatch);
             TimeLabel.Draw(spriteBatch);
@@ -115,12 +117,12 @@ namespace Fogoso.GameLogic.Screens
             CenterPanel.Update();
             TabsButton.Update();
 
-            string DateText = AragubasTime.GetDecadeNameWithYear() + " - " + AragubasTime.GetMonthName() + " - " + AragubasTime.Week + "," + AragubasTime.GetDayName();
+            string DateText = AragubasTime.GetDecadeNameWithYear() + " - " + AragubasTime.GetMonthName() + "/" + AragubasTime.Week + "," + AragubasTime.GetDayName();
             DateLabel.SetText(DateText);
 
             string TimeText = AragubasTime.Hour + " : " + AragubasTime.Minute + " : " + AragubasTime.Second;
             TimeLabel.SetText(TimeText);
-
+ 
             // Refresh SmootObj Value
             ceira.Update();
             ceira.SetTargetValue(CurrentSessionData.Ceira);

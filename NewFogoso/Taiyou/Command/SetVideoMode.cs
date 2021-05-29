@@ -58,8 +58,8 @@ namespace Fogoso.Taiyou.Command
         {
             string[] Arguments = ReplaceVarLiterals();
 
-            int VideoModeWidth = Convert.ToInt32(GetArgument(Arguments, 0));
-            int VideoModeHeight = Convert.ToInt32(GetArgument(Arguments, 1));
+            int VideoModeWidth = Int32.Parse(GetArgument(Arguments, 0));
+            int VideoModeHeight = Int32.Parse(GetArgument(Arguments, 1));
             bool VideoModeIsFullscreen = GetArgument(Arguments, 1).ToLower().Equals("true");
  
             Main.Reference.graphics.PreferredBackBufferWidth = VideoModeWidth;

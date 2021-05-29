@@ -12,6 +12,7 @@ namespace Fogoso.GameLogic.UI
     {
         public bool IsVisible = true; 
         public bool IsEnabled = true;
+        public bool ForceReadjust;
         public Rectangle Rectangle;
         public bool Selected; 
         public int SelectIndex;

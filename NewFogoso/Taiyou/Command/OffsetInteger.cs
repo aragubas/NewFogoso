@@ -50,7 +50,7 @@ namespace Fogoso.Taiyou.Command
             int OperatorValue = 0;
 
             // Check if OperatorVariable is an integer
-            if (OperatorVariable.Type != "Int") { throw new Exception("Operator variable is not an integer."); }
+            if (OperatorVariable.Type != VariableType.Integer) { throw new Exception("Operator variable is not an integer."); }
             OperatorValue = OperatorVariable.GetValue();
 
 
@@ -58,13 +58,13 @@ namespace Fogoso.Taiyou.Command
             if (OffsetAmount.StartsWith("$", StringComparison.Ordinal))
             {
                 int OffsetAmountVarIndex = Global.VarList_Keys.IndexOf(OffsetAmount.Remove(0, 1));
-                if (Global.VarList[OffsetAmountVarIndex].Type != "Int") { throw new Exception("OffserAmmount variable is not an integer"); }
+                if (Global.VarList[OffsetAmountVarIndex].Type != VariableType.Integer) { throw new Exception("OffserAmmount variable is not an integer"); }
 
                 iOffsetAmount = Global.VarList[OffsetAmountVarIndex].GetValue();
             }
             else
             {
-                iOffsetAmount = Convert.ToInt32(OffsetAmount);
+                iOffsetAmount = Int32.Parse(OffsetAmount);
             }
 
 

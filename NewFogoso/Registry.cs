@@ -93,12 +93,12 @@ namespace Fogoso
                 LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%usr", Environment.UserName);
                 LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%current_dir", Environment.CurrentDirectory);
                 LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%machine_name", Environment.MachineName);
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%processor_count", Convert.ToString(Environment.ProcessorCount));
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%source_dir", Convert.ToString(Global.SourceDirectory));
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%bgm_source_dir", Convert.ToString(Global.BGM_SourceFolder));
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%font_source_dir", Convert.ToString(Global.FONT_SourceFolder));
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%image_source_dir", Convert.ToString(Global.IMAGE_SourceFolder));
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%sound_source_dir", Convert.ToString(Global.SOUND_SourceFolder));
+                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%processor_count", Environment.ProcessorCount.ToString());
+                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%source_dir", Global.SourceDirectory.ToString());
+                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%bgm_source_dir", Global.BGM_SourceFolder.ToString());
+                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%font_source_dir", Global.FONT_SourceFolder.ToString());
+                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%image_source_dir", Global.IMAGE_SourceFolder.ToString());
+                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%sound_source_dir", Global.SOUND_SourceFolder.ToString());
 
                 Console.WriteLine("Found Key: [" + LoadedKeysNames[i] + "]");
 

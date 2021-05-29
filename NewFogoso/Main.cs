@@ -50,7 +50,7 @@ namespace Fogoso
         SpriteBatch spriteBatch;
         public static Main Reference;
         public static bool DebugModeEnabled;
-
+        public static int MaxFPS;
 
         // Fps Counter
         int _total_frames = 0;
@@ -104,8 +104,11 @@ namespace Fogoso
             // Initialize Textbox Instance
             GameLogic.TextBox.KeyboardInput.Initialize(this, 120, 5);
 
+            // Set some variables
+            MaxFPS = Int32.Parse(Registry.ReadKeyValue("/fps"));
+
             // Set Target FPS
-            this.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / Convert.ToInt32(Registry.ReadKeyValue("/fps")));
+            this.TargetElapsedTime = TimeSpan.FromMilliseconds(1000 / MaxFPS);
 
             // Set DebugMode variable
             DebugModeEnabled = Registry.ReadKeyValue("/debug_mode").ToLower().Equals("true");

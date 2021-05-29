@@ -67,10 +67,10 @@ namespace Fogoso.Taiyou.Command
             int OperatorIndex = Global.VarList_Keys.IndexOf(OperatorVarName);
             if (OperatorIndex == -1) { throw new IndexOutOfRangeException("Cannot find the variable [" + OperatorVarName + "]."); }
             Variable OperatorVariable = Global.VarList[OperatorIndex];
-            if (OperatorVariable.Type != "Int") { throw new Exception("Variable [" + OperatorVarName + "] is not an Integer."); }
+            if (OperatorVariable.Type != VariableType.Integer) { throw new Exception("Variable [" + OperatorVarName + "] is not an Integer."); }
             var OperatorValue = OperatorVariable.GetValue();
 
-            if (!Regex.IsMatch(Convert.ToString(OperatorVariable.Value), @"\d"))
+            if (!Regex.IsMatch(OperatorVariable.Value.ToString(), @"\d"))
             {
                 throw new IndexOutOfRangeException("Operator Value is not an number.");
             }
@@ -87,14 +87,14 @@ namespace Fogoso.Taiyou.Command
                 }
 
             }
-            else { ActuatorValue = Global.VarList[ActuatorIndex].Value; }
+            else { ActuatorValue = Global.VarList[ActuatorIndex].Value.ToString(); }
 
             if (!Regex.IsMatch(ActuatorValue, @"\d"))
             {
                 throw new IndexOutOfRangeException("Literals must start with '#' token. [" + OperatorVarName + "].");
             }
  
-            int ActuatorInInteger = Convert.ToInt32(ActuatorValue);
+            int ActuatorInInteger = Int32.Parse(ActuatorValue);
 
             switch (MathOperation)
             {

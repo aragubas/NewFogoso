@@ -82,7 +82,7 @@ namespace Fogoso.GameLogic.Screens
 
         private void SkipToInitialScreen()
         {
-            int Ceira = Convert.ToInt32(Registry.ReadKeyValue("/initial_screen"));
+            int Ceira = Int32.Parse(Registry.ReadKeyValue("/initial_screen"));
             if (Ceira != 0) { ScreenSelector.SetCurrentScreen(Ceira); }
 
         }

@@ -30,7 +30,7 @@ namespace Fogoso.GameLogic
             offsetDay = pDayOffset;
             offsetHour = pHourOffset;
             offsetMinute = pMinuteOffset;
-
+  
             ResetTime();
  
         }

@@ -473,7 +473,7 @@ namespace Fogoso.Taiyou
  
             // Check if instruction is valid
             if (InstuctionsArgumentsSizeIndex == -1) { throw new Exception(TaiyouParserError("Type Error!\nInvalid Command or Instruction [" + Instruction + "]\nAt Script [" + KeyNameFiltred + "]\nIn Line [" + line + "]\nTip: You just typed an command that doesn't exist.")); }
-            int CorrectNumberOfInstructions = Convert.ToInt32(Instructions_NumberOfArguments[InstuctionsArgumentsSizeIndex]);
+            int CorrectNumberOfInstructions = Int32.Parse(Instructions_NumberOfArguments[InstuctionsArgumentsSizeIndex]);
             // Count how many times " appered and divide by 2 
             int NumberOfInstructions = Pass2.Remove(0, 3).Count(x => x == '"') / 2;
 
@@ -533,7 +533,7 @@ namespace Fogoso.Taiyou
             // Variable doesn't exist
             if (VarIndex == -1)
             {
-                Variable newVar = new Variable(VarType, VarValue, VarTag);
+                Variable newVar = new Variable(Variable.StringToVarType(VarType), VarValue, VarTag);
 
                 VarList_Keys.Add(VarTag);
                 VarList.Add(newVar);

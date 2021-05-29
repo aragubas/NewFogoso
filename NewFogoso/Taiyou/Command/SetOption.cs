@@ -98,11 +98,11 @@ namespace Fogoso.Taiyou.Command
                     return 0;
 
                 case "CURSOR_X":
-                    GameInput.CursorPosition.X = Convert.ToInt32(OptionValue);
+                    GameInput.CursorPosition.X = Int32.Parse(OptionValue);
                     return 0;
    
                 case "CURSOR_Y":
-                    GameInput.CursorPosition.Y = Convert.ToInt32(OptionValue);
+                    GameInput.CursorPosition.Y = Int32.Parse(OptionValue);
                     return 0;
  
 

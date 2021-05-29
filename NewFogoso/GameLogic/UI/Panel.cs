@@ -102,6 +102,18 @@ namespace Fogoso.GameLogic.UI
 
         }
 
+        public void ControlFill(string ReferenceTag)
+        {
+            if (ControlCollection.Count > 2) { Utils.ConsoleWriteWithTitle("Panel.ControlFill", "Cannot fill control, there is more than one control on this panel.", true); return; }
+            UIControl control = GetControlByTag(ReferenceTag);
+            if (control == null) { Utils.ConsoleWriteWithTitle("Panel.ControlFill", "Cannot find control for fill operation."); return; }
+            
+            control.SetRectangle(new Rectangle(0, 0, Rectangle.Width, Rectangle.Height));
+            control.PositionOffset = new Vector2(Rectangle.X, Rectangle.Y);
+              
+  
+        }
+
         public override void Update()
         {
             base.Update();

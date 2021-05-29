@@ -34,18 +34,18 @@ namespace Fogoso.GameLogic
         {
             if (Year < 25)
             {    
-                return "Octunder " + Convert.ToString(Math.Abs(Year - 25));
+                return "Octunder " + Math.Abs(Year - 25).ToString();
             } 
             else if (Year < 35)
             { 
-                return "Notrunda " + Convert.ToString(Math.Abs(Year - 35));
+                return "Notrunda " + Math.Abs(Year - 35).ToString();
             }
             else if (Year <= 42)
             { 
-                return "Corrupted " + Convert.ToString(Math.Abs(Year - 42));
+                return "Corrupted " + Math.Abs(Year - 42).ToString();
             }
 
-            return "Undefined " + Convert.ToString(Year);
+            return "Undefined " + Year.ToString();
 
         }
 
@@ -105,10 +105,10 @@ namespace Fogoso.GameLogic
         {
             Frames += 1;
 
-            if (Frames >= Convert.ToInt32(Registry.ReadKeyValue("/fps"))) { Second += 1; Frames = 0; }
+            if (Frames >= Int32.Parse(Registry.ReadKeyValue("/fps"))) { Second += 1; Frames = 0; }
             if (Second >= 13) { Minute += 1; Second = 1; }
             if (Minute >= 13) { Hour += 1; Minute = 1; }
-            if (Hour >= 8) { Day += 1; Hour = 1; }
+            if (Hour >= 7) { Day += 1; Hour = 1; }
             if (Day >= 5) { Week += 1; Day = 1; }
             if (Week >= 6) { Month += 1; Week = 1; }
             if (Month >= 5) { Year += 1; Month = 1; }
