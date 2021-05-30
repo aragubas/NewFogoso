@@ -326,6 +326,7 @@ namespace Fogoso
         public static KeyboardState oldState;
         public static GamePadState oldPadState;
         public static GamePadCapabilities newCapabilities;
+        public static SpriteFont DefaultFont;
         private static int LastInputMode = -1;
         public static List<InputKeyArgument> InputKeyArguments = new List<InputKeyArgument>();
         public static List<string> InputKeyArguments_key = new List<string>();
@@ -399,8 +400,9 @@ namespace Fogoso
 
             }
 
-
-
+            Utils.ConsoleWriteWithTitle("GameInput", "Loading default font...");
+            DefaultFont = Fonts.GetSpriteFont(Fonts.GetFontDescriptor("PressStart2P", Fonts.DefaultFontSize));
+ 
         }
 
         public static void InputViwer_Define(string InputArg)
@@ -541,7 +543,7 @@ namespace Fogoso
                 {
                     string ActionWax = Registry.ReadKeyValue("/gamepad_actions/" + Wax);
 
-                    spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("default"), ActionWax, new Vector2(Position.X, Position.Y - TextOffset), Color.FromNonPremultiplied(230 - TextOffset, Opacity, Opacity, Opacity + 50), -0.7f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
+                    spriteBatch.DrawString(DefaultFont, ActionWax, new Vector2(Position.X, Position.Y - TextOffset), Color.FromNonPremultiplied(230 - TextOffset, Opacity, Opacity, Opacity + 50), -0.7f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
 
                 }
 

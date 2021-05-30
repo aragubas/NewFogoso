@@ -1,6 +1,7 @@
 ﻿using Fogoso.GameLogic.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,15 +28,15 @@ namespace Fogoso.GameLogic.Screens
 
             LeftPanel = new Panel(new Rectangle(0, 0, 200, Global.WindowHeight));
             CenterPanel = new Panel(new Rectangle(205, 35, Global.WindowWidth - 210, Global.WindowHeight - 85));
-            DateLabel = new Label(new Vector2(205, 5), Main.Reference.Content.Load<SpriteFont>("default"), "amet");
-            TimeLabel = new Label(new Vector2(205, 20), Main.Reference.Content.Load<SpriteFont>("small"), "sit");
+            DateLabel = new Label(new Vector2(205, 5), Fonts.GetFontDescriptor("PressStart2P", Fonts.SmallFontSize), "amet");
+            TimeLabel = new Label(new Vector2(205, 20), Fonts.GetFontDescriptor("PressStart2P", Fonts.SmallFontSize), "sit");
             TabsButton = new ToolStripPanel(new Rectangle(205, 35 + (Global.WindowHeight - 85) + 5, Global.WindowWidth - 210, 40), true);
-
+ 
             refClickerViewer = new ClickerViewer(new Vector2(3, LeftPanel.Rectangle.Bottom));
-            Label sinas = new Label(new Vector2(5, 5), Main.Reference.Content.Load<SpriteFont>("default"), "Loading...");
+            Label sinas = new Label(new Vector2(5, 5), Fonts.GetFontDescriptor("PressStart2P", Fonts.DefaultFontSize), "Loading...");
             Button InfosButton = new Button(new Vector2(5, 5), "Infos");
             Button ItemsViewButton = new Button(new Vector2(5, 5), "Items");
-
+  
             TabsButton.AddControl(InfosButton, "infos-button");
             TabsButton.AddControl(ItemsViewButton, "items-button");
 
@@ -50,7 +51,7 @@ namespace Fogoso.GameLogic.Screens
             InfosButton.ButtonPress += InfosButton_ButtonPress;
             ItemsViewButton.ButtonPress += ItemsViewButton_ButtonPress;
 
-            ceira = new UtilsObjects.ValueSmoother(3, 20, false);
+            ceira = new UtilsObjects.ValueSmoother(10, 20, false);
  
             // Open Item View
             ItemsViewButton_ButtonPress(null);
@@ -58,17 +59,23 @@ namespace Fogoso.GameLogic.Screens
 
         void ItemsViewButton_ButtonPress(Button sender)
         {
+            CenterPanel.ControlCollection.Clear();
+
             List<UIControl> newControlCollection = new List<UIControl>();
             ItemsView ceiraView = new ItemsView(new Rectangle(5, 5, 200, 200));
-
+            ceiraView.Tag = "items-view";
+             
             newControlCollection.Add(ceiraView);
 
-
             CenterPanel.SwitchControlCollection(newControlCollection);
-        }
+            CenterPanel.ControlFill("items-view");
 
+        }
+ 
         void InfosButton_ButtonPress(Button sender)
         {
+            CenterPanel.ControlCollection.Clear();
+  
             List<UIControl> newControlCollection = new List<UIControl>();
 
 
@@ -85,10 +92,10 @@ namespace Fogoso.GameLogic.Screens
             }
             Rectangle ceira = new Rectangle(Rect.X, Rect.Y, Rect.Width, Rect.Height);
             ceira.Inflate(2, 2);
-  
-            spriteBatch.Draw(Sprites.GetSprite("/base.png"), ceira, Color.FromNonPremultiplied(15, 15, 15, 100));
-            spriteBatch.Draw(Sprites.GetSprite("/base.png"), Rect, bgColor);
-
+   
+            spriteBatch.DrawRectangle(ceira, Color.FromNonPremultiplied(15, 15, 22, 50), 2);
+            spriteBatch.FillRectangle(Rect, bgColor);
+ 
         }
 
         public override void Draw(SpriteBatch spriteBatch)

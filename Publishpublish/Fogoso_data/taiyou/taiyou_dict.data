@@ -1,0 +1,16 @@
+WriteLine;001
+Var;002
+IntegerOperation;003
+EventHandler;004
+Jump;005
+SetOption;006
+JumpIf;007
+SetVar;008
+Halt;009
+HaltExec;00A
+HaltIfEqual;00B
+SetVideoMode;00C
+SetCursor;00D
+InternalRoutine;00E
+Call;00F
+DebugVar;00G

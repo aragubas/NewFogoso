@@ -503,29 +503,29 @@ namespace Fogoso.Taiyou
         public static void SetGlobalVariables()
         {
             // Resolution Variables
-            SetVariable("int", "Internal.GameWindow.Width", Fogoso.Global.WindowWidth.ToString());
-            SetVariable("int", "Internal.GameWindow.Height", Fogoso.Global.WindowHeight.ToString());
-            SetVariable("bool", "Internal.GameWindow.Fullscreen", Fogoso.Global.WindowIsFullcreen.ToString());
-            
+            SetVariable(VariableType.Integer, "Internal.GameWindow.Width", Fogoso.Global.WindowWidth.ToString());
+            SetVariable(VariableType.Integer, "Internal.GameWindow.Height", Fogoso.Global.WindowHeight.ToString());
+            SetVariable(VariableType.Boolean, "Internal.GameWindow.Fullscreen", Fogoso.Global.WindowIsFullcreen.ToString());
+             
             // Enviroment Variables
-            SetVariable("bool", "Internal.Environment.DebugMode", Main.DebugModeEnabled.ToString());
-            SetVariable("int", "Internal.Environment.FPS", Main.Reference._fps.ToString());
+            SetVariable(VariableType.Boolean, "Internal.Environment.DebugMode", Main.DebugModeEnabled.ToString());
+            SetVariable(VariableType.Integer, "Internal.Environment.FPS", Main.Reference._fps.ToString());
             
-            // GameInput Variables
-            SetVariable("string", "Internal.GameInput.Cursor.Default", GameInput.defaultCursor);
-            SetVariable("string", "Internal.GameInput.Cursor", GameInput.CursorImage);
-            SetVariable("string", "Internal.GameInput.Cursor.X", GameInput.CursorPosition.X.ToString());
-            SetVariable("string", "Internal.GameInput.Cursor.Y", GameInput.CursorPosition.Y.ToString());
-            SetVariable("string", "Internal.GameInput.Cursor.ReservedID", GameInput.ReservedModeID.ToString());
-
+            // GameInput Variables 
+            SetVariable(VariableType.String, "Internal.GameInput.Cursor.Default", GameInput.defaultCursor);
+            SetVariable(VariableType.String, "Internal.GameInput.Cursor", GameInput.CursorImage);
+            SetVariable(VariableType.Integer, "Internal.GameInput.Cursor.X", GameInput.CursorPosition.X.ToString());
+            SetVariable(VariableType.Integer, "Internal.GameInput.Cursor.Y", GameInput.CursorPosition.Y.ToString());
+            SetVariable(VariableType.Integer, "Internal.GameInput.Cursor.ReservedID", GameInput.ReservedModeID.ToString());
+  
             // Raw cursor position
-            SetVariable("int", "Internal.Raw.CursorX", Mouse.GetState().X.ToString());
-            SetVariable("int", "Internal.Raw.CursorY", Mouse.GetState().Y.ToString());
- 
+            SetVariable(VariableType.Integer, "Internal.Raw.CursorX", Mouse.GetState().X);
+            SetVariable(VariableType.Integer, "Internal.Raw.CursorY", Mouse.GetState().Y);
+   
 
         }
  
-        public static void SetVariable(string VarType, string VarTag, string VarValue)
+        public static void SetVariable(VariableType VarType, string VarTag, object VarValue)
         {
             // Var index
             int VarIndex = VarList_Keys.IndexOf(VarTag);
@@ -533,7 +533,7 @@ namespace Fogoso.Taiyou
             // Variable doesn't exist
             if (VarIndex == -1)
             {
-                Variable newVar = new Variable(Variable.StringToVarType(VarType), VarValue, VarTag);
+                Variable newVar = new Variable(VarType, VarValue, VarTag);
 
                 VarList_Keys.Add(VarTag);
                 VarList.Add(newVar);

@@ -52,7 +52,7 @@ namespace Fogoso.Taiyou.Command
             // Check if OperatorVariable is an integer
             if (OperatorVariable.Type != VariableType.Integer) { throw new Exception("Operator variable is not an integer."); }
             OperatorValue = OperatorVariable.GetValue();
-
+ 
 
             // Get the OffsetAmmount from Variable
             if (OffsetAmount.StartsWith("$", StringComparison.Ordinal))

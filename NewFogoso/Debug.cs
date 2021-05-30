@@ -24,7 +24,7 @@ namespace Fogoso
     public static class Debug
     {
         static List<DebugItem> DebugStuff;
-
+        static SpriteFont DefaultFontFile = null;
 
         public static void Initialize()
         {
@@ -55,14 +55,15 @@ namespace Fogoso
  
         public static void RenderDebugInfo(SpriteBatch spriteBatch)
         {
+            if (DefaultFontFile == null) { DefaultFontFile = Fonts.GetSpriteFont(Fonts.GetFontDescriptor("PressStart2P", Fonts.DefaultFontSize)); }
             spriteBatch.Begin();
 
             for(int i = 0; i < DebugStuff.Count; i++)
             {
                 string Text = "'" + DebugStuff[i].Name + "' = [" + DebugStuff[i].Value + "]";
-                spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(6, 6 + (i * 15)), Color.Black);
-                spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(5, 5 + (i * 15)), Color.Red);
-
+                spriteBatch.DrawString(DefaultFontFile, Text, new Vector2(6, 6 + (i * 15)), Color.Black);
+                spriteBatch.DrawString(DefaultFontFile, Text, new Vector2(5, 5 + (i * 15)), Color.Red);
+  
             }
  
             spriteBatch.End();

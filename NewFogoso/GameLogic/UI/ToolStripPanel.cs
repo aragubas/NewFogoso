@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Fogoso.GameLogic.UI
         public AnimationController Animator;
         private Color PanelColor;
         private Color PanelOriginalColor;
-        private Color PanelReservedColor;
+        private Color PanelReservedColor;        
         public int ItemsSpacing = 2;
         private int Scroll;
         private int LastMouseX;
@@ -64,8 +65,8 @@ namespace Fogoso.GameLogic.UI
             spriteBatch.GraphicsDevice.ScissorRectangle = Rectangle;
 
             // Draw background
-            spriteBatch.Draw(Sprites.GetSprite("/base.png"), new Rectangle(0, 0, Rectangle.Width, Rectangle.Height), Color.FromNonPremultiplied(PanelColor.R + 130, PanelColor.G + 130, PanelColor.B + 146, PanelColor.A));
-            spriteBatch.Draw(Sprites.GetSprite("/base.png"), new Rectangle(1, 1, Rectangle.Width - 2, Rectangle.Height - 2), PanelColor);
+            spriteBatch.DrawRectangle(new Rectangle(0, 0, Rectangle.Width, Rectangle.Height), Color.FromNonPremultiplied(PanelColor.R + 130, PanelColor.G + 130, PanelColor.B + 146, PanelColor.A), 2);
+            spriteBatch.FillRectangle(new Rectangle(1, 1, Rectangle.Width - 2, Rectangle.Height - 2), PanelColor);
 
             // Draw all UI Elements
             for (int i = 0; i < ControlCollection.Count; i++)
@@ -154,7 +155,7 @@ namespace Fogoso.GameLogic.UI
 
                 }
             }
-
+  
             // Start Scrolling if enabled
             if (GameInput.CursorColision.Intersects(Rectangle) && ScrollingEnabled)
             {

@@ -13,6 +13,7 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
         Random RandomMizer;
         float EffectMultiplier = 35f;
         Matrix ScreenTransform;
+        SpriteFont Font;
         UtilsObjects.ValueSmoother ColorRSmooth;
         UtilsObjects.ValueSmoother ColorGSmooth;
         UtilsObjects.ValueSmoother ColorBSmooth;
@@ -41,16 +42,16 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {  
             spriteBatch.Begin(transformMatrix:ScreenTransform);
-  
+    
             for (int x = 0; x < Global.WindowWidth / 13; x++)
             {
                 for (int y = 0; y < Global.WindowHeight / 13; y++)
                 {
-                    spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("12pt"), "$", new Vector2(x * 15, y * 15), Color.FromNonPremultiplied((int)ColorRSmooth.GetValue() + y, (int)ColorGSmooth.GetValue() + x, (int)ColorBSmooth.GetValue() + y, 255));
+                    spriteBatch.DrawString(Font, "$", new Vector2(x * 15, y * 15), Color.FromNonPremultiplied((int)ColorRSmooth.GetValue() + y, (int)ColorGSmooth.GetValue() + x, (int)ColorBSmooth.GetValue() + y, 255));
 
                 }
             }
-
+ 
             spriteBatch.End();
 
         }
@@ -88,8 +89,8 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
 
         public override void Initialize()
         {
-            base.Initialize();
-
+            base.Initialize(); 
+            Font = Fonts.GetSpriteFont(Fonts.GetFontDescriptor("PressStart2P", 18));
         }
     }
 }

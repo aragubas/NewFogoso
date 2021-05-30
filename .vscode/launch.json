@@ -5,7 +5,7 @@
             // Use IntelliSense to find out which attributes exist for C# debugging
             // Use hover for the description of the existing attributes
             // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-            "name": ".NET Core Launch (console)",
+            "name": "Launch",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -14,19 +14,29 @@
             "args": [],
             "cwd": "${workspaceFolder}/Output",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "externalTerminal",
             "stopAtEntry": false
         },
         {
-            "name": ".NET Core Attach",
+            "name": "Publish",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "publish",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/Publish/NewFogoso.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Publish",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "externalTerminal",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Attach",
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:pickProcess}"
         },
         {
-            // Use IntelliSense to find out which attributes exist for C# debugging
-            // Use hover for the description of the existing attributes
-            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
             "name": "Launch Only (Launch without buiding)",
             "type": "coreclr",
             "request": "launch",
@@ -35,7 +45,7 @@
             "args": [],
             "cwd": "${workspaceFolder}/Output",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "externalTerminal",
             "stopAtEntry": false
         },
 

@@ -22,6 +22,7 @@
                 "publish",
                 "${workspaceFolder}/NewFogoso/NewFogoso.csproj",
                 "/property:GenerateFullPaths=true",
+                "/property:OutputPath=${workspaceFolder}/Publish",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Fogoso.GameLogic
 {
 
-    class AragubasTimeObject
+    public class AragubasTimeObject
     {
         int Year = 0;
         int Month = 0;
@@ -52,6 +52,7 @@ namespace Fogoso.GameLogic
         public bool TimeDay() { return AragubasTime.Day >= Day; }
         public bool TimeHour() { return AragubasTime.Hour >= Hour; }
         public bool TimeMinute() { return AragubasTime.Minute >= Minute; }
- 
+        public bool TimeTriggered() {return TimeYear() && TimeMonth() && TimeWeek() && TimeDay() && TimeHour() && TimeMinute(); }
+
     }
 }

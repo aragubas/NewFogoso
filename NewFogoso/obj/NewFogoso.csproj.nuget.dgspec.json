@@ -45,6 +45,10 @@
             "MonoGame.Framework.DesktopGL": {
               "target": "Package",
               "version": "[3.8.0.1641, )"
+            },
+            "SpriteFontPlus": {
+              "target": "Package",
+              "version": "[0.9.2, )"
             }
           },
           "imports": [

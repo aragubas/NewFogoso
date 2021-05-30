@@ -74,7 +74,7 @@ namespace Fogoso.Taiyou
             }
         }
 
-        public Variable(VariableType varType, dynamic varValue, string VarTag)
+        public Variable(VariableType varType, object varValue, string VarTag)
         {
             Tag = VarTag;
             Type = varType;
@@ -82,15 +82,15 @@ namespace Fogoso.Taiyou
    
             // Set the variable Generic Type
             SetVarGenericType(varType);
-   
-            // Check for literals
+    
+            // Check for VarCopy
             try{
                 if (Convert.ToString(varValue).StartsWith("$", StringComparison.Ordinal))
                 { 
-                    int VarIndex = Global.VarList_Keys.IndexOf(varValue.Remove(0, 1));
-                    if (VarIndex == -1) { throw new Exception("Cannot find variable [" + varValue + "]."); }
+                    int VarIndex = Global.VarList_Keys.IndexOf(varValue.ToString().Remove(0, 1));
+                    if (VarIndex == -1) { throw new Exception($"Cannot find variable for copy operation. {varValue}"); }
                     Variable varWax = Global.VarList[VarIndex];
-
+  
                     if (varWax.GenericVarType != GenericVarType) { throw new Exception("Cannot copy destination variable to current variable since they are different types of variable."); }
 
                     Value = Global.VarList[VarIndex].Value;

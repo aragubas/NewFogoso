@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,10 @@ namespace Fogoso.GameLogic.UI
         // Method
         protected virtual void OnButtonPress()
         {
-            Sound.PlaySound("hud/click", 0.15f);
+            Sound.PlaySound("hud/click", 0.2f);
             if (ButtonPress != null) { ButtonPress(this); }
         }
-
+ 
         #endregion
 
         public string Text;
@@ -33,6 +34,7 @@ namespace Fogoso.GameLogic.UI
         Color _backColor;
         Color _foreColor;
         MouseState oldState;
+        SpriteFont Font;
         bool InactiveUpdateRan;
         private bool MouseOverSoundPlayed;
 
@@ -44,13 +46,14 @@ namespace Fogoso.GameLogic.UI
             Text = pText;
 
             // Set minimum size
-            MinWidth = (int)Main.Reference.Content.Load<SpriteFont>("default").MeasureString(Text).X;
-            MinHeight = (int)Main.Reference.Content.Load<SpriteFont>("default").MeasureString(Text).Y;
+            Font = Fonts.GetSpriteFont(Fonts.GetFontDescriptor("PressStart2P", Fonts.DefaultFontSize));
+            MinWidth = (int)Font.MeasureString(Text).X;
+            MinHeight = (int)Font.MeasureString(Text).Y;
 
             Location = pLocation;
             Location.X += BorderSize;
             Location.Y += BorderSize;
-
+ 
             Size = new Vector2(MinWidth, MinHeight);
 
             Rectangle = new Rectangle((int)Location.X - BorderSize, (int)Location.Y - BorderSize, (int)Size.X + BorderSize * 2, (int)Size.Y + BorderSize * 2);
@@ -106,9 +109,9 @@ namespace Fogoso.GameLogic.UI
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprites.GetSprite("/base.png"), Rectangle, _backColor);
+            spriteBatch.FillRectangle(Rectangle, _backColor);
 
-            spriteBatch.DrawString(Main.Reference.Content.Load<SpriteFont>("default"), Text, new Vector2(Location.X, Location.Y), _foreColor);
+            spriteBatch.DrawString(Font, Text, new Vector2(Location.X, Location.Y), _foreColor);
         }
 
         public override void InactiveUpdate()

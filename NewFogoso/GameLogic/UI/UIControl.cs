@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fogoso.GameLogic.UI
 {
@@ -23,14 +18,9 @@ namespace Fogoso.GameLogic.UI
         public Rectangle ColisionRect;
         public string Tag;
         public bool OnlyUpdateWhenMouseHover;
-
-        public UIControl()
-        {
-
-        }
-
+ 
         /// <summary>
-        /// Update logic
+        /// Control Update logic
         /// </summary>
         public virtual void Update() { if (!IsVisible) { return; } }
 
@@ -40,9 +30,9 @@ namespace Fogoso.GameLogic.UI
         public virtual void InactiveUpdate() { if (!IsVisible) { return; } }
 
         /// <summary>
-        /// Draw the control
+        /// Draw control
         /// </summary>
-        /// <param name="spriteBatch"></param>
+        /// <param name="spriteBatch">SpriteBatch</param>
         public virtual void Draw(SpriteBatch spriteBatch) { if (!IsVisible || !IsEnabled) { return; } }
 
         /// <summary>
@@ -53,9 +43,13 @@ namespace Fogoso.GameLogic.UI
         /// <summary> 
         /// Set control rectangle (override for resizing logic)
         /// </summary>
-        /// <param name="pRectangle"></param>
+        /// <param name="pRectangle">New Rectangle</param>
         public virtual void SetRectangle(Rectangle pRectangle) { Rectangle = pRectangle; }
-
-
+  
+        /// <summary>
+        /// Breif description of this control
+        /// </summary>
+        public virtual new string ToString() { return "UI Control"; }
+ 
     }
 }

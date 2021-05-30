@@ -1,6 +1,0 @@
-Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/12pt.spritefont","/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/12pt.xnb","FontDescriptionProcessor","SpriteFontContent",2019,37905,1.347712
-"/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/arial_12.spritefont","/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/arial_12.xnb","FontDescriptionProcessor","SpriteFontContent",2009,21521,1.564521
-"/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/default.spritefont","/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/default.xnb","FontDescriptionProcessor","SpriteFontContent",2010,21522,0.231357
-"/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/small.spritefont","/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/small.xnb","FontDescriptionProcessor","SpriteFontContent",2008,21522,0.368402
-"/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/tyne.spritefont","/home/aragubas/Documents/Projects/NewFogoso/NewFogoso/Content/bin/Windows/Content/tyne.xnb","FontDescriptionProcessor","SpriteFontContent",2010,13330,0.298047

@@ -28,12 +28,12 @@ namespace Fogoso.GameLogic.UI
 
         #endregion
 
-        public Label(Vector2 pPosition, SpriteFont pFont, string pText)
+        public Label(Vector2 pPosition, FontDescriptor pFont, string pText)
         {
             Text = pText;
-            Font = pFont;
+            Font = Fonts.GetSpriteFont(pFont);
             Position = pPosition;
-
+ 
             TextColor = Color.White;
             lastTextSize = Font.MeasureString(Text);
         }

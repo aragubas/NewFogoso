@@ -1,0 +1,55 @@
+# Restore Cursor
+##########################
+# This script is called every frame, for restoring cursor position and image
+###########################################################
+
+$FUNCTION "@HEADER";
+    Var "Int", "RestoreCursor.CursorX", "0";
+    Var "Int", "RestoreCursor.CursorY", "0";
+$END
+
+# Restore Cursor Image
+JumpIf "#Internal.GameInput.Cursor.ReservedID$", "==", "-1", "RestoreCursor";
+
+# Set CursorPosVariable
+SetVar "RestoreCursor.CursorX", "Int", "#Internal.Raw.CursorX$";
+SetVar "RestoreCursor.CursorY", "Int", "#Internal.Raw.CursorY$";
+
+ 
+# Set cursor position to Zero if less than 0
+JumpIf "#RestoreCursor.CursorX$", "<=", "0", "SetXToZero";
+JumpIf "#RestoreCursor.CursorY$", "<=", "0", "SetYToZero";
+
+# Set cursor position to Window Size if higher than Window Size
+JumpIf "#RestoreCursor.CursorX$", ">=", "#Internal.GameWindow.Width$", "SetXToWidth";
+JumpIf "#RestoreCursor.CursorY$", ">=", "#Internal.GameWindow.Height$", "SetYToHeight";
+
+SetOption "CURSOR_X", "#RestoreCursor.CursorX$";
+SetOption "CURSOR_Y", "#RestoreCursor.CursorY$";
+
+ 
+# Set cursor to default one
+$FUNCTION "RestoreCursor";
+    SetOption "CURSOR_IMAGE", "#Internal.GameInput.Cursor.Default$";
+$END
+ 
+# Set cursor X to 0
+$FUNCTION "SetXToZero";
+    SetVar "RestoreCursor.CursorX", "Int", "0";
+$END
+
+# Set cursor Y to 0
+$FUNCTION "SetYToZero";
+    SetVar "RestoreCursor.CursorY", "Int", "0";
+$END
+   
+# Set cursor X to Window Width
+$FUNCTION "SetXToWidth";
+    SetVar "RestoreCursor.CursorX", "Int", "#Internal.GameWindow.Width$";
+$END
+ 
+# Set cursor Y to Window Height
+$FUNCTION "SetYToHeight";
+    SetVar "RestoreCursor.CursorY", "Int", "#Internal.GameWindow.Height$";
+$END
+

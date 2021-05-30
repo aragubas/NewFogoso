@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using MonoGame.Extended;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,8 +29,8 @@ namespace Fogoso.GameLogic.UI
 
         public CeiraViewObj(string pCeiraText, Vector2 InitialPos, Color pBackgroundColor, Color pForegroundColor, float CeiraChange)
         {
-            font = Main.Reference.Content.Load<SpriteFont>("tyne");
-
+            font = Fonts.GetSpriteFont(Fonts.GetFontDescriptor("PressStart2P", Fonts.TyneFontSize));
+  
             string Result = Utils.WrapText(font, pCeiraText, 140);
 
             CeiraText = Result;
@@ -57,10 +58,10 @@ namespace Fogoso.GameLogic.UI
             if (IsEnabled && Opacity < 255) { Opacity += 10; }
             if (!IsEnabled) { Opacity -= 25; }
             if (Opacity < 0) { WaitingDeletion = true; return; }
-
+ 
             // Draw Background
-            spriteBatch.Draw(Sprites.GetSprite("/base.png"), new Rectangle((int)CeiraPosition.X, (int)CeiraPosition.Y, (int)CeiraTextSize.X, (int)CeiraTextSize.Y), Color.FromNonPremultiplied(BackgroundColor.R, BackgroundColor.G, BackgroundColor.B, Opacity));
-            
+            spriteBatch.FillRectangle(new Rectangle((int)CeiraPosition.X, (int)CeiraPosition.Y, (int)CeiraTextSize.X, (int)CeiraTextSize.Y), Color.FromNonPremultiplied(BackgroundColor.R, BackgroundColor.G, BackgroundColor.B, Opacity));
+
             // Draw Text
             spriteBatch.DrawString(font, CeiraText, CeiraPosition, Color.FromNonPremultiplied(ForegroundColor.R, ForegroundColor.G, ForegroundColor.B, Opacity));
  
@@ -120,13 +121,10 @@ namespace Fogoso.GameLogic.UI
    
         public override void Update()
         {
-            if (ClearEstimatedTimer.TimeHour()) 
+            if (ClearEstimatedTimer.TimeTriggered()) 
             { 
                 // Increase Ceira with Income
                 CurrentSessionData.Ceira += EstimatedIncome; 
-
-                // Play Click Sound
-                if (EstimatedIncome > 0) { Sound.PlaySound("click", 1f); }; 
  
                 // Reset Income
                 EstimatedIncome = 0; 
@@ -144,7 +142,7 @@ namespace Fogoso.GameLogic.UI
                 {
                     if (CeiraViewer[i].CeiraPosition.Y < CeiraViewer[i].CeiraTextSize.Y) { CeiraViewer.Remove(CeiraViewer[i]); continue; }
                     if (!CeiraViewer[i].IsEnabled) {if (CeiraViewer[i].WaitingDeletion) { CeiraViewer.Remove(CeiraViewer[i]); } continue; }
-                    if (CeiraViewer[i].TimeTrigger.TimeMinute()) { CeiraViewer[i].IsEnabled = false; if (CeiraViewer[i].CeiraPosition.Y > Rectangle.Y) { CeiraViewer.Remove(CeiraViewer[i]); } continue; }
+                    if (CeiraViewer[i].TimeTrigger.TimeTriggered()) { CeiraViewer[i].IsEnabled = false; if (CeiraViewer[i].CeiraPosition.Y > Rectangle.Y) { CeiraViewer.Remove(CeiraViewer[i]); } continue; }
 
  
                     CeiraViewer[i].SetPosition(new Vector2(i % 2, Rectangle.Y - (i * CeiraViewer[i].CeiraTextSize.Y))); 
@@ -157,7 +155,8 @@ namespace Fogoso.GameLogic.UI
                 AddCeira(CurrentSessionData.CeiraPerWorkunit.ToString(), CurrentSessionData.CeiraPerWorkunit);
                 AragubasTime.Frames = AragubasTime.Frames * 2;
                 Random Oracle = new Random();
-  
+                Sound.PlaySound("click", 0.06f);
+
                 if (Oracle.Next(0, 100) == RandomSinas)
                 {
                     AragubasTime.Frames += AragubasTime.Frames * 2;
