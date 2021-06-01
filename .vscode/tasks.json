@@ -15,15 +15,30 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "publish-linux",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "publish",
                 "${workspaceFolder}/NewFogoso/NewFogoso.csproj",
                 "/property:GenerateFullPaths=true",
-                "/property:OutputPath=${workspaceFolder}/Publish",
+                "/property:OutputPath=${workspaceFolder}/Publish/",
                 "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish-windows",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/NewFogoso/NewFogoso.csproj",
+                "-r win-x64", 
+                "/p:GenerateFullPaths=true",
+                "/p:OutputPath=${workspaceFolder}/Publish/",
+                "/consoleloggerparameters:NoSummary",
+                "/p:PublishTrimmed=true",
             ],
             "problemMatcher": "$msCompile"
         },

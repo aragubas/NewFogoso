@@ -1,0 +1,6 @@
+is_global = true
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = true
+build_property.IncludeAllContentForSelfExtract = 
+build_property.RootNamespace = NewFogoso
+build_property.ProjectDir = /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/

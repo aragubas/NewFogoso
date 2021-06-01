@@ -1,0 +1,13 @@
+# Initial Script
+##################
+# This script is called when Fogoso Engine Finish Loading Taiyou. (At this point, no resource is currently loaded.)
+#####################################################################################################################
+
+Jump "main"; 
+   
+$FUNCTION "main";
+    WriteLine "Taiyou has been started";
+    SetOption "WINDOW_TITLE", "Fogoso - Loading Resources...";
+    InternalRoutine "INIT_STATIC_EVENTS";
+     
+$END

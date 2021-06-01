@@ -1,0 +1,10 @@
+# SetVideoMode
+################
+# This script will be executed after initial for setting up video mode.
+##########################################################################
+
+$FUNCTION "@HEADER";
+    SetOption "WINDOW_TITLE", "Fogoso May 2021";
+$END
+ 
+SetVideoMode "800", "480", "False";
