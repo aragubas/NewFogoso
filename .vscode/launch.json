@@ -14,33 +14,7 @@
             "args": [],
             "cwd": "${workspaceFolder}/Output",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "externalTerminal",
-            "stopAtEntry": false
-        },
-        {
-            "name": "Publish (Linux)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "publish-linux",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Publish/NewFogoso.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/Publish",
-            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "externalTerminal",
-            "stopAtEntry": false
-        },
-        {
-            "name": "Publish (Windows)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "publish-windows",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Publish/NewFogoso.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/Publish",
-            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "externalTerminal",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
         {
@@ -58,7 +32,7 @@
             "args": [],
             "cwd": "${workspaceFolder}/Output",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "externalTerminal",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
 

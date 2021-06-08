@@ -20,19 +20,19 @@ All events happens on aragubas
 1 minute has 12 seconds
 
 -= Month Names =-
-1 - Tropin
-2 - Jatubeiro
-3 - Crotela
-4 - Laubarin
+1 - Abrilze
+2 - Bonocze
+3 - Cauteze
+4 - Dimalze
 
 -= Day Names =-
-1 - Narilda
-2 - Doiize
-3 - Lalanida
-4 - Kronilha
-5 - Cacanildo
-6 - Scrolla
-7 - Abutrec
+1 - Abutrecdo
+2 - Braunildo
+3 - Canildo
+4 - Dorimado
+5 - Enalildo
+6 - Foconildo
+7 - Gaunetdo
 
 
 -= Periods =-
@@ -57,10 +57,10 @@ and each parameter affects gameplay, it will be also used for the "market view" 
 N.  V.    D.                                                                                                
 ==  ====  ==========================================================================================  
 --0 t--4  = Create UI SubSystem with windowing and panels with docking and auto-arrangement stuff
---1 t---  = Prototype game environment 
---2 t---  = Start coding game environment
---3 ----  = Prototype Item arrangement system
---4 ----  = Start coding item arrangement system
+--1 t--1  = Prototype game environment 
+--2 t--1  = Start coding game environment
+--3 t---  = Prototype Item arrangement system
+--4 t---  = Start coding item arrangement system
 --5 ----  = Prototype a store for buying items (test with first 3 items)
 --6 ----  = Start coding store
 --7 ----  = Prototype XP system
@@ -72,7 +72,9 @@ N.  V.    D.
 -13 ----  = Code Planet View
 -14 ----  = Prototype Random event generator
 -15 ----  = Code Random Event Generator 
-       
+-16 ----  = Start Coding Timed Tasks
+BUG ----  = Add WrapAround to TimeObject's Time Values
+
 [...]
 -50 t--1  = Debug Profiler for Game Engine
 

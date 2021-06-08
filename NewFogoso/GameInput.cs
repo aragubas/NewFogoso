@@ -66,7 +66,7 @@ namespace Fogoso
                     ThisGamePadButton = Buttons.DPadRight;
                     break;
 
-                case "BACK":
+                case "SELECT":
                     ThisGamePadButton = Buttons.Back;
                     break;
 
@@ -308,6 +308,10 @@ namespace Fogoso
 
                 case "F12":
                     KeyObj = Keys.F12;
+                    break;
+
+                case "TAB":
+                    KeyObj = Keys.Tab;
                     break;
 
                 default:

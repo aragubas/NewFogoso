@@ -42,6 +42,14 @@ namespace Fogoso.GameLogic.UI
         {
             TextColor = pNewColor;
         }
+
+        public override void SetRectangle(Rectangle newRect)
+        {
+            base.SetRectangle(newRect);
+            Position.X = newRect.X;
+            Position.Y = newRect.Y;
+            
+        }
         
         /// <summary>
         /// Get TextSize from cache

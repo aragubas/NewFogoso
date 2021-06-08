@@ -21,18 +21,17 @@ namespace Fogoso.GameLogic
         int offsetDay = 0;
         int offsetHour = 0;
         int offsetMinute = 0;
-
+ 
         public AragubasTimeObject(int pMinuteOffset, int pHourOffset, int pDayOffset, int pWeekOffset, int pMonthOffset, int pYearOffset)
         {
             offsetYear = pYearOffset;
             offsetMonth = pMonthOffset;
-            offsetWeek = pWeekOffset;
+            offsetWeek = pWeekOffset; 
             offsetDay = pDayOffset;
             offsetHour = pHourOffset;
             offsetMinute = pMinuteOffset;
-  
             ResetTime();
- 
+  
         }
 
         public void ResetTime()
@@ -43,7 +42,7 @@ namespace Fogoso.GameLogic
             Day = AragubasTime.Day + offsetDay;
             Hour = AragubasTime.Hour + offsetHour;
             Minute = AragubasTime.Minute + offsetMinute;
-
+ 
         }
 
         public bool TimeYear() { return AragubasTime.Year >= Year; }

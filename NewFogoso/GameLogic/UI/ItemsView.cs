@@ -4,27 +4,27 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using MonoGame.Extended;
- 
+using Fogoso.GameLogic.Items;
+
 namespace Fogoso.GameLogic.UI
-{
-    class ItemsViewItem
+{ 
+    public class ItemsViewItem
     {
         public Vector2 RenderOffset;
         public Rectangle Rectangle;
-        public Rectangle ContentArea;
         SpriteFont Font;
         Vector2 TextSize;
         string TitleText;
         public bool Enabled = true;
         public int Opacity = 0;
         public List<string> Properties;
-  
+
         // Event Handler
-        internal delegate void delRenderContent(SpriteBatch spriteBatch, ItemsViewItem sender);
+        public delegate void delRenderContent(SpriteBatch spriteBatch, ItemsViewItem sender);
         public event delRenderContent RenderContentEvent;
-        internal delegate void delUpdateContent(ItemsViewItem sender);
+        public delegate void delUpdateContent(ItemsViewItem sender);
         public event delUpdateContent UpdateContentEvent;
-    
+     
         public void RenderContent(SpriteBatch spriteBatch)
         {
             if (RenderContentEvent != null) { RenderContentEvent.Invoke(spriteBatch, this); }
@@ -35,7 +35,7 @@ namespace Fogoso.GameLogic.UI
             if (UpdateContentEvent != null && Enabled) { UpdateContentEvent.Invoke(this); }
         }
  
-        public ItemsViewItem(string Name, List<string> pProperties=null)
+        public ItemsViewItem(string Name, List<string> pProperties=null, GameItem isGameItem=null)
         {
             RenderOffset = new Vector2(0, 0);
             Rectangle = new Rectangle(0, 0, 250, 300);
@@ -57,6 +57,8 @@ namespace Fogoso.GameLogic.UI
                 TitleText += "...";
             }
 
+            if (isGameItem != null) { UpdateContentEvent += isGameItem.UpdateItemViewSummary; RenderContentEvent += isGameItem.RenderItemViewSummary; }
+ 
         }
  
         public void SetRectangle(Rectangle newRectangle)
@@ -94,8 +96,8 @@ namespace Fogoso.GameLogic.UI
         private bool ScrollHoldStarted;
         private bool ScrollingEnabled = false;
         private int TotalWidth;
-        private bool Sinas;
-
+        int SoundRepeatInterval;
+  
         public ItemsView(Rectangle pRectangle)
         {
             // Set to loading cursor
@@ -148,35 +150,29 @@ namespace Fogoso.GameLogic.UI
 
 
             }
-
-            if (!Sinas)
-            {
-                Sinas = true;
-                // Initialize Stuff
-                ItemsCollection = new List<ItemsViewItem>();
-    
-                for (int i = 0; i< 20; i++)
-                {
-                    AddItem(new ItemsViewItem($"Enceiradoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa {i}"));
-                }
-
-            }
- 
+  
             // Move when Scrolling
             if (ScrollHoldStarted && ScrollingEnabled)
             {
                 GameInput.ReservedModeID = InputReservedID;
+
 
                 if (Mouse.GetState().MiddleButton == ButtonState.Released)
                 {
                     ScrollHoldStarted = false;
                     LastMouseX = 0;
                     GameInput.ReservedModeID = -1;
-
+                    Sound.PlaySound("click_hold/1", 0.25f);
+                    SoundRepeatInterval = 0;
+                     
                 }
                 else
                 {
                     SetScrollX((int)GameInput.CursorPosition.X - LastMouseX);
+
+                    SoundRepeatInterval++;
+
+                    if (SoundRepeatInterval == 25) { Sound.PlaySound("click_hold/2", 0.25f); SoundRepeatInterval = 0; }
 
                 }
             }
@@ -191,6 +187,7 @@ namespace Fogoso.GameLogic.UI
                     {
                         ScrollHoldStarted = true;
                         LastMouseX = (int)GameInput.CursorPosition.X + Math.Abs(Scroll);
+                        Sound.PlaySound("click_hold/1", 0.25f);
                     }
                 }
 
@@ -217,8 +214,8 @@ namespace Fogoso.GameLogic.UI
             // Set Position for All Controls
             for (int i = 0; i < ItemsCollection.Count; i++)
             {
-                if (i == 0) { ItemsCollection[i].SetRectangle(new Rectangle(Scroll, ItemsCollection[i].Rectangle.Y, ItemsCollection[i].Rectangle.Width, ItemsCollection[i].Rectangle.Height)); continue; }
-                ItemsCollection[i].SetRectangle(new Rectangle(ItemsCollection[i - 1].Rectangle.X + ItemsCollection[i - 1].Rectangle.Width + ItemsSpacing, ItemsCollection[i].Rectangle.Y, ItemsCollection[i].Rectangle.Width, ItemsCollection[i].Rectangle.Height));
+                if (i == 0) { ItemsCollection[i].SetRectangle(new Rectangle(Scroll, Rectangle.Height / 2 - ItemsCollection[i].Rectangle.Height / 2, ItemsCollection[i].Rectangle.Width, ItemsCollection[i].Rectangle.Height)); continue; }
+                ItemsCollection[i].SetRectangle(new Rectangle(ItemsCollection[i - 1].Rectangle.X + ItemsCollection[i - 1].Rectangle.Width + ItemsSpacing, Rectangle.Height / 2 - ItemsCollection[i].Rectangle.Height / 2, ItemsCollection[i].Rectangle.Width, ItemsCollection[i].Rectangle.Height));
  
             }
 
@@ -244,18 +241,8 @@ namespace Fogoso.GameLogic.UI
             // Set all Item's X to the previuos item X plus its width and item spacing
             for (int i = 0; i < ItemsCollection.Count; i++)
             {
-                if (i == 0) { ItemsCollection[i].SetRectangle(new Rectangle(ItemsSpacing, ItemsSpacing, ItemsCollection[i].Rectangle.Width, ItemsCollection[i].Rectangle.Height)); continue; }
-                ItemsCollection[i].SetRectangle(new Rectangle(ItemsCollection[i - 1].Rectangle.X + ItemsCollection[i - 1].Rectangle.Width + ItemsSpacing, ItemsSpacing, ItemsCollection[i].Rectangle.Width, ItemsCollection[i].Rectangle.Height));
-
-            }
- 
-            // Center Horizontally all controls
-            for (int i = 0; i < ItemsCollection.Count; i++)
-            {
-                Rectangle rectCopy = ItemsCollection[i].Rectangle;
-                rectCopy.Y = Rectangle.Height / 2 - rectCopy.Height / 2;
- 
-                ItemsCollection[i].SetRectangle(rectCopy);
+                if (i == 0) { ItemsCollection[i].SetRectangle(new Rectangle(ItemsSpacing, Rectangle.Height / 2 - ItemsCollection[i].Rectangle.Height / 2, ItemsCollection[i].Rectangle.Width, ItemsCollection[i].Rectangle.Height)); continue; }
+                ItemsCollection[i].SetRectangle(new Rectangle(ItemsCollection[i - 1].Rectangle.X + ItemsCollection[i - 1].Rectangle.Width + ItemsSpacing, Rectangle.Height / 2 - ItemsCollection[i].Rectangle.Height / 2, ItemsCollection[i].Rectangle.Width, ItemsCollection[i].Rectangle.Height));
 
             }
  

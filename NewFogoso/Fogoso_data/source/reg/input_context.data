@@ -4,10 +4,11 @@
 # {Action Name},{Keyboard},{GamepadButton};
 # == Supported Mappings:
 # All keyboard letters and Function Keys
-# Gamepad X, Y, A, B, DPAD UP,DOWN,LEFT,RIGHT, Start, Select, LEFT_SHOULDER, RIGHT_SHOULDER
+# Gamepad X, Y, A, B, DPAD UP,DOWN,LEFT,RIGHT, Start, Select LEFT_SHOULDER, RIGHT_SHOULDER
 PAUSE_KEY,ESC,START;
 PAUSE_KEY,ESC,START;
 MINING_PRIMARY,Z,X;
 MINING_SECONDARY,M,Y;
 DEBUG_TEST_1,F,X;
 DEBUG_TEST_2,G,X;
+TOGGLE_CLICKVIEWER,TAB,SELECT;

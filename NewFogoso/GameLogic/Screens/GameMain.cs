@@ -1,4 +1,5 @@
 ﻿using Fogoso.GameLogic.UI;
+using Fogoso.GameLogic.OverlayScreens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
@@ -12,46 +13,33 @@ namespace Fogoso.GameLogic.Screens
 {
     class GameMain : GameScreen 
     {
-        Panel LeftPanel;
         Panel CenterPanel;
         Label DateLabel;
         Label TimeLabel;
-        Label MoneyInfosLabel;
         ToolStripPanel TabsButton;
-        UtilsObjects.ValueSmoother ceira;
-        ClickerViewer refClickerViewer;
 
         public GameMain()
         {
             // Change to Loading Cursor
             GameInput.CursorImage = "loading.png";
 
-            LeftPanel = new Panel(new Rectangle(0, 0, 200, Global.WindowHeight));
-            CenterPanel = new Panel(new Rectangle(205, 35, Global.WindowWidth - 210, Global.WindowHeight - 85));
-            DateLabel = new Label(new Vector2(205, 5), Fonts.GetFontDescriptor("PressStart2P", Fonts.SmallFontSize), "amet");
-            TimeLabel = new Label(new Vector2(205, 20), Fonts.GetFontDescriptor("PressStart2P", Fonts.SmallFontSize), "sit");
-            TabsButton = new ToolStripPanel(new Rectangle(205, 35 + (Global.WindowHeight - 85) + 5, Global.WindowWidth - 210, 40), true);
+            CenterPanel = new Panel(new Rectangle(ScreenSelector.WorkingArea.X + 5, ScreenSelector.WorkingArea.Y + 35, ScreenSelector.WorkingArea.Width - 210, ScreenSelector.WorkingArea.Height - 85));
+            DateLabel = new Label(new Vector2(ScreenSelector.WorkingArea.X + 5, ScreenSelector.WorkingArea.Y + 5), Fonts.GetFontDescriptor("PressStart2P", Fonts.SmallFontSize), "amet");
+            TimeLabel = new Label(new Vector2(ScreenSelector.WorkingArea.X + 5, ScreenSelector.WorkingArea.Y + 20), Fonts.GetFontDescriptor("PressStart2P", Fonts.SmallFontSize), "sit");
+            TabsButton = new ToolStripPanel(new Rectangle(ScreenSelector.WorkingArea.X + 5, 35 + (ScreenSelector.WorkingArea.Height - 85) + 5, ScreenSelector.WorkingArea.Width - 210, 40), true);
  
-            refClickerViewer = new ClickerViewer(new Vector2(3, LeftPanel.Rectangle.Bottom));
-            Label sinas = new Label(new Vector2(5, 5), Fonts.GetFontDescriptor("PressStart2P", Fonts.DefaultFontSize), "Loading...");
             Button InfosButton = new Button(new Vector2(5, 5), "Infos");
             Button ItemsViewButton = new Button(new Vector2(5, 5), "Items");
-  
+   
             TabsButton.AddControl(InfosButton, "infos-button");
             TabsButton.AddControl(ItemsViewButton, "items-button");
 
-            LeftPanel.AddControl(refClickerViewer, "clicker-viewer");
-            LeftPanel.AddControl(sinas, "ceira-label");
-            MoneyInfosLabel = sinas;
 
             // Add Event Listeners
-            sinas.DrawBackground += DrawLabelBackground;
             DateLabel.DrawBackground += DrawLabelBackground;
             TimeLabel.DrawBackground += DrawLabelBackground;
             InfosButton.ButtonPress += InfosButton_ButtonPress;
             ItemsViewButton.ButtonPress += ItemsViewButton_ButtonPress;
-
-            ceira = new UtilsObjects.ValueSmoother(10, 20, false);
  
             // Open Item View
             ItemsViewButton_ButtonPress(null);
@@ -63,15 +51,20 @@ namespace Fogoso.GameLogic.Screens
 
             List<UIControl> newControlCollection = new List<UIControl>();
             ItemsView ceiraView = new ItemsView(new Rectangle(5, 5, 200, 200));
-            ceiraView.Tag = "items-view";
-             
+            ceiraView.Tag = "items-view";  
             newControlCollection.Add(ceiraView);
 
             CenterPanel.SwitchControlCollection(newControlCollection);
             CenterPanel.ControlFill("items-view");
 
+            CurrentSessionData.Reset();
+            for(int i = 0; i < CurrentSessionData.UserItems.Count; i++)
+            { 
+                ceiraView.AddItem(new ItemsViewItem(CurrentSessionData.UserItems[i].Metadata.ItemName, isGameItem:CurrentSessionData.UserItems[i]));
+            }
+         
         }
- 
+      
         void InfosButton_ButtonPress(Button sender)
         {
             CenterPanel.ControlCollection.Clear();
@@ -102,7 +95,6 @@ namespace Fogoso.GameLogic.Screens
         {
             base.Draw(spriteBatch);
 
-            LeftPanel.Draw(spriteBatch);
             CenterPanel.Draw(spriteBatch);
             TabsButton.Draw(spriteBatch);
  
@@ -114,13 +106,23 @@ namespace Fogoso.GameLogic.Screens
 
         public override void Update()
         {
+            // Working area has been changed
+            if (ScreenSelector.WorkingAreaChanged)
+            {
+                CenterPanel.SetRectangle(new Rectangle(ScreenSelector.WorkingArea.X + 5, ScreenSelector.WorkingArea.Y + 35, ScreenSelector.WorkingArea.Width - 10, ScreenSelector.WorkingArea.Height - 85));
+                CenterPanel.ForceReadjust = true;
+
+                TabsButton.SetRectangle(new Rectangle(ScreenSelector.WorkingArea.X + 5, 35 + (ScreenSelector.WorkingArea.Height - 85) + 5, ScreenSelector.WorkingArea.Width - 10, 40));
+ 
+            }
+
+             
             if (GameInput.GetInputState("PAUSE_KEY", false))
             {
                 ScreenSelector.SetCurrentScreen(0);
                 return;
             }
 
-            LeftPanel.Update();
             CenterPanel.Update();
             TabsButton.Update();
 
@@ -129,17 +131,6 @@ namespace Fogoso.GameLogic.Screens
 
             string TimeText = AragubasTime.Hour + " : " + AragubasTime.Minute + " : " + AragubasTime.Second;
             TimeLabel.SetText(TimeText);
- 
-            // Refresh SmootObj Value
-            ceira.Update();
-            ceira.SetTargetValue(CurrentSessionData.Ceira);
-
-            // Refresh MoneyInfos Label
-            if (refClickerViewer != null)
-            {
-                MoneyInfosLabel.SetText($"$ {ceira.GetValue().ToString("0.00")}\nExp {CurrentSessionData.Experience}\nIncome: {refClickerViewer.EstimatedIncome.ToString("0.00")}");
-            }
- 
 
         }
 
@@ -147,7 +138,7 @@ namespace Fogoso.GameLogic.Screens
         {
             base.Initialize();
 
-
+            ScreenSelector.CurrentOverlayScreen = new ClickerViewPanel(); 
         }
 
         public override string ToString()

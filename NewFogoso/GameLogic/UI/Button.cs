@@ -19,7 +19,7 @@ namespace Fogoso.GameLogic.UI
         public event ButtonPressEventHandler ButtonPress;
 
         // Method
-        protected virtual void OnButtonPress()
+        public void PeformClick()
         {
             Sound.PlaySound("hud/click", 0.2f);
             if (ButtonPress != null) { ButtonPress(this); }
@@ -146,9 +146,9 @@ namespace Fogoso.GameLogic.UI
 
             // Detect MouseDown Event
             if (newState.LeftButton == ButtonState.Released) { SetColor(2); }
-
+ 
             // Detect MouseUp Event
-            if (newState.LeftButton == ButtonState.Released && oldState.LeftButton == ButtonState.Pressed) { SetColor(3); OnButtonPress(); }
+            if (newState.LeftButton == ButtonState.Released && oldState.LeftButton == ButtonState.Pressed) { SetColor(3); PeformClick(); }
 
             // Set OldState
             oldState = newState;

@@ -35,6 +35,8 @@
 using System;
 using Fogoso.GameLogic.Screens;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework; 
+using Fogoso.GameLogic.OverlayScreens;
 
 namespace Fogoso.GameLogic
 {
@@ -42,12 +44,23 @@ namespace Fogoso.GameLogic
     {
         public static GameScreen CurrentSelectedScreen;
         public static GameScreen CurrentBackgroundScreen;
+        public static OverlayScreen CurrentOverlayScreen;
+        private static Rectangle LastWorkingArea;
+        public static bool WorkingAreaChanged;
+        public static Rectangle WorkingArea;
+        public static bool SuspendScreenUpdating;
 
 
         public static void Update()
         {
-            CurrentSelectedScreen.Update();
+            LastWorkingArea = WorkingArea;
+
+            if (!SuspendScreenUpdating) { CurrentSelectedScreen.Update(); }
             if (CurrentBackgroundScreen != null) { CurrentBackgroundScreen.Update(); }
+ 
+            if (CurrentOverlayScreen != null) { CurrentOverlayScreen.Update(); }
+
+            WorkingAreaChanged = LastWorkingArea != WorkingArea;
         }
 
         public static void Draw(SpriteBatch spriteBatch)
@@ -55,7 +68,8 @@ namespace Fogoso.GameLogic
             if (CurrentBackgroundScreen != null) { CurrentBackgroundScreen.Draw(spriteBatch); }
 
             CurrentSelectedScreen.Draw(spriteBatch);
-
+  
+            if (CurrentOverlayScreen != null) { CurrentOverlayScreen.Draw(spriteBatch); }
         }
 
         public static void SetCurrentScreen(int ScreenID)
@@ -124,8 +138,8 @@ namespace Fogoso.GameLogic
         {
             // Set Initial Screen
             SetCurrentScreen(0);
-            SetBackgroundScreen(0);
-
+            SetBackgroundScreen(0); 
+            WorkingArea = new Rectangle(0, 0, Global.WindowWidth, Global.WindowHeight);
 
         }
 

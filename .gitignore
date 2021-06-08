@@ -4,6 +4,6 @@
 .pdb
 *.exe.manifest
 *.pdb
-Output\*
-Publish-Linux\*
-Publish-Win64\*
+Output/*
+Publish-Linux/*
+Publish-Win64/*
