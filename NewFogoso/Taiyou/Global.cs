@@ -215,7 +215,7 @@ namespace Fogoso.Taiyou
 
                     if (line.Length < 3) { Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "Removed empty line"); continue; }
                     if (line.StartsWith(TaiyouGlobal.TaiyouToken_LINE_COMMENT, StringComparison.Ordinal)) { Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "Removed comment line"); continue; }
-
+ 
                     // Initialize the Function Reading
                     if (line.StartsWith(TaiyouGlobal.TaiyouToken_FUNCTION_DECLARING, StringComparison.Ordinal))
                     {

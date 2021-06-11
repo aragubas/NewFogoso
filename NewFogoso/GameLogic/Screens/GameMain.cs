@@ -14,8 +14,6 @@ namespace Fogoso.GameLogic.Screens
     class GameMain : GameScreen 
     {
         Panel CenterPanel;
-        Label DateLabel;
-        Label TimeLabel;
         ToolStripPanel TabsButton;
 
         public GameMain()
@@ -24,8 +22,6 @@ namespace Fogoso.GameLogic.Screens
             GameInput.CursorImage = "loading.png";
 
             CenterPanel = new Panel(new Rectangle(ScreenSelector.WorkingArea.X + 5, ScreenSelector.WorkingArea.Y + 35, ScreenSelector.WorkingArea.Width - 210, ScreenSelector.WorkingArea.Height - 85));
-            DateLabel = new Label(new Vector2(ScreenSelector.WorkingArea.X + 5, ScreenSelector.WorkingArea.Y + 5), Fonts.GetFontDescriptor("PressStart2P", Fonts.SmallFontSize), "amet");
-            TimeLabel = new Label(new Vector2(ScreenSelector.WorkingArea.X + 5, ScreenSelector.WorkingArea.Y + 20), Fonts.GetFontDescriptor("PressStart2P", Fonts.SmallFontSize), "sit");
             TabsButton = new ToolStripPanel(new Rectangle(ScreenSelector.WorkingArea.X + 5, 35 + (ScreenSelector.WorkingArea.Height - 85) + 5, ScreenSelector.WorkingArea.Width - 210, 40), true);
  
             Button InfosButton = new Button(new Vector2(5, 5), "Infos");
@@ -36,8 +32,6 @@ namespace Fogoso.GameLogic.Screens
 
 
             // Add Event Listeners
-            DateLabel.DrawBackground += DrawLabelBackground;
-            TimeLabel.DrawBackground += DrawLabelBackground;
             InfosButton.ButtonPress += InfosButton_ButtonPress;
             ItemsViewButton.ButtonPress += ItemsViewButton_ButtonPress;
  
@@ -99,8 +93,6 @@ namespace Fogoso.GameLogic.Screens
             TabsButton.Draw(spriteBatch);
  
             spriteBatch.Begin();
-            DateLabel.Draw(spriteBatch);
-            TimeLabel.Draw(spriteBatch);
             spriteBatch.End();
         }
 
@@ -125,13 +117,6 @@ namespace Fogoso.GameLogic.Screens
 
             CenterPanel.Update();
             TabsButton.Update();
-
-            string DateText = AragubasTime.GetDecadeNameWithYear() + " - " + AragubasTime.GetMonthName() + "/" + AragubasTime.Week + "," + AragubasTime.GetDayName();
-            DateLabel.SetText(DateText);
-
-            string TimeText = AragubasTime.Hour + " : " + AragubasTime.Minute + " : " + AragubasTime.Second;
-            TimeLabel.SetText(TimeText);
-
         }
 
         public override void Initialize()

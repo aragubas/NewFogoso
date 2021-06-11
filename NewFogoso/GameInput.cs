@@ -9,129 +9,19 @@ namespace Fogoso
     public class InputKeyArgument
     {
         public Keys KeyObj;
-        public Buttons ThisGamePadButton;
         public string GamepadEq;
 
         public string ActionName = "";
 
-        public InputKeyArgument(string pActionName, string pKeyboardEq, string pGamepadEq)
+        public InputKeyArgument(string pActionName, string pKeyboardEq)
         {
             ActionName = pActionName;
 
             // Set KeyboardEq
             SetKeyboardEq(pKeyboardEq);
 
-            // Set GamepadEq    
-            SetGamepadEq(pGamepadEq);
-
-            GamepadEq = pGamepadEq;
-
         }
 
-        public void SetGamepadEq(string pGamepadEq)
-        {
-            pGamepadEq = pGamepadEq.ToUpper();
-
-            switch (pGamepadEq)
-            {
-                case "A":
-                    ThisGamePadButton = Buttons.A;
-                    break;
-
-                case "B":
-                    ThisGamePadButton = Buttons.B;
-                    break;
-
-                case "X":
-                    ThisGamePadButton = Buttons.X;
-                    break;
-
-                case "Y":
-                    ThisGamePadButton = Buttons.Y;
-                    break;
-
-                case "DPAD_UP":
-                    ThisGamePadButton = Buttons.DPadUp;
-                    break;
-
-                case "DPAD_DOWN":
-                    ThisGamePadButton = Buttons.DPadDown;
-                    break;
-
-                case "DPAD_LEFT":
-                    ThisGamePadButton = Buttons.DPadLeft;
-                    break;
-
-                case "DPAD_RIGHT":
-                    ThisGamePadButton = Buttons.DPadRight;
-                    break;
-
-                case "SELECT":
-                    ThisGamePadButton = Buttons.Back;
-                    break;
-
-                case "HOME":
-                    ThisGamePadButton = Buttons.BigButton;
-                    break;
-
-                case "LEFT_SHOULDER":
-                    ThisGamePadButton = Buttons.LeftShoulder;
-                    break;
-
-                case "RIGHT_SHOULDER":
-                    ThisGamePadButton = Buttons.RightShoulder;
-                    break;
-
-                case "LEFT_STICK_PRESS":
-                    ThisGamePadButton = Buttons.LeftStick;
-                    break;
-
-                case "RIGHT_STICK_PRESS":
-                    ThisGamePadButton = Buttons.RightStick;
-                    break;
-
-                case "START":
-                    ThisGamePadButton = Buttons.Start;
-                    break;
-
-                case "LEFT_THUMB_UP":
-                    ThisGamePadButton = Buttons.LeftThumbstickUp;
-                    break;
-
-                case "LEFT_THUMB_DOWN":
-                    ThisGamePadButton = Buttons.LeftThumbstickDown;
-                    break;
-
-                case "LEFT_THUMB_LEFT":
-                    ThisGamePadButton = Buttons.LeftThumbstickLeft;
-                    break;
-
-                case "LEFT_THUMB_RIGHT":
-                    ThisGamePadButton = Buttons.LeftThumbstickRight;
-                    break;
-
-                case "RIGHT_THUMB_UP":
-                    ThisGamePadButton = Buttons.RightThumbstickUp;
-                    break;
-
-                case "RIGHT_THUMB_DOWN":
-                    ThisGamePadButton = Buttons.RightThumbstickDown;
-                    break;
-
-                case "RIGHT_THUMB_LEFT":
-                    ThisGamePadButton = Buttons.RightThumbstickLeft;
-                    break;
-
-                case "RIGHT_THUMB_RIGHT":
-                    ThisGamePadButton = Buttons.RightThumbstickRight;
-                    break;
-
-                default:
-                    throw new Exception("Invalid GamepadKeyCode {" + pGamepadEq + "}");
-
-            }
-
-        }
 
         public void SetKeyboardEq(string pKeyboardEq)
         {
@@ -326,16 +216,9 @@ namespace Fogoso
 
     public class GameInput
     {
-        public static int InputMode = -1;
         public static KeyboardState oldState;
-        public static GamePadState oldPadState;
-        public static GamePadCapabilities newCapabilities;
-        public static SpriteFont DefaultFont;
-        private static int LastInputMode = -1;
         public static List<InputKeyArgument> InputKeyArguments = new List<InputKeyArgument>();
         public static List<string> InputKeyArguments_key = new List<string>();
-        public static List<string> Waxer = new List<string>();
-        public static List<string> PressedWaxer = new List<string>();
         public static int ReservedModeID = -1;
 
         // Cursor
@@ -343,80 +226,44 @@ namespace Fogoso
         public static readonly string defaultCursor = "arrow.png";
         public static Vector2 CursorPosition;
         public static Rectangle CursorColision;
-
-        // State Animation Change Variables
-        #region StateChange Variables
-        private static int StateChangeStartDelay = 0;
-        private static int StateChangeStartDelayMax = 60;
-        private static bool StateChangeAnimation = false;
-        private static bool StateChangeAnimMode = false;
-        private static bool StateChangeAnimDelayEnd = false;
-        private static int StateChangeAnimDelayEndValue = 0;
-        private static int StateChangeAnimDelayEndValueMax = 50;
-        private static int StateChangeAnimVal = 0;
-        private static int StateChangeAnimValAdder = 0;
-        private static int StateChangeAnimValMax = 150;
-        #endregion
-
-        // InputViwerAnim Variables
-        #region InputViwer Changer
-        public static bool InputViwer_AnimationEnabled;
-        private static int InputViwer_AnimationVal = 34;
-        private static int InputViwer_AnimationValAdder;
-        private static int InputViwer_AnimationValMax = 34;
-        private static int InputViwer_AnimationMode;
-
-
-        #endregion
-
+ 
         public static int GenerateInputReservedID()
         {
             Random cierra = new Random();
-            return cierra.Next(-2147483647, 2147483647);
+            return cierra.Next(Int32.MinValue, Int32.MaxValue);
         } 
 
         public static void Initialize()
         {
             Utils.ConsoleWriteWithTitle("GameInput", "Loading input context...");
 
-            string InputContextFile = Registry.ReadKeyValue("/input_context");
-
-            foreach (var Line in InputContextFile.Split(';'))
+            string[] InputContextFile = Registry.ReadKeyValue("/input_context").Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            Utils.ConsoleWriteWithTitle("GameInput", $"Input Context Data {Registry.ReadKeyValue("/input_context")}");
+ 
+            for (int i = 0; i < InputContextFile.Length; i++)
             {
-                if (Line.Length < 3 || Line.StartsWith("#"))
+                Utils.ConsoleWriteWithTitle("GameInput", $"Line [{InputContextFile[i]}]");
+                if (InputContextFile[i].Length < 3 || InputContextFile[i].StartsWith("#"))
                 {
-                    Utils.ConsoleWriteWithTitle("GameInput", "Blank line skipped");
-                    continue;
-
+                    Utils.ConsoleWriteWithTitle("GameInput", "Blank or Comment line skipped");
+                    continue; 
                 }
 
-                string[] LineSplit = Line.Split(',');
-
-                string ActionName = LineSplit[0];
-                string ActionKeyboard = LineSplit[1];
-                string ActionJoypad = LineSplit[2].TrimEnd();
-
+                string[] LineSplit = InputContextFile[i].Split(',');
+ 
+                string ActionName = LineSplit[0].Trim();
                 Utils.ConsoleWriteWithTitle("GameInput", "Loaded {" + ActionName + "}");
-
+                
                 InputKeyArguments_key.Add(ActionName);
-                InputKeyArgument NewWax = new InputKeyArgument(ActionName, ActionKeyboard, ActionJoypad);
+                InputKeyArgument NewWax = new InputKeyArgument(ActionName, LineSplit[1].Trim());
                 InputKeyArguments.Add(NewWax);
 
             }
 
-            Utils.ConsoleWriteWithTitle("GameInput", "Loading default font...");
-            DefaultFont = Fonts.GetSpriteFont(Fonts.GetFontDescriptor("PressStart2P", Fonts.DefaultFontSize));
- 
+            Utils.ConsoleWriteWithTitle("GameInput", "Context Input read complete.");
+            
         }
 
-        public static void InputViwer_Define(string InputArg)
-        {
-            int WaxIndex = Waxer.IndexOf(InputArg);
-            if (WaxIndex == -1)
-            {
-                Waxer.Add(InputArg);
-            }
-        }
         private static string LastInputContextFindError = "";
         public static InputKeyArgument GetInputKeyArg(string InputContext)
         {
@@ -436,52 +283,12 @@ namespace Fogoso
             return InputKeyArguments[InpContxtIndex];
         }
 
-        public static void SetInputMode(int NewInputMode)
+        public static bool GetInputState(string KeyactionArg, bool KeyDown = false, bool ShowInViewer = false)
         {
-            if (NewInputMode > 1)
-            {
-                throw new Exception("Invalid input mode.");
-            }
-
-            InputMode = NewInputMode;
-            if (LastInputMode != NewInputMode)
-            {
-                LastInputMode = NewInputMode;
-                StateChangeAnimation = true;
-                Sound.PlaySound("hud/im_change");
-            }
-
-
-        }
-
-        public static bool GetInputState(string KeyactionArg, bool CheckController, bool KeyDown = false, bool ShowInViewer = false)
-        {
-            if (ShowInViewer) { InputViwer_Define(KeyactionArg); };
-
             InputKeyArgument Wax = GetInputKeyArg(KeyactionArg);
 
             if (Wax == null)
             {
-                return false;
-            }
-
-            // Check for Keyboard 
-            if (CheckController || InputMode == 1)
-            {
-                if (KeyDown)
-                {
-                    if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Wax.ThisGamePadButton) && oldPadState.IsButtonDown(Wax.ThisGamePadButton))
-                    {
-                        PressedWaxer.Add(KeyactionArg);
-                        return true;
-                    }
-                    return false;
-                }
-                if (GamePad.GetState(PlayerIndex.One).IsButtonDown(Wax.ThisGamePadButton) && oldPadState.IsButtonUp(Wax.ThisGamePadButton))
-                {
-                    PressedWaxer.Add(KeyactionArg);
-                    return true;
-                }; 
                 return false;
             }
 
@@ -505,184 +312,12 @@ namespace Fogoso
             // Draw Cursor
             DrawCursor(spriteBatch);
 
-
-            if (StateChangeAnimation || StateChangeAnimDelayEnd)
-            {
-                spriteBatch.Draw(Sprites.GetSprite("/input_mode/" + InputMode + ".png"), new Vector2(spriteBatch.GraphicsDevice.Viewport.Width - StateChangeAnimVal, spriteBatch.GraphicsDevice.Viewport.Height - 170), color: Color.FromNonPremultiplied(255, 255, 255, 255 - -StateChangeAnimVal));
-
-            }
-
-            if (InputMode != 1) { spriteBatch.End(); return; }
-
             spriteBatch.End();
-
-            DrawIconViewer(spriteBatch);
-
         }
 
-        private static void DrawIconViewer(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Begin();
-            //string AllWax = "";
-            int WaxWax = -1;
-            Vector2 Position = new Vector2(0, 0);
-
-            foreach (string Wax in Waxer)
-            {
-                WaxWax += 1;
-
-                int ShowerIndex = InputKeyArguments_key.IndexOf(Wax);
-                if (ShowerIndex == -1) { WaxWax -= 1; continue; }
-                InputKeyArgument Equivalent = InputKeyArguments[ShowerIndex];
-                Position.X = 5 + WaxWax * 32;
-                Position.Y = spriteBatch.GraphicsDevice.Viewport.Height - InputViwer_AnimationVal;
-                int Opacity = 150;
-                int TextOffset = 10;
-
-                if (PressedWaxer.IndexOf(Wax) != -1) { Opacity = 255; TextOffset = 7; }
-
-                spriteBatch.Draw(Sprites.GetSprite("/input_mode/gamepad_indicator/" + Equivalent.GamepadEq + ".png"), Position, color: Color.FromNonPremultiplied(255, 255, 255, Opacity));
-
-                if (Registry.KeyExists("/gamepad_actions/" + Wax))
-                {
-                    string ActionWax = Registry.ReadKeyValue("/gamepad_actions/" + Wax);
-
-                    spriteBatch.DrawString(DefaultFont, ActionWax, new Vector2(Position.X, Position.Y - TextOffset), Color.FromNonPremultiplied(230 - TextOffset, Opacity, Opacity, Opacity + 50), -0.7f, Vector2.Zero, 1f, SpriteEffects.None, 1.0f);
-
-                }
-
-            }
-            spriteBatch.End();
-
-            Waxer.Clear();
-            PressedWaxer.Clear();
-        }
-        public static void UpdateStateChangeAnim()
-        {
-            if (StateChangeAnimation)
-            {
-                if (!StateChangeAnimMode)
-                {
-                    // Add delay to start of animation
-                    if (StateChangeStartDelay <= StateChangeStartDelayMax)
-                    {
-                        StateChangeStartDelay += 1;
-
-                    }
-                    else
-                    {
-                        StateChangeAnimValAdder += 1;
-                        StateChangeAnimVal += StateChangeAnimValAdder;
-
-                    }
-
-                    if (StateChangeAnimVal >= StateChangeAnimValMax)
-                    {
-                        StateChangeAnimVal = StateChangeAnimValMax;
-                        StateChangeAnimMode = true;
-                        StateChangeAnimation = false;
-                        StateChangeAnimDelayEnd = true;
-                    }
-                }
-                else
-                {
-                    StateChangeAnimValAdder += 1;
-                    StateChangeAnimVal -= StateChangeAnimValAdder;
-
-                    if (StateChangeAnimVal <= 0)
-                    {
-                        StateChangeAnimVal = 0;
-                        StateChangeAnimMode = false;
-                        StateChangeAnimation = false;
-                        StateChangeAnimValAdder = 0;
-                        StateChangeStartDelay = 0;
-
-                    }
-
-                }
-
-
-            }
-
-            // DelayEnd animation
-            if (StateChangeAnimDelayEnd)
-            {
-                StateChangeAnimDelayEndValue += 1;
-
-                if (StateChangeAnimDelayEndValue >= StateChangeAnimDelayEndValueMax)
-                {
-                    StateChangeAnimation = true;
-                    StateChangeAnimDelayEnd = false;
-                    StateChangeAnimDelayEndValue = 0;
-                }
-            }
-        }
-
-        public static void UpdateInputViwerAnim()
-        {
-            if (InputViwer_AnimationEnabled)
-            {
-                if (InputViwer_AnimationMode == 0)
-                {
-                    InputViwer_AnimationValAdder += 1;
-                    InputViwer_AnimationVal += InputViwer_AnimationValAdder;
-
-                    if (InputViwer_AnimationVal >= InputViwer_AnimationValMax)
-                    {
-                        InputViwer_AnimationVal = InputViwer_AnimationValMax;
-                        InputViwer_AnimationEnabled = false;
-                        InputViwer_AnimationMode += 1;
-                    }
-
-                }
-                else if (InputViwer_AnimationMode == 1)
-                {
-                    InputViwer_AnimationValAdder += 1;
-                    InputViwer_AnimationVal -= InputViwer_AnimationValAdder;
-
-                    if (InputViwer_AnimationVal <= -InputViwer_AnimationValMax * 2)
-                    {
-                        InputViwer_AnimationVal = -InputViwer_AnimationValMax * 2;
-                        InputViwer_AnimationEnabled = false;
-                        InputViwer_AnimationMode -= 1;
-                        InputViwer_AnimationValAdder = 0;
-                    }
-
-                }
-
-            }
-        }
         public static void Update()
         {
-            UpdateStateChangeAnim();
-            UpdateInputViwerAnim();
-
             CursorColision = new Rectangle((int)CursorPosition.X, (int)CursorPosition.Y, 1, 1);
-
-            // Get GamePad Capabilities
-            newCapabilities = GamePad.GetCapabilities(PlayerIndex.One);
-
-            // Check if any controller is connected
-            if (newCapabilities.IsConnected)
-            {
-                SetInputMode(1);
-                oldPadState = GamePad.GetState(PlayerIndex.One);
-                return;
-            }
-
-            if (InputMode == 0)
-            {
-                oldState = Keyboard.GetState();
-                return;
-            }
-
-            // Check if controller has been disconnected
-            if (!newCapabilities.IsConnected)
-            {
-                SetInputMode(0);
-                return;
-            }
-
 
         }
 

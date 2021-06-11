@@ -88,7 +88,7 @@ namespace Fogoso
                 KeyNameFiltred = KeyNameFiltred.Replace(".data", "");
 
                 LoadedKeysNames.Add(KeyNameFiltred.Replace(Global.OSSlash, "/"));
-                LoadedKeysValues.Add(File.ReadAllText(Global.REGISTRY_SourceFolder + Global.OSSlash + KeyNameFiltred + ".data").Replace("\n", ""));
+                LoadedKeysValues.Add(File.ReadAllText(Global.REGISTRY_SourceFolder + Global.OSSlash + KeyNameFiltred + ".data").Trim());
                 LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%n", Environment.NewLine);
                 LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%usr", Environment.UserName);
                 LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%current_dir", Environment.CurrentDirectory);

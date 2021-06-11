@@ -90,6 +90,8 @@ namespace Fogoso.GameLogic.OverlayScreens
         UtilsObjects.ValueSmoother CurrentMoneyValueSmoother;
         bool Minimized;
         bool Visible;
+        Label DateLabel;
+        Label TimeLabel;
  
         public ClickerViewPanel()
         {
@@ -99,7 +101,7 @@ namespace Fogoso.GameLogic.OverlayScreens
             CeiraViewer = new List<CeiraViewObj>();
             ClearEstimatedTimer = new AragubasTimeObject(0, 1, 0, 0, 0, 0);
             _rasterizerState = new RasterizerState() { ScissorTestEnable = true };  
-            Animator = new AnimationController(1, 0.15f, 0.09f, true, false, true, 0);
+            Animator = new AnimationController(1, 0.15f, 0.1f, true, false, true, 0);
             MoneyInfosLabel = new Label(new Vector2(0, 0), Fonts.GetFontDescriptor("PressStart2P", Fonts.DefaultFontSize), "Loading...");
             MinimizedStateLabel = new Label(new Vector2(0, Global.WindowHeight / 2 - 16), Fonts.GetFontDescriptor("PressStart2P", 32), ">");
  
@@ -108,11 +110,17 @@ namespace Fogoso.GameLogic.OverlayScreens
   
             CurrentMoneyValueSmoother = new UtilsObjects.ValueSmoother(10, 20, false);
 
+            DateLabel = new Label(new Vector2(205, ScreenSelector.WorkingArea.Y + 5), Fonts.GetFontDescriptor("PressStart2P", Fonts.SmallFontSize), "amet");
+            TimeLabel = new Label(new Vector2(205, ScreenSelector.WorkingArea.Y + 20), Fonts.GetFontDescriptor("PressStart2P", Fonts.SmallFontSize), "sit");
+
+            DateLabel.DrawBackground += DrawLabelBackground;
+            TimeLabel.DrawBackground += DrawLabelBackground;
+
 
             CurrentSessionData.clickerViewPanel = this;
         } 
 
-        void DrawMinimizedStateLabelBackground(Rectangle Rect, SpriteBatch spriteBatch)
+        void DrawMinimizedStateLabelBackground(Rectangle Rect, SpriteBatch spriteBatch, Label sender)
         {
             Color bgColor = Color.FromNonPremultiplied(32, 32, 43, 230);
              
@@ -121,23 +129,36 @@ namespace Fogoso.GameLogic.OverlayScreens
  
         }
 
-        void DrawLabelBackground(Rectangle Rect, SpriteBatch spriteBatch)
+        void DrawLabelBackground(Rectangle Rect, SpriteBatch spriteBatch, Label sender)
         {
-            Color bgColor = Color.FromNonPremultiplied(120, 120, 120, 230);
+            Color bgColor = Color.FromNonPremultiplied(93, 93, 103, sender.Opacity - 30);
             
             if (CurrentSessionData.Ceira < 0)
             {
-                bgColor = Color.FromNonPremultiplied(215, 120, 80, 255);
-            }
-            Rectangle ceira = new Rectangle(Rect.X, Rect.Y, Rect.Width, Rect.Height);
-            ceira.Inflate(2, 2);
-   
-            spriteBatch.DrawRectangle(ceira, Color.FromNonPremultiplied(15, 15, 22, 50), 2);
+                bgColor = Color.FromNonPremultiplied(215, 215, 225, sender.Opacity);
+            }      
+             
+            spriteBatch.DrawRectangle(Rect, Color.FromNonPremultiplied(15, 15, 22, sender.Opacity - 215), 2);
             spriteBatch.FillRectangle(Rect, bgColor);
  
         }
 
+        void DrawDateMoneyInfosLabel(SpriteBatch spriteBatch)
+        {
+            DateLabel.Draw(spriteBatch);
+            TimeLabel.Draw(spriteBatch);
+            
+        }
 
+        void UpdateDateTimeLabel()
+        {
+            DateLabel.SetText($"{AragubasTime.GetDecadeNameWithYear()} - {AragubasTime.GetMonthName()}/{AragubasTime.Week}, {AragubasTime.GetDayName()}");
+ 
+            TimeLabel.SetText($"{AragubasTime.Hour}:{AragubasTime.Minute}:{AragubasTime.Second}");
+ 
+            SetClockOpacity();
+        }
+        
         private void SetMatrix(int pTranslationX, int pTranslationY, float pScaleX, float pScaleY)
         {  
             PositionFix = Matrix.CreateScale(pScaleX, pScaleY, 0) * Matrix.CreateTranslation(pTranslationX, pTranslationY, 0);
@@ -168,7 +189,7 @@ namespace Fogoso.GameLogic.OverlayScreens
 
             Minimized = Animator.GetState() == 1;
         }
-
+ 
         public override void Draw(SpriteBatch spriteBatch)
         {
             // Copy last Scissor Rectangle
@@ -206,20 +227,40 @@ namespace Fogoso.GameLogic.OverlayScreens
 
                 spriteBatch.End();
             }
- 
+
+            spriteBatch.Begin();
+            DrawDateMoneyInfosLabel(spriteBatch);
+            spriteBatch.End();
 
         }
-   
+
+        void SetClockOpacity()
+        {
+            short newOpacity = Convert.ToInt16(255 * Animator.GetValue());
+            if (newOpacity < 30) { newOpacity = 0; }
+ 
+            DateLabel.Opacity = newOpacity;
+            TimeLabel.Opacity = newOpacity;
+        }
+ 
         public override void Update()
         {
+            // Update Animator
             Animator.Update();
+
+            // Set Visible Flag
             Visible = !Minimized && Animator.GetState() == 1 && !Animator.Ended;
             
+            // Update DateTime Label
+            UpdateDateTimeLabel();
+            
+            // Set Transformation Matrix
             SetMatrix(Rectangle.X, Rectangle.Y, Animator.GetValue(), 1);
 
+            // Set Working Area
             if (Visible) { ScreenSelector.WorkingArea = new Rectangle(Rectangle.Width, 0, Global.WindowWidth - Rectangle.Width, Global.WindowHeight); } else { ScreenSelector.WorkingArea = new Rectangle(32, 0, Global.WindowWidth - 32, Global.WindowHeight); }
 
-
+            // Toggle Clicker Viewer Key
             if (GameInput.GetInputState("TOGGLE_CLICKVIEWER", false)) { ToggleMinimized(); }
    
             if (Visible)

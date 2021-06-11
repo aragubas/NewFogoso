@@ -12,18 +12,19 @@ namespace Fogoso.GameLogic.UI
     {
         Vector2 Position;
         SpriteFont Font;
-        string Text;
+        public string Text;
         Color TextColor;
+        public short Opacity = 255;
         Vector2 lastTextSize;
-
+ 
         #region DrawBackgroundEventHandler
-        public delegate void DrawBackgroundEventHandler(Rectangle Rect, SpriteBatch spriteBatch);
+        public delegate void DrawBackgroundEventHandler(Rectangle Rect, SpriteBatch spriteBatch, Label sender);
         public event DrawBackgroundEventHandler DrawBackground;
 
         // Method
         protected virtual void OnDrawBackground(SpriteBatch spriteBatch)
         {
-            if (DrawBackground != null) { DrawBackground(new Rectangle((int)Position.X, (int)Position.Y, (int)lastTextSize.X, (int)lastTextSize.Y), spriteBatch); }
+            if (DrawBackground != null) { DrawBackground(new Rectangle((int)Position.X, (int)Position.Y, (int)lastTextSize.X, (int)lastTextSize.Y), spriteBatch, this); }
         }
 
         #endregion
@@ -38,9 +39,10 @@ namespace Fogoso.GameLogic.UI
             lastTextSize = Font.MeasureString(Text);
         }
 
-        public void SetTextColor(Color pNewColor)
+        public void SetTextColor(Color pNewColor, short pOpacity)
         {
-            TextColor = pNewColor;
+            TextColor = pNewColor; 
+            Opacity = pOpacity;
         }
 
         public override void SetRectangle(Rectangle newRect)
@@ -77,7 +79,7 @@ namespace Fogoso.GameLogic.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             OnDrawBackground(spriteBatch);
-            spriteBatch.DrawString(Font, Text, Position, TextColor);
+            spriteBatch.DrawString(Font, Text, Position, Color.FromNonPremultiplied(TextColor.R, TextColor.G, TextColor.B, Opacity));
 
         } 
 
