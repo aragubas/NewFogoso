@@ -40,14 +40,14 @@ namespace Fogoso.Taiyou
 {
     public static class StaticlyLinkedEvents
     {
-        public static TaiyouScript EventUpdateInterpreterInstance;
+        public static InterpreterInstance EventUpdateInterpreterInstance;
 
 
         public static void LoadEvents()
         {
             try
             {
-                EventUpdateInterpreterInstance = new TaiyouScript("static-event-update", true, Taiyou.Global.GetScript("engine_update"));
+                EventUpdateInterpreterInstance = new InterpreterInstance("static-event-update", true, Taiyou.Global.GetScript("engine_update"));
  
             }catch(ArgumentNullException)
             {
@@ -73,7 +73,7 @@ namespace Fogoso.Taiyou
         /// Triggers an event.
         /// </summary>
         /// <param name="EventName">Event name added to Event Queue</param>
-        public static void TriggerEvent(string EventName)
+        public static object TriggerEvent(string EventName)
         {
             int EventID = EventListNames.IndexOf(EventName);
             if (EventID == -1)
@@ -87,10 +87,9 @@ namespace Fogoso.Taiyou
                 }
    
 
-                return;
-            }
-            EventList[EventID].InterpreterInstance.Interpret();
-
+                return null;
+            } 
+            return EventList[EventID].InterpreterInstance.Interpret();
         }
 
         /// <summary>

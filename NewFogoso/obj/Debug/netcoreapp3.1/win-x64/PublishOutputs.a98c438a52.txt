@@ -33,6 +33,8 @@
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/source/reg/missing_texture.data
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/source/reg/sound-variations/bankrupt.data
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/source/sound/click.wav
+/home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/source/sound/click_hold/1.wav
+/home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/source/sound/click_hold/2.wav
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/source/sound/hud/click.wav
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/source/sound/hud/im_change.wav
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/source/sound/hud/select.wav
@@ -48,7 +50,6 @@
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/taiyou/readme.txt
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/taiyou/scripts/engine_update.tiy
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/taiyou/scripts/initial.tiy
-/home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/taiyou/scripts/initial_video_mode.tiy
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/taiyou/scripts/Update/RestoreCursor.tiy
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/Fogoso_data/taiyou/taiyou_dict.data
 /home/notrunda/Documents/Projects/NewFogoso/Publish-Win64/StartFogoso.sh

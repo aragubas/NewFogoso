@@ -107,7 +107,7 @@ namespace Fogoso.Taiyou.Command
         // UPDATE_ARAGUBAS_TIME     | Update aragubas time
         // INIT_STATIC_EVENTS       | Initialize Staticly Linked Events
 
-        public override int Call()
+        public override object Call()
         {
             if (selectedRoutine == null)
             {
@@ -153,7 +153,7 @@ namespace Fogoso.Taiyou.Command
             }
  
             if (selectedRoutine != null) { selectedRoutine.Run(); }
-            return 0;
+            return null;
         }
 
 

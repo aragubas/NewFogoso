@@ -318,7 +318,8 @@ namespace Fogoso
         public static void Update()
         {
             CursorColision = new Rectangle((int)CursorPosition.X, (int)CursorPosition.Y, 1, 1);
-
+            oldState = Keyboard.GetState();
+            
         }
 
     }

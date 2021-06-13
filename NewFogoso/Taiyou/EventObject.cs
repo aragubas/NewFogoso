@@ -41,7 +41,7 @@ namespace Fogoso.Taiyou
     {
         public string Name;
         public string ScriptName;
-        public TaiyouScript InterpreterInstance;
+        public InterpreterInstance InterpreterInstance;
         public bool EventEnabled;
 
         public EventObject(string name, string scriptname)
@@ -51,7 +51,7 @@ namespace Fogoso.Taiyou
             ScriptName = scriptname;
 
             // Create an Interpreter Instance
-            InterpreterInstance = new TaiyouScript(ScriptName);
+            InterpreterInstance = new InterpreterInstance(ScriptName);
 
         }
 

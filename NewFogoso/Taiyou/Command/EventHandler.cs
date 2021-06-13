@@ -38,7 +38,7 @@ namespace Fogoso.Taiyou.Command
 {
     internal abstract class EventHandlerOperation
     {
-        public virtual void Run() { }
+        public virtual object Run() { return null; }
     }
 
     internal class AddOperation : EventHandlerOperation
@@ -55,12 +55,12 @@ namespace Fogoso.Taiyou.Command
         }
 
 
-        public override void Run()
+        public override object Run()
         {
             Event.EventListNames.Add(EventName);
             Event.EventList.Add(new EventObject(EventName, EventScript));
 
-            base.Run();
+            return null;
         }
 
     }
@@ -77,11 +77,9 @@ namespace Fogoso.Taiyou.Command
         }
 
 
-        public override void Run()
+        public override object Run()
         {
-            Event.TriggerEvent(EventName);
-
-            base.Run();
+            return Event.TriggerEvent(EventName);
         }
 
     }
@@ -98,11 +96,9 @@ namespace Fogoso.Taiyou.Command
         }
 
 
-        public override void Run()
+        public override object Run()
         {
-            Event.TriggerEvent(EventName);
-
-            base.Run();
+            return Event.TriggerEvent(EventName);
         }
 
     }
@@ -129,7 +125,7 @@ namespace Fogoso.Taiyou.Command
         // 2 - Event Name
         // (optional) 3 - Event Script
 
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 

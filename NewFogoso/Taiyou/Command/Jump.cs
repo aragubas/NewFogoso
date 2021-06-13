@@ -51,9 +51,9 @@ namespace Fogoso.Taiyou.Command
         }
 
         bool FunctionInited = false;
-        TaiyouScript FunctionToRun;
+        InterpreterInstance FunctionToRun;
 
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
@@ -81,14 +81,12 @@ namespace Fogoso.Taiyou.Command
                 List<TaiyouLine> AllCode = Global.Functions_Data[FunctionIndex];
 
                 // Create a Temporary Script
-                FunctionToRun = new TaiyouScript("", true, Global.Functions_Data[FunctionIndex]);
+                FunctionToRun = new InterpreterInstance("", true, Global.Functions_Data[FunctionIndex]);
 
             }
 
             // Run the Function
-            FunctionToRun.Interpret();
-
-            return 0;
+            return FunctionToRun.Interpret();
         }
 
 

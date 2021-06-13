@@ -207,7 +207,7 @@ namespace Fogoso
             ConsoleWriteWithTitle("FSCheck", "Checking ContentFolder Version...");
 
             // Check if Metadata File Exists
-            string MetaFilePath = Environment.CurrentDirectory + "/" + Global.ContentFolder + "data_packpage.metadata";
+            string MetaFilePath = Environment.CurrentDirectory + Global.OSSlash + Global.ContentFolder + "data_packpage.metadata";
             System.Console.WriteLine("FilePath to Check:\n" + MetaFilePath);
 
             if (!File.Exists(MetaFilePath))

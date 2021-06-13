@@ -49,7 +49,7 @@ namespace Fogoso.Taiyou.Command
 
         }
 
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
@@ -63,7 +63,7 @@ namespace Fogoso.Taiyou.Command
             }
             Debug.DebugThing(Global.VarList[VarIndex].Tag, Global.VarList[VarIndex].ToString());
 
-            return 0;
+            return null;
         }
 
 

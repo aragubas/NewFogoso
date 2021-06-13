@@ -49,10 +49,10 @@ namespace Fogoso.Taiyou.Command
 
         }
 
-        public override int Call()
+        public override object Call()
         {
             RootTaiyouLine.ParentScript.HaltExecution = true;
-            return 1;
+            return ReturnCodes.Halt;
         }
 
 

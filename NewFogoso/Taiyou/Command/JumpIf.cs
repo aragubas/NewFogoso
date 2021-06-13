@@ -58,11 +58,7 @@ namespace Fogoso.Taiyou.Command
         // 4 - Function to call if true
         // 5 - (optional) Function to call if false
         // 
-        // ----
-        // Avaliable Routines:
-        // ----
-        // UPDATE_INTERNAL_VARIABLE  |  Update interval variables (such as video mode, cursor position etc.)
- 
+          
         bool ArgumentsSet = false;
         string pComparator1;
         string pComparatorType;
@@ -70,7 +66,7 @@ namespace Fogoso.Taiyou.Command
         string pFunctionToCall;
         string pFunctionToCallIfFalse;
 
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
@@ -91,12 +87,16 @@ namespace Fogoso.Taiyou.Command
                     if (pComparator1 == pComparator2)
                     {
                         // Do Action
-                        return CallFunction(pFunctionToCall);
+                        object Return = CallFunction(pFunctionToCall);
+                        if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
                         
                     }else{
                         if (pFunctionToCallIfFalse != "")
                         {
-                            return CallFunction(pFunctionToCallIfFalse);
+                            // Do Else Action
+                            object Return = CallFunction(pFunctionToCallIfFalse);
+                            if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
+
                         }
                     }
                     break;
@@ -105,11 +105,16 @@ namespace Fogoso.Taiyou.Command
                     if (pComparator1 != pComparator2)
                     {
                         // Do Action
-                        return CallFunction(pFunctionToCall);
+                        object Return = CallFunction(pFunctionToCall);
+                        if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
+                        
                     }else{
                         if (pFunctionToCallIfFalse != "")
                         {
-                            return CallFunction(pFunctionToCallIfFalse);
+                            // Do Else Action
+                            object Return = CallFunction(pFunctionToCallIfFalse);
+                            if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
+                            
                         }
                     }
                     break;
@@ -119,11 +124,16 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) >= float.Parse(pComparator2))
                     {
                         // Do Action
-                        return CallFunction(pFunctionToCall);
+                        object Return = CallFunction(pFunctionToCall);
+                        if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
+                        
                     }else{
                         if (pFunctionToCallIfFalse != "")
                         {
-                            return CallFunction(pFunctionToCallIfFalse);
+                            // Do Else Action
+                            object Return = CallFunction(pFunctionToCallIfFalse);
+                            if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
+                            
                         }
                     }
                     break;
@@ -132,11 +142,16 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) > float.Parse(pComparator2))
                     {
                         // Do Action
-                        return CallFunction(pFunctionToCall);
+                        object Return = CallFunction(pFunctionToCall);
+                        if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
+                        
                     }else{
                         if (pFunctionToCallIfFalse != "")
                         {
-                            return CallFunction(pFunctionToCallIfFalse);
+                            // Do Else Action
+                            object Return = CallFunction(pFunctionToCallIfFalse);
+                            if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
+                            
                         }
                     }
                     break;
@@ -146,11 +161,16 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) <= float.Parse(pComparator2))
                     {
                         // Do Action
-                        return CallFunction(pFunctionToCall);
+                        object Return = CallFunction(pFunctionToCall);
+                        if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
+                        
                     }else{
                         if (pFunctionToCallIfFalse != "")
                         {
-                            return CallFunction(pFunctionToCallIfFalse);
+                            // Do Else Action
+                            object Return = CallFunction(pFunctionToCallIfFalse);
+                            if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
+                            
                         }
                     }
                     break;
@@ -159,11 +179,16 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) < float.Parse(pComparator2))
                     {
                         // Do Action
-                        return CallFunction(pFunctionToCall);
+                        object Return = CallFunction(pFunctionToCall);
+                        if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
+                        
                     }else{
                         if (pFunctionToCallIfFalse != "")
                         {
-                            return CallFunction(pFunctionToCallIfFalse);
+                            // Do Else Action
+                            object Return = CallFunction(pFunctionToCallIfFalse);
+                            if (ReturnCodes.Halt.Equals(Return)) { return null; } else { return Return; }
+                            
                         }
                     }
                     break;
@@ -174,13 +199,13 @@ namespace Fogoso.Taiyou.Command
  
             }
 
-            return 0;
+            return null;
         }
 
         bool FunctionCallInitiated = false;
-        TaiyouScript FunctionToRun;
+        InterpreterInstance FunctionToRun;
 
-        private int CallFunction(string FunctionToCall)
+        private object CallFunction(string FunctionToCall)
         {
             // Create a temporary script
             if (!FunctionCallInitiated)
@@ -199,7 +224,7 @@ namespace Fogoso.Taiyou.Command
                 List<TaiyouLine> AllCode = Global.Functions_Data[FunctionIndex];
 
                 // Create an Script Instance
-                FunctionToRun = new TaiyouScript("", true, Global.Functions_Data[FunctionIndex]);
+                FunctionToRun = new InterpreterInstance("", true, Global.Functions_Data[FunctionIndex]);
  
             }
 

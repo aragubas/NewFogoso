@@ -45,9 +45,9 @@ namespace Fogoso.Taiyou
         public string[] OriginalArguments { get; set; }
         public TaiyouLine RootTaiyouLine;
 
-        public virtual int Call()
+        public virtual object Call()
         {
-            return 0;
+            return null;
         }
  
         public string[] ReplaceVarLiterals()
@@ -58,7 +58,7 @@ namespace Fogoso.Taiyou
             for (int i = 0; i < OriginalArguments.Length; i++)
             {
                 pArguments[i] = Fogoso.Taiyou.Global.LiteralReplacer(OriginalArguments[i]);
-            }
+            } 
 
             return pArguments;
         }

@@ -54,7 +54,7 @@ namespace Fogoso.Taiyou.Command
         // 1 - Width
         // 2 - Height
         // 3 - Fullscreen
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
@@ -71,7 +71,7 @@ namespace Fogoso.Taiyou.Command
             Fogoso.Global.WindowHeight = VideoModeHeight;
             Fogoso.Global.WindowIsFullcreen = VideoModeIsFullscreen;
 
-            return 0;
+            return null;
         }
 
 

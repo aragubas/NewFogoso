@@ -42,16 +42,18 @@ namespace Fogoso.Taiyou
         public string[] Arguments;
         public string ScriptOfOrigin = "";
         public string OriginalLineCode = "";
-        public TaiyouScript ParentScript;
+        public int OriginalLineNumber = -1;
+        public InterpreterInstance ParentScript;
 
-        public TaiyouLine(string Line, string pScriptOfOrigin, string pOriginalLineCode)
+        public TaiyouLine(string Line, string pScriptOfOrigin, int pOriginalLineNumber)
         {
             string CommandCode = Line.Substring(0, 3);
             // Set the Arguments string
             Arguments = Line.Remove(0, 3).Split(',');
             ScriptOfOrigin = pScriptOfOrigin;
-            OriginalLineCode = pOriginalLineCode;
-
+            OriginalLineCode = Line;
+            OriginalLineNumber = pOriginalLineNumber;
+             
             // Switch Case the TGEUC Interpretation
             switch (CommandCode)
             {
@@ -129,7 +131,7 @@ namespace Fogoso.Taiyou
 
         }
 
-        public int call()
+        public object call()
         {
             return FunctionCall.Call();
         }

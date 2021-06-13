@@ -47,7 +47,6 @@
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/bin/Debug/netcoreapp3.1/win-x64/Fogoso_data/taiyou/readme.txt
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/bin/Debug/netcoreapp3.1/win-x64/Fogoso_data/taiyou/scripts/engine_update.tiy
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/bin/Debug/netcoreapp3.1/win-x64/Fogoso_data/taiyou/scripts/initial.tiy
-/home/notrunda/Documents/Projects/NewFogoso/NewFogoso/bin/Debug/netcoreapp3.1/win-x64/Fogoso_data/taiyou/scripts/initial_video_mode.tiy
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/bin/Debug/netcoreapp3.1/win-x64/Fogoso_data/taiyou/scripts/Update/RestoreCursor.tiy
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/bin/Debug/netcoreapp3.1/win-x64/Fogoso_data/taiyou/taiyou_dict.data
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/bin/Debug/netcoreapp3.1/win-x64/StartFogoso.sh
@@ -295,3 +294,5 @@
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/obj/Debug/netcoreapp3.1/win-x64/NewFogoso.dll
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/obj/Debug/netcoreapp3.1/win-x64/NewFogoso.pdb
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/obj/Debug/netcoreapp3.1/win-x64/NewFogoso.genruntimeconfig.cache
+/home/notrunda/Documents/Projects/NewFogoso/NewFogoso/bin/Debug/netcoreapp3.1/win-x64/Fogoso_data/source/sound/click_hold/1.wav
+/home/notrunda/Documents/Projects/NewFogoso/NewFogoso/bin/Debug/netcoreapp3.1/win-x64/Fogoso_data/source/sound/click_hold/2.wav

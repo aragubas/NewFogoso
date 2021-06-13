@@ -55,7 +55,7 @@ namespace Fogoso.Taiyou.Command
         string pComparatorType;
         string pComparator2;
 
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
@@ -74,7 +74,7 @@ namespace Fogoso.Taiyou.Command
                     if (pComparator1 == pComparator2)
                     {
                         // Halt
-                        return 1;
+                        return ReturnCodes.Halt;
                     }
                     break;
 
@@ -82,7 +82,7 @@ namespace Fogoso.Taiyou.Command
                     if (pComparator1 != pComparator2)
                     {
                         // Halt
-                        return 1;
+                        return ReturnCodes.Halt;
                     }
                     break;
 
@@ -91,7 +91,7 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) >= float.Parse(pComparator2))
                     {
                         // Halt
-                        return 1;
+                        return ReturnCodes.Halt;
                     }
                     break;
 
@@ -100,7 +100,7 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) <= float.Parse(pComparator2))
                     {
                         // Halt
-                        return 1;
+                        return ReturnCodes.Halt;
                     }
                     break;
 
@@ -108,7 +108,7 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) < float.Parse(pComparator2))
                     {
                         // Halt
-                        return 1;
+                        return ReturnCodes.Halt;
                     }
                     break;
 
@@ -117,13 +117,13 @@ namespace Fogoso.Taiyou.Command
                     if (float.Parse(pComparator1) > float.Parse(pComparator2))
                     {
                         // Halt
-                        return 1;
+                        return ReturnCodes.Halt;
                     }
                     break;
 
             }
 
-            return 0;
+            return null;
         }
 
 

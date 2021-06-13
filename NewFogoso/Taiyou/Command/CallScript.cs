@@ -40,7 +40,7 @@ namespace Fogoso.Taiyou.Command
 {
     public class CallScript : TaiyouCommand
     {
-        TaiyouScript ScriptToCall;
+        InterpreterInstance ScriptToCall;
         public CallScript(string[] pArguments, string pScriptCaller, TaiyouLine pRootTaiyouLine)
         {
             OriginalArguments = pArguments;
@@ -50,7 +50,7 @@ namespace Fogoso.Taiyou.Command
 
         }
 
-        public override int Call()
+        public override object Call()
         {
             if (ScriptToCall == null)
             {
@@ -61,7 +61,7 @@ namespace Fogoso.Taiyou.Command
                     int LinesIndex = Global.LoadedTaiyouScripts.IndexOf(ScriptName);
                     ScriptName = Global.LoadedTaiyouScripts_Data[LinesIndex][0].ScriptOfOrigin;
    
-                    ScriptToCall = new TaiyouScript(ScriptName, false, Global.LoadedTaiyouScripts_Data[LinesIndex]);
+                    ScriptToCall = new InterpreterInstance(ScriptName, false, Global.LoadedTaiyouScripts_Data[LinesIndex]);
 
                 }catch (IndexOutOfRangeException)
                 {

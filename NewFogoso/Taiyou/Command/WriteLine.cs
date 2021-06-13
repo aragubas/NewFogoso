@@ -49,7 +49,7 @@ namespace Fogoso.Taiyou.Command
 
         }
 
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
@@ -57,7 +57,7 @@ namespace Fogoso.Taiyou.Command
 
             Console.WriteLine(TextToDisplay);
 
-            return 0;
+            return null;
         }
 
 

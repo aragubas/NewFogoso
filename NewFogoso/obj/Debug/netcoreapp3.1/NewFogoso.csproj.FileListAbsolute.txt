@@ -115,9 +115,7 @@
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/readme.txt
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/scripts/engine_update.tiy
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/scripts/initial.tiy
-/home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/scripts/initial_video_mode.tiy
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/scripts/Update/RestoreCursor.tiy
-/home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/taiyou_dict.data
 /home/notrunda/Documents/Projects/NewFogoso/Output/StartFogoso.sh
 /home/notrunda/Documents/Projects/NewFogoso/Output/NewFogoso
 /home/notrunda/Documents/Projects/NewFogoso/Output/NewFogoso.deps.json
@@ -127,3 +125,5 @@
 /home/notrunda/Documents/Projects/NewFogoso/Output/NewFogoso.pdb
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/source/sound/click_hold/1.wav
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/source/sound/click_hold/2.wav
+/home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/scripts/post-init.tiy
+/home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/instructions_names.data

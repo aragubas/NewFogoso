@@ -237,10 +237,36 @@ namespace Fogoso.GameLogic.OverlayScreens
         void SetClockOpacity()
         {
             short newOpacity = Convert.ToInt16(255 * Animator.GetValue());
-            if (newOpacity < 30) { newOpacity = 0; }
+            if (newOpacity < 50) { newOpacity = 0; }
  
             DateLabel.Opacity = newOpacity;
             TimeLabel.Opacity = newOpacity;
+        }
+   
+        void MiningAction()
+        {
+            //if (Minimized) { ToggleMinimized(); }
+
+            AddCeira(CurrentSessionData.CeiraPerWorkunit.ToString(), CurrentSessionData.CeiraPerWorkunit);
+            AragubasTime.Frames = AragubasTime.Frames * 2;
+            Random Oracle = new Random();
+            Sound.PlaySound("click", 0.06f);
+   
+            if (Oracle.Next(0, 100) == RandomSinas)
+            {
+                AragubasTime.Frames += AragubasTime.Frames * 2;
+                AddCeira((CurrentSessionData.CeiraPerWorkunit * CurrentSessionData.CeiraWorkunitBonusMultiplier).ToString() + " Bonus!", Color.Black, Color.White, CurrentSessionData.CeiraPerWorkunit * CurrentSessionData.CeiraWorkunitBonusMultiplier);
+ 
+            }
+
+            if (LastMinute != AragubasTime.Minute) 
+            {
+                LastMinute = AragubasTime.Minute; CurrentSessionData.Experience++;
+                Random ceira = new Random();
+                RandomSinas = ceira.Next(0, 100);
+
+            }
+
         }
  
         public override void Update()
@@ -301,30 +327,9 @@ namespace Fogoso.GameLogic.OverlayScreens
             }
    
             // Detect when pressing mining button
-            if (GameInput.GetInputState("MINING_PRIMARY", false) || GameInput.GetInputState("MINING_SECONDARY", false))
-            {
-                //if (Minimized) { ToggleMinimized(); }
+            if (GameInput.GetInputState("MINING_PRIMARY", false)) { MiningAction(); }
+            if (GameInput.GetInputState("MINING_SECONDARY", false)) { MiningAction(); }
 
-                AddCeira(CurrentSessionData.CeiraPerWorkunit.ToString(), CurrentSessionData.CeiraPerWorkunit);
-                AragubasTime.Frames = AragubasTime.Frames * 2;
-                Random Oracle = new Random();
-                Sound.PlaySound("click", 0.06f);
-
-                if (Oracle.Next(0, 100) == RandomSinas)
-                {
-                    AragubasTime.Frames += AragubasTime.Frames * 2;
-                    AddCeira((CurrentSessionData.CeiraPerWorkunit * CurrentSessionData.CeiraWorkunitBonusMultiplier).ToString() + " Bonus!", Color.Black, Color.White, CurrentSessionData.CeiraPerWorkunit * CurrentSessionData.CeiraWorkunitBonusMultiplier);
- 
-                }
-
-                if (LastMinute != AragubasTime.Minute) 
-                {
-                    LastMinute = AragubasTime.Minute; CurrentSessionData.Experience++;
-                    Random ceira = new Random();
-                    RandomSinas = ceira.Next(0, 100);
-
-                }
-            }
         }
 
     }

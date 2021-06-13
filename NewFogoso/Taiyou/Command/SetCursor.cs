@@ -52,7 +52,7 @@ namespace Fogoso.Taiyou.Command
         // SetCursor - In-Game cursor changer
         // ===================================
         // 1 - Cursor res name
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
@@ -60,7 +60,7 @@ namespace Fogoso.Taiyou.Command
 
             GameInput.CursorImage = CursorResName;
  
-            return 0;
+            return null;
         }
 
 

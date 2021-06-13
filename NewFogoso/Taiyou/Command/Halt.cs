@@ -49,9 +49,9 @@ namespace Fogoso.Taiyou.Command
 
         }
 
-        public override int Call()
+        public override object Call()
         {
-            return 1;
+            return ReturnCodes.Halt;
         }
 
 

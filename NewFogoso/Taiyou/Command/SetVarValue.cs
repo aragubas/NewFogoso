@@ -55,7 +55,7 @@ namespace Fogoso.Taiyou.Command
         //
 
 
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
@@ -71,19 +71,19 @@ namespace Fogoso.Taiyou.Command
             {
                 case "String":
                     OperatorVariable.SetValue(Convert.ToString(NewValue));
-                    return 0;
+                    return null;
 
                 case "Bool":
                     OperatorVariable.SetValue(Convert.ToBoolean(NewValue));
-                    return 0;
+                    return null;
 
                 case "Float":
                     OperatorVariable.SetValue(float.Parse(NewValue));
-                    return 0;
+                    return null;
 
                 case "Int":
                     OperatorVariable.SetValue(Int32.Parse(NewValue));
-                    return 0;
+                    return null;
 
                 default:
                     throw new TaiyouExecutionError(this, "Type Error!", "Invalid Operation");

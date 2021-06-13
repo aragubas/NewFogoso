@@ -55,7 +55,7 @@ namespace Fogoso.Taiyou.Command
         // 2 - Math Operation
         // 3 - Actuator Var Name (you can use # for literals)
 
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
@@ -122,7 +122,7 @@ namespace Fogoso.Taiyou.Command
                     throw new IndexOutOfRangeException("Invalid MathOperation [" + MathOperation + "]");
             }
 
-            return 0;
+            return null;
         }
 
 

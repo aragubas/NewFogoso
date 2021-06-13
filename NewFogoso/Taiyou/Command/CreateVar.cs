@@ -61,7 +61,7 @@ namespace Fogoso.Taiyou.Command
         // 3 - Default value
         //
 
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
@@ -78,12 +78,12 @@ namespace Fogoso.Taiyou.Command
             // Check if variable exists
             int VarID = Global.VarList_Keys.IndexOf(VarTag);
 
-            if (VarID != -1) { return 0; }
+            if (VarID != -1) { return null; }
 
 
             Global.VarList.Add(new Variable(Variable.StringToVarType(VarType), VarDefaultValue, VarTag));
             Global.VarList_Keys.Add(VarTag);
-            return 0;
+            return null;
         }
 
     }

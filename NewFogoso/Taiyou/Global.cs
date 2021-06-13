@@ -80,7 +80,7 @@ namespace Fogoso.Taiyou
             if (HeaderIndex == -1){ return; }
 
             // Create a temporary script
-            TaiyouScript FunctionToRun = new TaiyouScript($"{TaiyouGlobal.TaiyouReservedNames_SCRIPT_HEADER}_{ScriptName}", true, ScriptHeaders_Data[HeaderIndex]);
+            InterpreterInstance FunctionToRun = new InterpreterInstance($"{TaiyouGlobal.TaiyouReservedNames_SCRIPT_HEADER}_{ScriptName}", true, ScriptHeaders_Data[HeaderIndex]);
             FunctionToRun.Interpret();
 
             // Remove Header from Memory
@@ -118,10 +118,9 @@ namespace Fogoso.Taiyou
                 int VarNameTokenSize = Math.Abs(TokenStartIndex - TokenEndIndex);
                 string Ceira = EntireInput.Substring(TokenStartIndex, VarNameTokenSize);
 
-                Variable VarValue;
                 string VarName = Ceira.Replace("$", "").Replace("#", "");
                 int VarIndex = GetVarIndex(VarName);
-                VarValue = GetVarObject(VarIndex);
+                Variable VarValue = GetVarObject(VarIndex);
 
                 EntireInput = EntireInput.Replace(Ceira, VarValue.ToString());
             }
@@ -141,7 +140,7 @@ namespace Fogoso.Taiyou
             // Load the Dictionary File
             Utils.ConsoleWriteWithTitle("TaiyouInit", "Loading Dictionary File...");
 
-            string[] TaiyouDictonary = File.ReadAllLines(Fogoso. Global.TaiyouDirectory + "taiyou_dict.data");
+            string[] TaiyouDictonary = File.ReadAllLines(Fogoso. Global.TaiyouDirectory + "instructions_names.data");
             // Clear the Lists
             TSCN.Clear();
             TSUP.Clear();
@@ -179,7 +178,7 @@ namespace Fogoso.Taiyou
                 Utils.ConsoleWriteWithTitle("TaiyouInit", "No scripts to load!");
                 return;
             }
-
+ 
             // Read every script
             for (int i = 0; i < AllScripts.Length; i++)
             {
@@ -199,20 +198,19 @@ namespace Fogoso.Taiyou
                 List<string> CorrectTextLines = new List<string>();
                 List<TaiyouLine> ParsedCode = new List<TaiyouLine>();
 
-                // Remove every line that is less than 3 Characters
-                int index = -1;
-
                 bool IsReadingFunctionLine = false;
                 bool LastFuncIsFunctionHeader = false;
                 bool FunctionHeaderDeclared = false;
                 string LastFuncLineName = "";
                 var FunctionCode = new List<TaiyouLine>();
+                int LineNumber = 0;
 
                 for (int i2 = 0; i2 < ReadTextLines.Length; i2++)
                 {
                     string line = ReadTextLines[i2];
-                    line = line.TrimEnd(' ');
-
+                    line = line.Trim();
+                    LineNumber += 1;
+    
                     if (line.Length < 3) { Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "Removed empty line"); continue; }
                     if (line.StartsWith(TaiyouGlobal.TaiyouToken_LINE_COMMENT, StringComparison.Ordinal)) { Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "Removed comment line"); continue; }
  
@@ -227,8 +225,8 @@ namespace Fogoso.Taiyou
 
                         Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Found Function Block");
                         string FunctionName = line.Split('"')[1];
-
-                        // Check if function is Script Header
+  
+                        // Script Header Function
                         if (FunctionName.Equals("@HEADER"))
                         {
                             // Dont allow declaring script header twice
@@ -246,7 +244,7 @@ namespace Fogoso.Taiyou
                             continue;
 
                         } 
-                        // Check if function is global
+                        // Non-Global function
                         else if (!FunctionName.StartsWith("global_", StringComparison.Ordinal))
                         {
                             Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Function is not global, ScriptName tag included.");
@@ -260,7 +258,7 @@ namespace Fogoso.Taiyou
                             continue;
  
                         } 
-                        // Handle global functions
+                        // Global Function
                         else if (FunctionName.StartsWith("global_", StringComparison.Ordinal))
                         {
                             Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Function is not global, ScriptName tag included.");
@@ -281,7 +279,7 @@ namespace Fogoso.Taiyou
                     // Read the function code
                     if (IsReadingFunctionLine)
                     {
-                        // Check if function reading reached to end
+                        // Check for End Function token
                         if (line.StartsWith(TaiyouGlobal.TaiyouToken_FUNCTION_END, StringComparison.Ordinal))
                         { 
                             // Add the key and the data  
@@ -313,7 +311,7 @@ namespace Fogoso.Taiyou
 
                         }
 
-                        // Check if line a Command Line
+                        // Check if line is not empty
                         if (line.Length > 3)
                         {
                             string EditedLine = line;
@@ -324,12 +322,12 @@ namespace Fogoso.Taiyou
                                 continue;
                             }
 
-                            // Run Code Revision for this line
-                            EditedLine = LineRevision(EditedLine, ScriptName, line, index);
-
+                            // Run Line Revision
+                            EditedLine = LineRevision(EditedLine, ScriptName, line, LineNumber);
+ 
                             // Add to final FunctionCode list
-                            FunctionCode.Add(new TaiyouLine(EditedLine, ScriptName, EditedLine));
-
+                            FunctionCode.Add(new TaiyouLine(EditedLine, ScriptName, LineNumber));
+ 
                             Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Added Instruction [" + EditedLine + "] to function block");
 
                         }
@@ -358,25 +356,22 @@ namespace Fogoso.Taiyou
                 // Check if a functions start was not left behind
                 if (IsReadingFunctionLine)
                 {
-                    Utils.ConsoleWriteWithTitle("TaiyouParser_Step2", "Fatal Error!\nA function has been initialized and not properly finished.\nin Script(" + ScriptName + ")\nin Function(" + LastFuncLineName + ")\nat Index(" + index + ")");
-                    throw new FileLoadException(TaiyouParserError("ParserStep2: A function has been initialized and not finished properly.\nin Script(" + ScriptName + ")\nin FunctionName(" + LastFuncLineName + ")\nat Index(" + index + ")."));
+                    Utils.ConsoleWriteWithTitle("TaiyouParser_Step2", $"Type Error!\nA function has been initialized and not finished properly.\nin Script { ScriptName }\nNear Function { LastFuncLineName }\nLine Number: { LineNumber }.");
+                    throw new Exception(TaiyouParserError($"Type Error!\nA function has been initialized and not finished properly.\nin Script { ScriptName }\nNear Function { LastFuncLineName }\nLine Number: { LineNumber }."));
                 }
-
+                 
                 // ##########################################
                 // ######### -- Parser Step 3 - #############
                 // ##########################################
-                Utils.ConsoleWriteWithTitle("TaiyouParser_Step3", "Code Revision");
+                Utils.ConsoleWriteWithTitle("TaiyouParser_Step3", "Parse remaning lines");
 
 
                 // Convert the result to Array
                 string[] ScriptData = CorrectTextLines.ToArray();
 
                 // Check if line is a valid command
-                index = -1;
                 foreach (var line in ScriptData)
                 {
-                    index += 1;
-
                     // Check if line is a Commented Line
                     if (line.StartsWith(TaiyouGlobal.TaiyouToken_LINE_COMMENT, StringComparison.Ordinal))
                     {
@@ -389,19 +384,19 @@ namespace Fogoso.Taiyou
                     // Final Line
                     string FinalLine = line;
 
-                    // ##########################################
+                    // #########################################
                     // ######### -- Parser Step 4 - #############
                     // ##########################################
                     Utils.ConsoleWriteWithTitle("TaiyouParser_Step4", "Convert code to TaiyouLine objects");
 
 
                     // Replace TSCN with TSUP
-                    FinalLine = LineRevision(FinalLine, ScriptName, line, index);
+                    FinalLine = LineRevision(FinalLine, ScriptName, line, LineNumber);
 
                     Utils.ConsoleWriteWithTitle("TaiyouParser_Step4", "Added line [" + FinalLine + "] to TaiyouLine");
-                    ParsedCode.Add(new TaiyouLine(FinalLine, ScriptName, line));
+                    ParsedCode.Add(new TaiyouLine(FinalLine, ScriptName, LineNumber));
                 }
-
+  
                 // ##########################################
                 // ######### -- Parser Step 5 - #############
                 // ##########################################
@@ -424,17 +419,16 @@ namespace Fogoso.Taiyou
             return Result;
         }
 
-        public static string ReplaceWithTSUP(string Input)
+        public static string ReplaceWithTSUP(string Input, string KeyNameFiltred, string line, int lineNumber)
         {
             string LineInstruction = Input.Split(' ')[0];
-
+ 
             // Replace TSCN with TSUP
             int IntructionNameIndex = TSCN.IndexOf(LineInstruction);
             if (IntructionNameIndex == -1)
             {
                 Utils.ConsoleWriteWithTitle("ReplaceWithTSUP Warning", "Unknow TSUP (" + LineInstruction + ")");
-
-                return Input;
+                throw new Exception(TaiyouParserError($"Type Error!\nInvalid Command or Instruction ({LineInstruction})\nAt Script {KeyNameFiltred}\nIn Line {line}\nLine Number {lineNumber}\nTip: You just typed an command that doesn't exist.")); 
             }
 
             string InstructionUpcode = TSUP[IntructionNameIndex];
@@ -447,39 +441,39 @@ namespace Fogoso.Taiyou
 
         }
  
-        public static string LineRevision(string Input, string KeyNameFiltred, string line, int index)
+        public static string LineRevision(string Input, string KeyNameFiltred, string line, int lineNumber)
         {
             Utils.ConsoleWriteWithTitle("TaiyouLineRevision", "Replacing with TSUP...");
 
-            string Pass1 = ReplaceWithTSUP(Input);
+            string Pass1 = ReplaceWithTSUP(Input, KeyNameFiltred, line, lineNumber);
             string FinalResult = "";
 
             if (Pass1.Length < 3)
             {
-                throw new Exception(TaiyouParserError("LineRevision: Instruction is less than 3 characters.\nPlease check the code.\nin Script(" + KeyNameFiltred + ")\nin Line(" + line + ")\nat Index(" + index + ")."));
+                throw new Exception(TaiyouParserError("LineRevision: Instruction is less than 3 characters.\nInstructions TSUP file contains invalid data."));
             }
 
             // If the line does not ends with ';' token, throw an error
             Utils.ConsoleWriteWithTitle("TaiyouLineRevision", "Checking for EndLine Character Type Error");
-            if (!Pass1.EndsWith(";", StringComparison.Ordinal)) { throw new Exception(TaiyouParserError("Type Error!\nLine Ending expected.\n\nat Script [" + KeyNameFiltred + "]\nIn Line [" + line + "]\nTip: You probally missed an end like token ';' at the end of a function or there is blank whitespaces greater than 3 characters.")); }
+            if (!Pass1.EndsWith(";", StringComparison.Ordinal)) { throw new Exception(TaiyouParserError($"Type Error!\nLine Ending expected.\n\nat Script [{KeyNameFiltred}]\nIn Line [{ line }]\nLine Number {lineNumber}\nTip: You missed an end like token ';' at the end of a command.")); }
  
             // Remove the ';' token
             string Pass2 = Pass1.Remove(Pass1.Length - 1, 1);
             // Instruction should be first 3 characters
             string Instruction = Pass2.Substring(0, 3);
  
-            Utils.ConsoleWriteWithTitle("TaiyouLineRevision", "Checking for ArgumentsSizeType  Errors");
+            Utils.ConsoleWriteWithTitle("TaiyouLineRevision", "Checking argument size.");
             int InstuctionsArgumentsSizeIndex = Instructions_TSUP.IndexOf(Instruction);
- 
+  
             // Check if instruction is valid
-            if (InstuctionsArgumentsSizeIndex == -1) { throw new Exception(TaiyouParserError("Type Error!\nInvalid Command or Instruction [" + Instruction + "]\nAt Script [" + KeyNameFiltred + "]\nIn Line [" + line + "]\nTip: You just typed an command that doesn't exist.")); }
+            if (InstuctionsArgumentsSizeIndex == -1) { throw new Exception(TaiyouParserError($"Parser Error!\nArgument Size Dictionary is missing a entry for {Instruction}.")); }
             int CorrectNumberOfInstructions = Int32.Parse(Instructions_NumberOfArguments[InstuctionsArgumentsSizeIndex]);
             // Count how many times " appered and divide by 2 
             int NumberOfInstructions = Pass2.Remove(0, 3).Count(x => x == '"') / 2;
 
             if (NumberOfInstructions < CorrectNumberOfInstructions)
             {
-                throw new Exception(TaiyouParserError("TaiyouLineRevision: The instruction on the line [" + Input + "] does not take less than " + CorrectNumberOfInstructions + " arguments."));
+                throw new Exception(TaiyouParserError("Type Error!\nThe command [{ Input }] does not take less than { CorrectNumberOfInstructions } arguments.\nAt line [{line}]\nLine Number {lineNumber}"));
             }
 
             FinalResult = Pass2;

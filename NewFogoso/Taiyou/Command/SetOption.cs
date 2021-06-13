@@ -64,7 +64,7 @@ namespace Fogoso.Taiyou.Command
         // CURSOR_IMAGE      | Set Cursor Image
  
 
-        public override int Call()
+        public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
@@ -75,35 +75,35 @@ namespace Fogoso.Taiyou.Command
             {
                 case "FIXED_TIME_STEP":
                     Main.Reference.IsFixedTimeStep = Convert.ToBoolean(OptionValue);
-                    return 0;
+                    return null;
 
                 case "MOUSE_VISIBLE":
                     Main.Reference.IsMouseVisible = Convert.ToBoolean(OptionValue);
-                    return 0;
+                    return null;
 
                 case "WINDOW_TITLE":
                     Main.Reference.Window.Title = OptionValue;
-                    return 0;
+                    return null;
 
                 case "WINDOW_BORDERLESS":
                     Main.Reference.Window.IsBorderless = Convert.ToBoolean(OptionValue);
-                    return 0;
+                    return null;
 
                 case "RELOAD":
                     Global.Reload();
-                    return 0;
+                    return null;
 
                 case "CURSOR_IMAGE":
                     GameInput.CursorImage = OptionValue;
-                    return 0;
+                    return null;
 
                 case "CURSOR_X":
                     GameInput.CursorPosition.X = Int32.Parse(OptionValue);
-                    return 0;
+                    return null;
    
                 case "CURSOR_Y":
                     GameInput.CursorPosition.Y = Int32.Parse(OptionValue);
-                    return 0;
+                    return null;
  
 
                 default:

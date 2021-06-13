@@ -49,7 +49,7 @@ namespace Fogoso
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static Main Reference;
-        public static bool DebugModeEnabled;
+        public static bool DebugModeEnabled = true;
         public static int MaxFPS;
 
         // Fps Counter
@@ -74,18 +74,14 @@ namespace Fogoso
 
             // Load all the taiyou scripts
             Taiyou.Global.LoadTaiyouScripts();
-            
-            // Register Initialization Events
-            Taiyou.Event.RegisterEvent("init", "initial");
-            Taiyou.Event.RegisterEvent("init-video-mode", "initial_video_mode");
-            Taiyou.Event.TriggerEvent("init");
-
+              
             // Create the Sprite Batch
             spriteBatch = new SpriteBatch(GraphicsDevice);
- 
+             
             // Set default video mode
-            Taiyou.Event.TriggerEvent("init-video-mode");
+            Taiyou.CallScript.Call("initial");
 
+            // Load Content
             LoadContent();
 
             base.Initialize();
