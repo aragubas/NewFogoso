@@ -125,5 +125,8 @@
 /home/notrunda/Documents/Projects/NewFogoso/Output/NewFogoso.pdb
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/source/sound/click_hold/1.wav
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/source/sound/click_hold/2.wav
-/home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/scripts/post-init.tiy
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/instructions_names.data
+/home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/source/reg/item_info/autoClicker/description.data
+/home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/source/reg/item_info/autoClicker/icon.data
+/home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/source/reg/item_info/autoClicker/name.data
+/home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/scripts/InitialTasks/PrecacheFonts.tiy

@@ -3,7 +3,7 @@
 # This script is called every frame, for restoring cursor position and image
 ###########################################################
 
-$FUNCTION "@HEADER";
+$ROUTINE "@HEADER"
     Var "Int", "RestoreCursor.CursorX", "0";
     Var "Int", "RestoreCursor.CursorY", "0";
 $END
@@ -29,27 +29,27 @@ SetOption "CURSOR_Y", "#RestoreCursor.CursorY$";
 
  
 # Set cursor to default one
-$FUNCTION "RestoreCursor";
+$ROUTINE "RestoreCursor"
     SetOption "CURSOR_IMAGE", "#Internal.GameInput.Cursor.Default$";
 $END
  
 # Set cursor X to 0
-$FUNCTION "SetXToZero";
+$ROUTINE "SetXToZero"
     SetVar "RestoreCursor.CursorX", "Int", "0";
 $END
 
 # Set cursor Y to 0
-$FUNCTION "SetYToZero";
+$ROUTINE "SetYToZero"
     SetVar "RestoreCursor.CursorY", "Int", "0";
 $END
    
 # Set cursor X to Window Width
-$FUNCTION "SetXToWidth";
+$ROUTINE "SetXToWidth"
     SetVar "RestoreCursor.CursorX", "Int", "#Internal.GameWindow.Width$";
 $END
  
 # Set cursor Y to Window Height
-$FUNCTION "SetYToHeight";
+$ROUTINE "SetYToHeight"
     SetVar "RestoreCursor.CursorY", "Int", "#Internal.GameWindow.Height$";
 $END
 

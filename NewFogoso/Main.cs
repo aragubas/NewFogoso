@@ -78,9 +78,20 @@ namespace Fogoso
             // Create the Sprite Batch
             spriteBatch = new SpriteBatch(GraphicsDevice);
              
-            // Set default video mode
+            // Start Initial Video
+            /*
+            try
+            {
+                Taiyou.CallScript.Call("initial");
+                Console.WriteLine("Initial Script started sucefully.");
+ 
+            }catch (Exception)
+            {
+                Console.WriteLine("FATAL ERROR: Initial script failed to run. Game Engine may be stable.");
+            }
+            */
             Taiyou.CallScript.Call("initial");
-
+            
             // Load Content
             LoadContent();
 

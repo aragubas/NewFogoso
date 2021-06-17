@@ -36,12 +36,14 @@ using System;
 namespace Fogoso.Taiyou
 {
     public static class TaiyouGlobal
-    {
-        public static string TaiyouToken_FUNCTION_END = "$END";
-        public static string TaiyouToken_FUNCTION_DECLARING = "$FUNCTION";
+    { 
+        public static string TaiyouToken_ROUTINE_END = "$END";
+        public static string TaiyouToken_ROUTINE_DECLARING = "ROUTINE";
+        public static string TaiyouToken_COMMAND_BLOCK = "$";
         public static string TaiyouToken_LINE_COMMENT = "#";
-        public static string TaiyouToken_FUNCTION_SPACING = "    ";
+        public static string TaiyouToken_ROUTINE_SPACING = "    ";
         public static string TaiyouReservedNames_SCRIPT_HEADER = "HEADER";
-  
+        public static string TaiyouNaming_GlobalFunction = "global_";
+        
     }
 }

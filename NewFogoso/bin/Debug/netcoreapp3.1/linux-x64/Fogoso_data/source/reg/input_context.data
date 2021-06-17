@@ -1,13 +1,14 @@
 # == Fogoso Engine InputContext Binding ==
 # Template:
 ##############
-# {Action Name},{Keyboard},{GamepadButton};
+# {Action Name},{Keyboard Key}
 # == Supported Mappings:
 # All keyboard letters and Function Keys
-# Gamepad X, Y, A, B, DPAD UP,DOWN,LEFT,RIGHT, Start, Select, LEFT_SHOULDER, RIGHT_SHOULDER
-PAUSE_KEY,ESC,START;
-PAUSE_KEY,ESC,START;
-MINING_PRIMARY,Z,X;
-MINING_SECONDARY,M,Y;
-DEBUG_TEST_1,F,X;
-DEBUG_TEST_2,G,X;
+#
+PAUSE_KEY,ESC
+MINING_PRIMARY,Z
+MINING_SECONDARY,M
+DEBUG_TEST_1,F
+DEBUG_TEST_2,G
+TOGGLE_CLICKVIEWER,TAB
+

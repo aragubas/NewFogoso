@@ -107,6 +107,7 @@ namespace Fogoso
 
         public static Texture2D GetSprite(string SpriteName)
         {
+            if (SpriteName.EndsWith(".png")) { SpriteName.Insert(SpriteName.Length - 1, ".png"); }
             if (AllSpritedLoaded_Names.IndexOf(SpriteName) == -1)
             {
                 // Check if error sprite exists

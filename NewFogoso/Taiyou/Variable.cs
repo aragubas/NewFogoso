@@ -42,7 +42,15 @@ namespace Fogoso.Taiyou
         Float,
         Boolean
     }
- 
+
+    public enum VariableGenericType : byte
+    {
+        String,
+        Number,
+        Boolean
+    }
+
+
     public class Variable
     {
         // Object Properties
@@ -50,7 +58,7 @@ namespace Fogoso.Taiyou
         public string Tag;
         public object Value;
         public string SearchPattern;
-        public string GenericVarType;
+        public VariableGenericType GenericVarType;
 
         public static VariableType StringToVarType(string VarTypeString)
         {
@@ -69,10 +77,53 @@ namespace Fogoso.Taiyou
                     return VariableType.Boolean;
 
                 default:
-                    Utils.ConsoleWriteWithTitle("VariableType.StringToVarType", $"Invalid variable type {VarTypeString}.", true);
                     throw new InvalidOperationException($"Invalid variable type {VarTypeString}.");
             }
         }
+
+        public static VariableGenericType StringToVarGenericType(string VarTypeString)
+        {
+            switch(VarTypeString.ToLower())
+            {
+                case "string":
+                    return VariableGenericType.String;
+
+                case "int":
+                    return VariableGenericType.Number;
+
+                case "float":
+                    return VariableGenericType.Number;
+
+                case "bool":
+                    return VariableGenericType.Boolean;
+
+                default:
+                    throw new InvalidOperationException($"Invalid variable type {VarTypeString}.");
+            }
+
+        }
+
+        public static VariableGenericType VariableToVarGenericType(VariableType VarType)
+        {
+            switch(VarType)
+            {
+                case VariableType.String:
+                    return VariableGenericType.String;
+
+                case VariableType.Integer:
+                    return VariableGenericType.Number;
+
+                case VariableType.Float:
+                    return VariableGenericType.Number;
+
+                case VariableType.Boolean:
+                    return VariableGenericType.Boolean;
+
+            }
+            throw new InvalidOperationException($"Invalid variable type {VarType}.");
+
+        }
+
 
         public Variable(VariableType varType, object varValue, string VarTag)
         {
@@ -81,7 +132,7 @@ namespace Fogoso.Taiyou
             SearchPattern = "$" + VarTag + "$";
    
             // Set the variable Generic Type
-            SetVarGenericType(varType);
+            GenericVarType = VariableToVarGenericType(varType);
     
             // Check for VarCopy
             try{
@@ -100,37 +151,6 @@ namespace Fogoso.Taiyou
             }catch(ArgumentException) {throw new Exception("INTERNAL ERROR!\nError in literal conversion (Cannot convert value to string).");}
    
             SetValue(varValue);
-        }
-
-        /// <summary>
-        /// Set the variable generic type
-        /// </summary>
-        /// <param name="input">Input.</param>
-        private void SetVarGenericType(VariableType input)
-        {
-            switch (input)
-            { 
-                case VariableType.Boolean:
-                    GenericVarType = "Boolean";
-                    break;
-
-                case VariableType.Integer:
-                    GenericVarType = "Number";
-                    break;
-
-                case VariableType.Float:
-                    GenericVarType = "Number";
-                    break;
-
-                case VariableType.String:
-                    GenericVarType = "String";
-                    break;
-
-                default:
-                    throw new ArgumentException("Cannot set GenericType\nVariable type [" + input + "] is invalid.");
-
-            }
-
         }
  
         /// <summary>

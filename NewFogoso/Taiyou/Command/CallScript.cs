@@ -54,16 +54,15 @@ namespace Fogoso.Taiyou.Command
         {
             if (ScriptToCall == null)
             {
-                string[] Arguments = ReplaceVarLiterals();
-                string ScriptName = GetArgument(Arguments, 0);
+                string ScriptName = GetArgument(ReplaceVarLiterals(), 0);
+ 
                 try
                 {
                     int LinesIndex = Global.LoadedTaiyouScripts.IndexOf(ScriptName);
-                    ScriptName = Global.LoadedTaiyouScripts_Data[LinesIndex][0].ScriptOfOrigin;
-   
+                     
                     ScriptToCall = new InterpreterInstance(ScriptName, false, Global.LoadedTaiyouScripts_Data[LinesIndex]);
-
-                }catch (IndexOutOfRangeException)
+                     
+                }catch (ArgumentOutOfRangeException)
                 {
                     throw new Exception($"Type Error in Execution!\nCannot find Taiyou Script {ScriptName}.");
                 }

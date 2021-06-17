@@ -57,7 +57,7 @@ namespace Fogoso.GameLogic.UI
                 TitleText += "...";
             }
 
-            if (isGameItem != null) { UpdateContentEvent += isGameItem.UpdateItemViewSummary; RenderContentEvent += isGameItem.RenderItemViewSummary; }
+            if (isGameItem != null) { if (isGameItem.itemSummary == null) { isGameItem.itemSummary = new ItemSummaryInfosObject(isGameItem); } UpdateContentEvent += isGameItem.itemSummary.Update; RenderContentEvent += isGameItem.itemSummary.Draw; }
  
         }
  
@@ -139,7 +139,7 @@ namespace Fogoso.GameLogic.UI
         public override void Update()
         {
             base.Update(); 
-
+            
             for (int i = 0; i < ItemsCollection.Count; i++)
             {
                 if (ItemsCollection[i].RenderOffset.X + ItemsCollection[i].Rectangle.Width < 0 || ItemsCollection[i].RenderOffset.X - ItemsCollection[i].Rectangle.Width > Rectangle.Width)

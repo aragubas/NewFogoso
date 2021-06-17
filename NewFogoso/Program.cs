@@ -14,7 +14,7 @@ namespace Fogoso
         [STAThread]
         static void Main()
         { 
-            Console.WriteLine("NewFogoso DotNet Core - 'May 22' 2021\n" + 
+            Console.WriteLine("NewFogoso DotNet Core - 'June 13' 2021\n" + 
                               "========================================");
 
             Console.WriteLine($"Current platform: {Global.OSName}");

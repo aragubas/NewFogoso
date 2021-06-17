@@ -3,11 +3,15 @@
 # This script is called when Fogoso Engine Finish Loading Taiyou. (At this point, no resource is currently loaded.)
 #####################################################################################################################
 
+$FUNCTION "@HEADER";
+    SetOption "WINDOW_TITLE", "Fogoso - Loading...";
+$END
+
 Jump "main"; 
    
 $FUNCTION "main";
     WriteLine "Taiyou has been started";
-    SetOption "WINDOW_TITLE", "Fogoso - Loading Resources...";
     InternalRoutine "INIT_STATIC_EVENTS";
-     
+    SetVideoMode "800", "480", "False";
+
 $END

@@ -14,3 +14,5 @@ SetCursor;00D
 InternalRoutine;00E
 Call;00F
 DebugVar;00G
+PrecacheFont;00H
+JumpToStart;00I

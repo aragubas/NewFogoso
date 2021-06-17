@@ -71,7 +71,7 @@ namespace Fogoso.Taiyou.Command
             switch (pComparatorType)
             {
                 case "==":
-                    if (pComparator1 == pComparator2)
+                    if (pComparator1.Equals(pComparator2))
                     {
                         // Halt
                         return ReturnCodes.Halt;
@@ -79,7 +79,7 @@ namespace Fogoso.Taiyou.Command
                     break;
 
                 case "!=":
-                    if (pComparator1 != pComparator2)
+                    if (!pComparator1.Equals(pComparator2))
                     {
                         // Halt
                         return ReturnCodes.Halt;

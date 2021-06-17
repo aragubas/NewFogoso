@@ -86,7 +86,15 @@ namespace Fogoso.Taiyou.Command
             }
 
             // Run the Function
-            return FunctionToRun.Interpret();
+            bool FunctionDone = false;
+            object Return = null;
+            while(!FunctionDone)
+            {
+                Return = FunctionToRun.Interpret();
+                if (ReturnCodes.RoutineJumpStart.Equals(Return)) { FunctionDone = false; } else{ FunctionDone = true; }
+            }
+            return Return;
+
         }
 
 

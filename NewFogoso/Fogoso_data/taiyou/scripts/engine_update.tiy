@@ -3,7 +3,7 @@
 # This script is called every frame, before Screen Update
 ###########################################################
 
-$FUNCTION "@HEADER";
+$ROUTINE "@HEADER"
     # Set Window Title
     JumpIf "#Internal.Environment.DebugMode$", "==", "True", "DebugModeUpdate", "NonDebugModeUpdate"; 
  
@@ -29,16 +29,16 @@ InternalRoutine "UPDATE_KEYBOARD_OBJ";
 
 # Update Sound System
 InternalRoutine "UPDATE_SOUND_SYSTEM";
-'
+
 # /\ /\ Only the functions above will be called
 #############################################
 # These functions should not be overwritten #
 #############################################
-$FUNCTION "DebugModeUpdate";
+$ROUTINE "DebugModeUpdate"
     SetOption "WINDOW_TITLE", "Fogoso(Debug Mode)";    
 $END
      
-$FUNCTION "NonDebugModeUpdate";
+$ROUTINE "NonDebugModeUpdate"
     SetOption "WINDOW_TITLE", "Fogoso - May 2021";
 $END
    

@@ -67,7 +67,7 @@ namespace Fogoso.Taiyou.Command
             int OperatorIndex = Global.VarList_Keys.IndexOf(OperatorVarName);
             if (OperatorIndex == -1) { throw new IndexOutOfRangeException("Cannot find the variable [" + OperatorVarName + "]."); }
             Variable OperatorVariable = Global.VarList[OperatorIndex];
-            if (OperatorVariable.Type != VariableType.Integer) { throw new Exception("Variable [" + OperatorVarName + "] is not an Integer."); }
+            if (OperatorVariable.GenericVarType != VariableGenericType.Number) { throw new Exception("Variable [" + OperatorVarName + "] is not an Integer."); }
             var OperatorValue = OperatorVariable.GetValue();
 
             if (!Regex.IsMatch(OperatorVariable.Value.ToString(), @"\d"))
@@ -77,45 +77,45 @@ namespace Fogoso.Taiyou.Command
 
             // Set the Actuator
             int ActuatorIndex = Global.VarList_Keys.IndexOf(ActuatorVarName);
-            string ActuatorValue = "";
+            float ActuatorValue = 0;
             if (ActuatorIndex == -1)
             {
                 // Check if Actuator is a literal
                 if (ActuatorVarName.StartsWith("#", StringComparison.Ordinal))
                 {
-                    ActuatorValue = ActuatorVarName.Remove(0, 1);
+                    ActuatorValue = float.Parse(ActuatorVarName.Remove(0, 1));
                 }
 
             }
-            else { ActuatorValue = Global.VarList[ActuatorIndex].Value.ToString(); }
+            else { ActuatorValue = (float)Global.VarList[ActuatorIndex].Value; }
 
-            if (!Regex.IsMatch(ActuatorValue, @"\d"))
+            if (!Regex.IsMatch(ActuatorValue.ToString(), @"\d"))
             {
                 throw new IndexOutOfRangeException("Literals must start with '#' token. [" + OperatorVarName + "].");
             }
  
-            int ActuatorInInteger = Int32.Parse(ActuatorValue);
+            float ActuatorRight = ActuatorValue;
 
             switch (MathOperation)
             {
                 case "+":
-                    Global.VarList[OperatorIndex].SetValue(OperatorValue + ActuatorInInteger);
+                    Global.VarList[OperatorIndex].SetValue(OperatorValue + ActuatorRight);
                     break;
 
                 case "-":
-                    Global.VarList[OperatorIndex].SetValue(OperatorValue - ActuatorInInteger);
+                    Global.VarList[OperatorIndex].SetValue(OperatorValue - ActuatorRight);
                     break;
 
                 case "/":
-                    Global.VarList[OperatorIndex].SetValue(OperatorValue / ActuatorInInteger);
+                    Global.VarList[OperatorIndex].SetValue(OperatorValue / ActuatorRight);
                     break;
 
                 case "*":
-                    Global.VarList[OperatorIndex].SetValue(OperatorValue * ActuatorInInteger);
+                    Global.VarList[OperatorIndex].SetValue(OperatorValue * ActuatorRight);
                     break;
 
                 case "%":
-                    Global.VarList[OperatorIndex].SetValue(OperatorValue % ActuatorInInteger);
+                    Global.VarList[OperatorIndex].SetValue(OperatorValue % ActuatorRight);
                     break;
 
                 default:

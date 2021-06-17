@@ -44,7 +44,8 @@ namespace Fogoso.Taiyou
     {
         Error,
         ExecutionHalt,
-        Halt
+        Halt,
+        RoutineJumpStart
     }
      
     public class InterpreterInstance

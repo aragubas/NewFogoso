@@ -39,28 +39,12 @@ using System.Threading;
 namespace Fogoso.Taiyou
 {
     public static class CallScript
-    {
-        private static string LastCallError = "";
-
-  
+    {  
         public static object Call(string pScriptName)
         {
-            try
-            {
-                InterpreterInstance instance = new InterpreterInstance(pScriptName);
-                return instance.Interpret();
-
-            }catch(Exception ex)
-            {
-                if (LastCallError != pScriptName)
-                {
-                    Utils.ConsoleWriteWithTitle("CallTaiyouScript", $"Error while calling taiyou script {ex.Message} ", true);
-                    LastCallError = pScriptName;
-                }
-                return null;
-            }
-             
+            InterpreterInstance instance = new InterpreterInstance(pScriptName);
+            return instance.Interpret();             
         } 
-          
+           
     }
 }

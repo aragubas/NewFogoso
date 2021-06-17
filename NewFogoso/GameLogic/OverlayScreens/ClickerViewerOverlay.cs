@@ -296,7 +296,7 @@ namespace Fogoso.GameLogic.OverlayScreens
 
                 MoneyInfosLabel.SetText($"$ {CurrentMoneyValueSmoother.GetValue().ToString("0.00")}\nExp {CurrentSessionData.Experience}\nIncome: {CurrentSessionData.clickerViewPanel.EstimatedIncome.ToString("0.00")}");
             }
-
+             
             if (ClearEstimatedTimer.TimeTriggered()) 
             {  
                 // Increase Ceira with Income

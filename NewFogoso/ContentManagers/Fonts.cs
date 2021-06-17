@@ -56,7 +56,7 @@ namespace Fogoso
         public static float SmallFontSize = 8;
         public static float TyneFontSize = 7.8f;
         public static float DefaultFontSize = 10;
- 
+  
         public static SpriteFont BakeFont(string FontName, float FontSize)
         {  
             Utils.ConsoleWriteWithTitle("Fonts.BakeFont", $"Baker Font '{FontName}' with Size '{FontSize.ToString()}'", true);
@@ -77,7 +77,17 @@ namespace Fogoso
             return fontBakeResult.CreateSpriteFont(Main.Reference.GraphicsDevice);
         } 
 
-         
+        public static void PrecacheFont(string FontName, float FontSize)
+        {
+            foreach(var Ceira in LoadedFonts.Keys)
+            {
+                if (Ceira.Name == FontName && Ceira.Size == FontSize) { return; }
+            } 
+  
+            FontDescriptor ceira = new FontDescriptor(FontName, FontSize);
+            LoadedFonts.Add(ceira, BakeFont(FontName, FontSize));
+        }
+        
         public static FontDescriptor GetFontDescriptor(string FontName, float FontSize)
         {
             foreach(var Ceira in LoadedFonts.Keys)

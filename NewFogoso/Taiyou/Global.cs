@@ -120,6 +120,7 @@ namespace Fogoso.Taiyou
 
                 string VarName = Ceira.Replace("$", "").Replace("#", "");
                 int VarIndex = GetVarIndex(VarName);
+                if (VarIndex == -1) { throw new Exception($"Type Error in Execution!\nThe varible ({VarName}) was not found in literal."); }
                 Variable VarValue = GetVarObject(VarIndex);
 
                 EntireInput = EntireInput.Replace(Ceira, VarValue.ToString());
@@ -198,99 +199,37 @@ namespace Fogoso.Taiyou
                 List<string> CorrectTextLines = new List<string>();
                 List<TaiyouLine> ParsedCode = new List<TaiyouLine>();
 
-                bool IsReadingFunctionLine = false;
-                bool LastFuncIsFunctionHeader = false;
-                bool FunctionHeaderDeclared = false;
+                bool IsReadingCommandBlock = false;
+                bool LastRoutineIsScriptHeader = false;
+                bool ScriptHeaderAlreadyDeclared = false;
                 string LastFuncLineName = "";
-                var FunctionCode = new List<TaiyouLine>();
+                var RoutineCode = new List<TaiyouLine>();
                 int LineNumber = 0;
-
+ 
                 for (int i2 = 0; i2 < ReadTextLines.Length; i2++)
                 {
                     string line = ReadTextLines[i2];
                     line = line.Trim();
                     LineNumber += 1;
-    
+     
                     if (line.Length < 3) { Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "Removed empty line"); continue; }
                     if (line.StartsWith(TaiyouGlobal.TaiyouToken_LINE_COMMENT, StringComparison.Ordinal)) { Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "Removed comment line"); continue; }
- 
-                    // Initialize the Function Reading
-                    if (line.StartsWith(TaiyouGlobal.TaiyouToken_FUNCTION_DECLARING, StringComparison.Ordinal))
-                    {
-                        // Check if last function has ended 
-                        if (IsReadingFunctionLine)
-                        {
-                            throw new Exception(TaiyouParserError("Type Error!\nExpected EndFunction token before starting new function block\nAt Script [" + ScriptName + "]\nNear function [" + LastFuncLineName + "]\n\nTip: You probally missed to add the end function token at the end of a function."));
-                        }
 
-                        Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Found Function Block");
-                        string FunctionName = line.Split('"')[1];
-  
-                        // Script Header Function
-                        if (FunctionName.Equals("@HEADER"))
-                        {
-                            // Dont allow declaring script header twice
-                            if (FunctionHeaderDeclared) { throw new Exception(TaiyouParserError("Type Error!\nScript Header declared twice\nAt Script [" + ScriptName + "]\nNear function [" + LastFuncLineName + "]\n\nTip: You probally tryied to declare script header twice"));  }
-                            Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Function is script header");
-                            FunctionName = $"{ScriptName}_HEADER";
-                            LastFuncIsFunctionHeader = true;
-       
-                            IsReadingFunctionLine = true;
-                            FunctionHeaderDeclared = true;
-
-                            LastFuncLineName = ScriptName;
-                            Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-ScriptHeader", "Header parse complete");
-
-                            continue;
-
-                        } 
-                        // Non-Global function
-                        else if (!FunctionName.StartsWith("global_", StringComparison.Ordinal))
-                        {
-                            Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Function is not global, ScriptName tag included.");
-                            FunctionName = ScriptName + "_" + FunctionName;
-
-                            IsReadingFunctionLine = true;
-   
-                            LastFuncLineName = FunctionName;
-                            Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Non-Global Function Name[" + LastFuncLineName + "]");
-
-                            continue;
- 
-                        } 
-                        // Global Function
-                        else if (FunctionName.StartsWith("global_", StringComparison.Ordinal))
-                        {
-                            Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Function is not global, ScriptName tag included.");
-                            FunctionName = FunctionName.Replace("global_", "");
- 
-                            IsReadingFunctionLine = true;
-   
-                            LastFuncLineName = FunctionName;
-                            Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Global Function Name[" + LastFuncLineName + "]");
-     
-                            continue;
-
-                        }
-                    
-                        continue;
-                    }
-     
-                    // Read the function code
-                    if (IsReadingFunctionLine)
+                    // Continue Reading Function
+                    if (IsReadingCommandBlock)
                     {
                         // Check for End Function token
-                        if (line.StartsWith(TaiyouGlobal.TaiyouToken_FUNCTION_END, StringComparison.Ordinal))
+                        if (line.StartsWith(TaiyouGlobal.TaiyouToken_ROUTINE_END, StringComparison.Ordinal))
                         { 
                             // Add the key and the data  
                             List<TaiyouLine> Copyied = new List<TaiyouLine>();
-                            foreach (var item in FunctionCode)
+                            foreach (var item in RoutineCode)
                             {
                                 Copyied.Add(item);
                             }
-
+ 
                             // Add last function to Function Buffer
-                            if (!LastFuncIsFunctionHeader)
+                            if (!LastRoutineIsScriptHeader)
                             {
                                 Functions_Data.Add(Copyied);
                                 Functions_Keys.Add(LastFuncLineName);
@@ -303,9 +242,9 @@ namespace Fogoso.Taiyou
                             }
 
 
-                            IsReadingFunctionLine = false;
-                            LastFuncIsFunctionHeader = false;
-                            FunctionCode.Clear();
+                            IsReadingCommandBlock = false;
+                            LastRoutineIsScriptHeader = false;
+                            RoutineCode.Clear();
                             LastFuncLineName = "";
                             continue;
 
@@ -326,22 +265,94 @@ namespace Fogoso.Taiyou
                             EditedLine = LineRevision(EditedLine, ScriptName, line, LineNumber);
  
                             // Add to final FunctionCode list
-                            FunctionCode.Add(new TaiyouLine(EditedLine, ScriptName, LineNumber));
+                            RoutineCode.Add(new TaiyouLine(EditedLine, ScriptName, LineNumber));
  
                             Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Added Instruction [" + EditedLine + "] to function block");
 
                         }
-
                     }
+ 
 
-                    // Add the Line if is not a Function Line
-                    if (!IsReadingFunctionLine)
+                    // Check the Routine Reading
+                    if (line.StartsWith(TaiyouGlobal.TaiyouToken_COMMAND_BLOCK, StringComparison.Ordinal))
                     {
-                        if (line.StartsWith(TaiyouGlobal.TaiyouToken_FUNCTION_END, StringComparison.Ordinal))
+
+                        // Check if last routine has ended 
+                        if (IsReadingCommandBlock)
                         {
+                            throw new Exception(TaiyouParserError("Type Error!\nExpected EndRoutine token before starting new routine block\nAt Script [" + ScriptName + "]\nNear routine [" + LastFuncLineName + "]\n\nTip: You probally missed to add the end routine token at the end of a routine."));
+                        } 
+                        Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutineBlock", "Routine Block Token Detected");
+                         
+                        string LineRoutineTypeFiltred = line.Split(' ')[0].Remove(0, 1);
+
+                        // Read a Routine Block
+                        if (LineRoutineTypeFiltred.Equals(TaiyouGlobal.TaiyouToken_ROUTINE_DECLARING))
+                        {
+                            // Routine Name
+                            string RoutineName = line.Split('"')[1];
+     
+                            // Script Header Routine
+                            if (RoutineName.Equals("@HEADER"))
+                            {
+                                // Dont allow declaring script header twice
+                                if (ScriptHeaderAlreadyDeclared) { throw new Exception(TaiyouParserError("Type Error!\nScript Header declared twice\nAt Script [" + ScriptName + "]\nNear function [" + LastFuncLineName + "]\n\nTip: You probally tryied to declare script header twice"));  }
+                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutineBlock", "Routine is script header");
+                                RoutineName = $"{ScriptName}_HEADER";
+                                LastRoutineIsScriptHeader = true;
+         
+                                IsReadingCommandBlock = true;
+                                ScriptHeaderAlreadyDeclared = true;
+
+                                LastFuncLineName = ScriptName;
+                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-ScriptHeader", "Header parse complete");
+
+                                continue;
+ 
+                            } 
+                            // Non-Global function
+                            else if (!RoutineName.StartsWith(TaiyouGlobal.TaiyouNaming_GlobalFunction, StringComparison.Ordinal))
+                            {
+                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutinedBlock", "Routined is not global, ScriptName tag included.");
+                                RoutineName = ScriptName + "_" + RoutineName;
+
+                                IsReadingCommandBlock = true;
+    
+                                LastFuncLineName = RoutineName;
+                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutineBlock", "Non-Global Routine Name[" + LastFuncLineName + "]");
+
+                                continue;
+    
+                            } 
+                            // Public Global Function
+                            else if (RoutineName.StartsWith(TaiyouGlobal.TaiyouNaming_GlobalFunction, StringComparison.Ordinal))
+                            {
+                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutineBlock", "Routine is not global, ScriptName tag included.");
+                                RoutineName = RoutineName.Replace(TaiyouGlobal.TaiyouNaming_GlobalFunction, "");
+    
+                                IsReadingCommandBlock = true;
+    
+                                LastFuncLineName = RoutineName;
+                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutineBlock", "Global Routine Name[" + LastFuncLineName + "]");
+        
+                                continue;
+
+                            }
+
+                        }
+                    
+                        continue;
+                    }
+     
+                    // Add the Line if is not a Function Line
+                    if (!IsReadingCommandBlock)
+                    {
+                        if (line.StartsWith(TaiyouGlobal.TaiyouToken_ROUTINE_END, StringComparison.Ordinal))
+                        { 
+                            Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "WARNING: Routine End Token Found but no Routine is being Currently Read.");
                             continue;
                         }
-                        Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "Added line [" + line + "] to next code revision");
+                        Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", $"Added line ({line}) to next code revision");
                         CorrectTextLines.Add(line);
                     }
 
@@ -354,7 +365,7 @@ namespace Fogoso.Taiyou
                 Utils.ConsoleWriteWithTitle("TaiyouParser_Step2", "Checking if function start was not left behind");
 
                 // Check if a functions start was not left behind
-                if (IsReadingFunctionLine)
+                if (IsReadingCommandBlock)
                 {
                     Utils.ConsoleWriteWithTitle("TaiyouParser_Step2", $"Type Error!\nA function has been initialized and not finished properly.\nin Script { ScriptName }\nNear Function { LastFuncLineName }\nLine Number: { LineNumber }.");
                     throw new Exception(TaiyouParserError($"Type Error!\nA function has been initialized and not finished properly.\nin Script { ScriptName }\nNear Function { LastFuncLineName }\nLine Number: { LineNumber }."));
@@ -363,8 +374,8 @@ namespace Fogoso.Taiyou
                 // ##########################################
                 // ######### -- Parser Step 3 - #############
                 // ##########################################
-                Utils.ConsoleWriteWithTitle("TaiyouParser_Step3", "Parse remaning lines");
-
+                Utils.ConsoleWriteWithTitle("TaiyouParser_Step3", "Read Non-Routine Code");
+ 
 
                 // Convert the result to Array
                 string[] ScriptData = CorrectTextLines.ToArray();
@@ -372,18 +383,9 @@ namespace Fogoso.Taiyou
                 // Check if line is a valid command
                 foreach (var line in ScriptData)
                 {
-                    // Check if line is a Commented Line
-                    if (line.StartsWith(TaiyouGlobal.TaiyouToken_LINE_COMMENT, StringComparison.Ordinal))
-                    {
-                        Utils.ConsoleWriteWithTitle("TaiyouParser_Step3 Warning", "CommentLine detected, comment line should be removed in Step 2");
-                        Utils.ConsoleWriteWithTitle("TaiyouParser_Step3 Warning", "Line: " + line);
-                         
-                        continue;
-                    }
-
                     // Final Line
                     string FinalLine = line;
-
+ 
                     // #########################################
                     // ######### -- Parser Step 4 - #############
                     // ##########################################
@@ -421,7 +423,7 @@ namespace Fogoso.Taiyou
 
         public static string ReplaceWithTSUP(string Input, string KeyNameFiltred, string line, int lineNumber)
         {
-            string LineInstruction = Input.Split(' ')[0];
+            string LineInstruction = Input.Split(' ')[0].Replace(";", "");
  
             // Replace TSCN with TSUP
             int IntructionNameIndex = TSCN.IndexOf(LineInstruction);
@@ -473,7 +475,7 @@ namespace Fogoso.Taiyou
 
             if (NumberOfInstructions < CorrectNumberOfInstructions)
             {
-                throw new Exception(TaiyouParserError("Type Error!\nThe command [{ Input }] does not take less than { CorrectNumberOfInstructions } arguments.\nAt line [{line}]\nLine Number {lineNumber}"));
+                throw new Exception(TaiyouParserError($"Type Error!\nThe command [{ Input }] does not take less than { CorrectNumberOfInstructions } arguments.\nAt line [{line}]\nLine Number {lineNumber}"));
             }
 
             FinalResult = Pass2;

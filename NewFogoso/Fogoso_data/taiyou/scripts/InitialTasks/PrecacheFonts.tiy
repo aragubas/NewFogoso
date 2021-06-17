@@ -1,0 +1,16 @@
+########################################################
+# This script precache fonts for better game peformace #
+########################################################
+ 
+$ROUTINE "global_PrecacheDefaultsFonts"
+    WriteLine "Precaching Fonts...";
+
+    PrecacheFont "PressStart2P", "8";
+    PrecacheFont "PressStart2P", "7.8";
+    PrecacheFont "PressStart2P", "10";
+    PrecacheFont "PressStart2P", "32";
+    PrecacheFont "PressStart2P", "18";
+
+    WriteLine "Done!";
+
+$END

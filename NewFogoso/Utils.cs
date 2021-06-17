@@ -121,8 +121,10 @@ namespace Fogoso
 
             return sb.ToString();
         }
- 
-        // Original Function Website
+
+        //////////////////////////////////
+        // Modified version for my needs 
+        // Credits:
         // http://web.archive.org/web/20190618131036/http://bluelinegamestudios.com/posts/drawstring-to-fit-text-to-a-rectangle-in-xna/
         static public void DrawStringBoundaries(SpriteBatch spriteBatch, SpriteFont font, string strToDraw, Rectangle boundaries, Color textColor, float rotation=0.0f)
         {
