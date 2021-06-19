@@ -64,7 +64,9 @@ namespace Fogoso.Taiyou.Command
             string NewValue = GetArgument(Arguments, 2);
 
             // Get the Operator Variable 
-            Variable OperatorVariable = Global.VarList[Global.VarList_Keys.IndexOf(OperatorVarName)];
+            Variable OperatorVariable = RootTaiyouLine.GetVariableInAvailableNamespaces(OperatorVarName);
+
+            if (OperatorVariable == null) { throw new TaiyouExecutionError(this, "Type Error at Runtime", $"Cannot find variable ({OperatorVarName})"); }
 
             // Get the NewValueType
             switch (NewValueType)

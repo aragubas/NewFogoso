@@ -3,19 +3,26 @@
 # This script is called when Fogoso Engine Finish Loading Taiyou. (At this point, no resource is currently loaded.)
 #####################################################################################################################
 
-$ROUTINE "@HEADER"
+# Set namespace
+$NAMESPACE "Core"
+
+# Import Initial Tasks
+$IMPORT "Core.InitialTasks"
+
+$HEADER
     SetOption "WINDOW_TITLE", "Fogoso - Loading...";
+    
 $END
 
 Jump "main"; 
 
-$ROUTINE "main"
+$ROUTINE private, main
     WriteLine "Taiyou has been started";
     InternalRoutine "INIT_STATIC_EVENTS";
     SetVideoMode "800", "480", "False";
     Call "InitialTasks.PrecacheFonts";
     
     # Call FontBakeLoop with Default Parameters
-    Jump "global_PrecacheDefaultsFonts";
+    Jump "PrecacheDefaultsFonts";
 
 $END

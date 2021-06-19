@@ -14,5 +14,10 @@ namespace Fogoso.GameLogic
 
             return TotalMaintenance;
         }
+
+        public static void RunMaintenance()
+        {
+            
+        }
     }
 }

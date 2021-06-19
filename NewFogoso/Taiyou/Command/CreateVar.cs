@@ -76,13 +76,13 @@ namespace Fogoso.Taiyou.Command
             }
 
             // Check if variable exists
-            int VarID = Global.VarList_Keys.IndexOf(VarTag);
+            Variable Var = RootTaiyouLine.GetVariableInAvailableNamespaces(VarTag);
 
-            if (VarID != -1) { return null; }
+            if (Var != null) { return null; }
 
-
-            Global.VarList.Add(new Variable(Variable.StringToVarType(VarType), VarDefaultValue, VarTag));
-            Global.VarList_Keys.Add(VarTag);
+             
+            Global.NamespacesDictionary[RootTaiyouLine.instanceNamespace].VarList.Add(new Variable(Variable.StringToVarType(VarType), VarDefaultValue, VarTag));
+            //RootTaiyouLine.instanceNamespace.VarList_Keys.Add(VarTag);
             return null;
         }
 

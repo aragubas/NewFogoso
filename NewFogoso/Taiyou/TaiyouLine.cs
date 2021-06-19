@@ -34,6 +34,8 @@
 
 using System;
 using Fogoso.Taiyou;
+using System.Collections.Generic;
+
 namespace Fogoso.Taiyou
 {
     public class TaiyouLine
@@ -44,8 +46,10 @@ namespace Fogoso.Taiyou
         public string OriginalLineCode = "";
         public int OriginalLineNumber = -1;
         public InterpreterInstance ParentScript;
+        public List<string> ImportedNamespaces;
+        public string instanceNamespace;
 
-        public TaiyouLine(string Line, string pScriptOfOrigin, int pOriginalLineNumber)
+        public TaiyouLine(string Line, string pScriptOfOrigin, int pOriginalLineNumber, List<string> pImportedNamespaces, string pInstanceNamespace)
         {
             string CommandCode = Line.Substring(0, 3);
             // Set the Arguments string
@@ -53,7 +57,9 @@ namespace Fogoso.Taiyou
             ScriptOfOrigin = pScriptOfOrigin;
             OriginalLineCode = Line;
             OriginalLineNumber = pOriginalLineNumber;
-             
+            ImportedNamespaces = pImportedNamespaces;
+            instanceNamespace = pInstanceNamespace;
+
             // Switch Case the TGEUC Interpretation
             switch (CommandCode)
             {
@@ -138,6 +144,92 @@ namespace Fogoso.Taiyou
 
 
         }
+
+        
+        public Variable GetVariableInAvailableNamespaces(string VarTag)
+        {
+
+            // First, check for variable in Current Namespace
+            foreach(Variable taiyouVar in Global.NamespacesDictionary[instanceNamespace].VarList)
+            {
+                if (taiyouVar.Tag == VarTag) { return taiyouVar; }
+            }
+ 
+            // If not found check for variable in imported namespaces
+            foreach(string name in ImportedNamespaces)
+            {
+                foreach(Variable taiyouVar in Global.NamespacesDictionary[name].VarList)
+                {
+                    if (taiyouVar.Tag == VarTag) { return taiyouVar; }
+                }
+            }
+ 
+            return null;
+        }   
+
+        public List<TaiyouLine> GetRoutineInAvailableNamespaces(string pRoutineName)
+        {
+            // First, check for variable in Current Namespace
+            foreach(TaiyouRoutine routine in Global.NamespacesDictionary[instanceNamespace].RoutineList)
+            {
+                if (routine.RoutineName == pRoutineName) { return routine.RoutineLines; }
+            }
+ 
+            // If not found check for variable in imported namespaces
+            foreach(string name in ImportedNamespaces)
+            {
+                foreach(TaiyouRoutine routine in Global.NamespacesDictionary[name].RoutineList)
+                {
+                    if (routine.AccessLevel == RoutineAccessLevel.Private) { continue; }
+                    if (routine.RoutineName == pRoutineName) { return routine.RoutineLines; }
+                }
+            }
+  
+            return null;
+        }   
+
+        public bool RoutineExists(string pRoutineName)
+        {
+            // First, check for variable in Current Namespace
+            foreach(TaiyouRoutine routine in Global.NamespacesDictionary[instanceNamespace].RoutineList)
+            {
+                if (routine.RoutineName == pRoutineName) { return true; }
+            }
+ 
+            // If not found check for variable in imported namespaces
+            foreach(string name in ImportedNamespaces)
+            {
+                foreach(TaiyouRoutine routine in Global.NamespacesDictionary[name].RoutineList)
+                {
+                    if (routine.AccessLevel == RoutineAccessLevel.Private) { continue; }
+                    if (routine.RoutineName == pRoutineName) { return true; }
+                }
+            }
+            
+            return false;
+        }
+
+        public bool VariableExists(string pVariableTag)
+        {
+            // First, check for variable in Current Namespace
+            foreach(Variable taiyouVar in Global.NamespacesDictionary[instanceNamespace].VarList)
+            {
+                if (taiyouVar.Tag == pVariableTag) { return true; }
+            }
+ 
+            // If not found check for variable in imported namespaces
+            foreach(string name in ImportedNamespaces)
+            {
+                foreach(Variable taiyouVar in Global.NamespacesDictionary[name].VarList)
+                {
+                    if (taiyouVar.Tag == pVariableTag) { return true; }
+                }
+
+            }
+ 
+            return false;
+        }
+
 
         public object call()
         {

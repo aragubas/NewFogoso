@@ -39,11 +39,14 @@ namespace Fogoso.Taiyou
     { 
         public static string TaiyouToken_ROUTINE_END = "$END";
         public static string TaiyouToken_ROUTINE_DECLARING = "ROUTINE";
+        public static string TaiyouToken_SCRIPT_HEADER_DECLARING = "HEADER";
         public static string TaiyouToken_COMMAND_BLOCK = "$";
         public static string TaiyouToken_LINE_COMMENT = "#";
-        public static string TaiyouToken_ROUTINE_SPACING = "    ";
+        public static string TaiyouToken_NAMESPACE_COMMAND_BLOCK = "NAMESPACE";
+        public static string TaiyouToken_IMPORT_COMMAND_BLOCK = "IMPORT";
+        public static string TaiyouNaming_PublicFunction = "public_";
         public static string TaiyouReservedNames_SCRIPT_HEADER = "HEADER";
-        public static string TaiyouNaming_GlobalFunction = "global_";
+          
         
     }
 }

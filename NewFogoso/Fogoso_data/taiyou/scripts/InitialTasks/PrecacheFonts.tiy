@@ -1,8 +1,10 @@
 ########################################################
 # This script precache fonts for better game peformace #
 ########################################################
- 
-$ROUTINE "global_PrecacheDefaultsFonts"
+
+$NAMESPACE "Core.InitialTasks"
+
+$ROUTINE public, PrecacheDefaultsFonts
     WriteLine "Precaching Fonts...";
 
     PrecacheFont "PressStart2P", "8";

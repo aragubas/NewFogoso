@@ -209,22 +209,14 @@ namespace Fogoso.Taiyou.Command
         {
             // Create a temporary script
             if (!FunctionCallInitiated)
-            {
+            { 
                 FunctionCallInitiated = true;
-                if (!FunctionToCall.StartsWith("global_", StringComparison.Ordinal))
-                {
-                    FunctionToCall = ScriptCaller + "_" + FunctionToCall;
-                }
+                List<TaiyouLine> AllCode = RootTaiyouLine.GetRoutineInAvailableNamespaces(FunctionToCall);
 
-
-                int FunctionIndex = Global.Functions_Keys.IndexOf(FunctionToCall);
-
-                if (FunctionIndex == -1) { throw new TaiyouExecutionError(this, "Type Error!", "Cannot find function [" + FunctionToCall + "]"); }
-
-                List<TaiyouLine> AllCode = Global.Functions_Data[FunctionIndex];
-
+                if (AllCode == null) { throw new TaiyouExecutionError(this, "Type Error at Runtime", $"Cannot find function ({FunctionToCall})"); }
+ 
                 // Create an Script Instance
-                FunctionToRun = new InterpreterInstance("", true, Global.Functions_Data[FunctionIndex]);
+                FunctionToRun = new InterpreterInstance("", true, AllCode);
  
             }
 

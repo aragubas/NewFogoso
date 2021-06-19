@@ -49,7 +49,7 @@ namespace Fogoso.Taiyou.Command
             RootTaiyouLine = pRootTaiyouLine;
 
         }
-
+ 
         // === Integer Operation ===
         // 1 - Operator Var Name
         // 2 - Math Operation
@@ -64,58 +64,61 @@ namespace Fogoso.Taiyou.Command
             string ActuatorVarName = GetArgument(Arguments, 2);
 
             // Set the Operator
-            int OperatorIndex = Global.VarList_Keys.IndexOf(OperatorVarName);
-            if (OperatorIndex == -1) { throw new IndexOutOfRangeException("Cannot find the variable [" + OperatorVarName + "]."); }
-            Variable OperatorVariable = Global.VarList[OperatorIndex];
+            Variable OperatorVariable = RootTaiyouLine.GetVariableInAvailableNamespaces(OperatorVarName);
+            if (OperatorVariable == null) { throw new IndexOutOfRangeException("Cannot find the variable [" + OperatorVarName + "]."); }
             if (OperatorVariable.GenericVarType != VariableGenericType.Number) { throw new Exception("Variable [" + OperatorVarName + "] is not an Integer."); }
-            var OperatorValue = OperatorVariable.GetValue();
 
-            if (!Regex.IsMatch(OperatorVariable.Value.ToString(), @"\d"))
+            /*
+            if (!Regex.IsMatch(OperatorVariable.ToString(), @"\d"))
             {
                 throw new IndexOutOfRangeException("Operator Value is not an number.");
             }
+            */
 
             // Set the Actuator
-            int ActuatorIndex = Global.VarList_Keys.IndexOf(ActuatorVarName);
+            Variable ActuatorVar = RootTaiyouLine.GetVariableInAvailableNamespaces(ActuatorVarName);
             float ActuatorValue = 0;
-            if (ActuatorIndex == -1)
+            if (ActuatorVar == null)
             {
                 // Check if Actuator is a literal
                 if (ActuatorVarName.StartsWith("#", StringComparison.Ordinal))
                 {
                     ActuatorValue = float.Parse(ActuatorVarName.Remove(0, 1));
+                }else
+                {
+                    throw new Exception("Couldn't determine actuator value.");
                 }
 
             }
-            else { ActuatorValue = (float)Global.VarList[ActuatorIndex].Value; }
-
+            else { ActuatorValue = (float)ActuatorVar.Value; }
+            
+            /*
             if (!Regex.IsMatch(ActuatorValue.ToString(), @"\d"))
             {
                 throw new IndexOutOfRangeException("Literals must start with '#' token. [" + OperatorVarName + "].");
             }
- 
-            float ActuatorRight = ActuatorValue;
+            */
 
             switch (MathOperation)
             {
                 case "+":
-                    Global.VarList[OperatorIndex].SetValue(OperatorValue + ActuatorRight);
+                    OperatorVariable.SetValue((float)OperatorVariable.Value + ActuatorValue);
                     break;
 
                 case "-":
-                    Global.VarList[OperatorIndex].SetValue(OperatorValue - ActuatorRight);
+                    OperatorVariable.SetValue((float)OperatorVariable.Value - ActuatorValue);
                     break;
 
                 case "/":
-                    Global.VarList[OperatorIndex].SetValue(OperatorValue / ActuatorRight);
+                    OperatorVariable.SetValue((float)OperatorVariable.Value / ActuatorValue);
                     break;
 
                 case "*":
-                    Global.VarList[OperatorIndex].SetValue(OperatorValue * ActuatorRight);
+                    OperatorVariable.SetValue((float)OperatorVariable.Value * ActuatorValue);
                     break;
 
                 case "%":
-                    Global.VarList[OperatorIndex].SetValue(OperatorValue % ActuatorRight);
+                    OperatorVariable.SetValue((float)OperatorVariable.Value % ActuatorValue);
                     break;
 
                 default:

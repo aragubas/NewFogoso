@@ -35,6 +35,7 @@
 using System;
 using Fogoso;
 using Fogoso.Taiyou;
+using System.Collections.Generic;
 
 namespace Fogoso.Taiyou
 {
@@ -57,11 +58,12 @@ namespace Fogoso.Taiyou
 
             for (int i = 0; i < OriginalArguments.Length; i++)
             {
-                pArguments[i] = Fogoso.Taiyou.Global.LiteralReplacer(OriginalArguments[i]);
+                pArguments[i] = Fogoso.Taiyou.Global.LiteralReplacer(OriginalArguments[i], RootTaiyouLine);
             } 
 
             return pArguments;
         }
+
 
         public string GetArgument(string[] Arguments, int ArgumentIndex)
         {

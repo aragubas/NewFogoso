@@ -45,14 +45,6 @@ namespace Fogoso.Taiyou
         public static List<string> LoadedTaiyouScripts = new List<string>();
         public static List<List<TaiyouLine>> LoadedTaiyouScripts_Data = new List<List<TaiyouLine>>();
 
-        // Global Variables
-        public static List<string> VarList_Keys = new List<string>();
-        public static List<Variable> VarList = new List<Variable>();
-
-        // Functions List
-        public static List<string> Functions_Keys = new List<string>();
-        public static List<List<TaiyouLine>> Functions_Data = new List<List<TaiyouLine>>();
-
         // Function Headers List
         public static List<string> ScriptHeaders_Keys = new List<string>();
         public static List<List<TaiyouLine>> ScriptHeaders_Data = new List<List<TaiyouLine>>();
@@ -64,6 +56,16 @@ namespace Fogoso.Taiyou
         // Instructions Dictionary Lists
         static List<string> Instructions_TSUP = new List<string>();
         static List<string> Instructions_NumberOfArguments = new List<string>();
+
+        // Namespaces Dictionary
+        public static Dictionary<string, TaiyouNamespace> NamespacesDictionary = new Dictionary<string, TaiyouNamespace>();
+
+        public static TaiyouNamespace AddNamespace(string NamespaceName)
+        {
+            
+            return NamespacesDictionary[NamespaceName];
+        }
+        
 
         public static List<TaiyouLine> GetScript(string ScriptName)
         {
@@ -89,17 +91,7 @@ namespace Fogoso.Taiyou
               
         }
  
-        public static int GetVarIndex(string VarName)
-        {
-            return VarList_Keys.IndexOf(VarName);
-        }
-
-        public static Variable GetVarObject(int Index)
-        {
-            return VarList[Index];
-        }
-
-        public static string LiteralReplacer(string Input)
+        public static string LiteralReplacer(string Input, TaiyouLine RootTaiyouLine)
         {
             string EntireInput = Input;
             if (!EntireInput.Contains("#"))
@@ -119,10 +111,9 @@ namespace Fogoso.Taiyou
                 string Ceira = EntireInput.Substring(TokenStartIndex, VarNameTokenSize);
 
                 string VarName = Ceira.Replace("$", "").Replace("#", "");
-                int VarIndex = GetVarIndex(VarName);
-                if (VarIndex == -1) { throw new Exception($"Type Error in Execution!\nThe varible ({VarName}) was not found in literal."); }
-                Variable VarValue = GetVarObject(VarIndex);
-
+                Variable VarValue = RootTaiyouLine.GetVariableInAvailableNamespaces(VarName);
+                if (VarValue == null) { throw new Exception($"Type Error in Execution!\nThe varible ({VarName}) was not found in literal."); }
+ 
                 EntireInput = EntireInput.Replace(Ceira, VarValue.ToString());
             }
 
@@ -135,9 +126,7 @@ namespace Fogoso.Taiyou
             // Clear the lists
             LoadedTaiyouScripts.Clear();
             LoadedTaiyouScripts_Data.Clear();
-            Functions_Data.Clear();
-            Functions_Keys.Clear();
-
+ 
             // Load the Dictionary File
             Utils.ConsoleWriteWithTitle("TaiyouInit", "Loading Dictionary File...");
 
@@ -179,8 +168,69 @@ namespace Fogoso.Taiyou
                 Utils.ConsoleWriteWithTitle("TaiyouInit", "No scripts to load!");
                 return;
             }
+            
+            ///////////////////////////////////////
+            // Initiality Declare System Namespace
+            ///////////////////////////////////////
+            NamespacesDictionary.Add("System", new TaiyouNamespace("system"));
  
-            // Read every script
+            ////////////////////////////////////////
+            // Initialiaty declare all namespaces
+            ///////////////////////////////////////
+            for (int i = 0; i < AllScripts.Length; i++)
+            {
+                // Set the Script Name
+                string ScriptName = AllScripts[i].Replace(Fogoso.Global.TaiyouScriptsDirectory, "");
+                ScriptName = ScriptName.Replace(".tiy", "").Replace(Fogoso.Global.OSSlash, ".");
+                LoadedTaiyouScripts.Add(ScriptName);
+
+                // Debug
+                Utils.ConsoleWriteWithTitle("TaiyouParser_NamespaceDeclaring", "Reading Script [" + ScriptName + "]");
+ 
+                // Define some variables
+                string ReadText = File.ReadAllText(Fogoso.Global.TaiyouScriptsDirectory + ScriptName.Replace(".", Fogoso.Global.OSSlash) + ".tiy", new System.Text.UTF8Encoding());
+                string[] ReadTextLines = ReadText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+                // Read line by line
+                for (int i2 = 0; i2 < ReadTextLines.Length; i2++)
+                {
+                    string line = ReadTextLines[i2];
+                    line = line.Trim();
+     
+                    if (line.Length < 3) { continue; }
+                    if (line.StartsWith(TaiyouGlobal.TaiyouToken_LINE_COMMENT, StringComparison.Ordinal)) { continue; }
+                    
+                    ///////////////////////////
+                    // Read Namespace declarng
+                    ///////////////////////////
+                    if (line.StartsWith(TaiyouGlobal.TaiyouToken_COMMAND_BLOCK, StringComparison.Ordinal))
+                    {
+                        string LineRoutineTypeFiltred = line.Split(' ')[0].Remove(0, 1);
+  
+                        ////////////////////////////
+                        // Read Namespace declaring 
+                        ////////////////////////////
+                        if (LineRoutineTypeFiltred.Equals(TaiyouGlobal.TaiyouToken_NAMESPACE_COMMAND_BLOCK))
+                        {
+                            string NamespaceName = line.Split('"')[1];
+
+                            if (NamespacesDictionary.ContainsKey(NamespaceName)) { break; }
+                             
+                            // Create Namespace
+                            // Item already added exception
+                            NamespacesDictionary.Add(NamespaceName, new TaiyouNamespace(NamespaceName));
+                            Utils.ConsoleWriteWithTitle("TaiyouParser_NamespaceDeclaring", $"Namespace ({NamespaceName}) has been created.");
+                            break;
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+            // Read every script 
             for (int i = 0; i < AllScripts.Length; i++)
             {
                 // Set the Script Name
@@ -198,24 +248,34 @@ namespace Fogoso.Taiyou
                 string[] ReadTextLines = ReadText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
                 List<string> CorrectTextLines = new List<string>();
                 List<TaiyouLine> ParsedCode = new List<TaiyouLine>();
-
+ 
+                ///////////////////////////////////////////
+                // Per-Script session available variables
+                ///////////////////////////////////////////
                 bool IsReadingCommandBlock = false;
                 bool LastRoutineIsScriptHeader = false;
                 bool ScriptHeaderAlreadyDeclared = false;
                 string LastFuncLineName = "";
-                var RoutineCode = new List<TaiyouLine>();
-                int LineNumber = 0;
- 
+                List<TaiyouLine> RoutineCode = new List<TaiyouLine>();
+                List<string> ImportedNamespaces = new List<string>();
+                string InstanceNamespace = null;
+                RoutineAccessLevel LastRoutineAccessLevel = 0;
+
+                int LineNumber = 0; 
+
+
                 for (int i2 = 0; i2 < ReadTextLines.Length; i2++)
                 {
                     string line = ReadTextLines[i2];
                     line = line.Trim();
                     LineNumber += 1;
      
-                    if (line.Length < 3) { Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "Removed empty line"); continue; }
-                    if (line.StartsWith(TaiyouGlobal.TaiyouToken_LINE_COMMENT, StringComparison.Ordinal)) { Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "Removed comment line"); continue; }
+                    if (line.Length < 3) { continue; }
+                    if (line.StartsWith(TaiyouGlobal.TaiyouToken_LINE_COMMENT, StringComparison.Ordinal)) { continue; }
 
-                    // Continue Reading Function
+                    ///////////////////////////////
+                    // Continue Reading Function //
+                    ///////////////////////////////
                     if (IsReadingCommandBlock)
                     {
                         // Check for End Function token
@@ -228,17 +288,18 @@ namespace Fogoso.Taiyou
                                 Copyied.Add(item);
                             }
  
-                            // Add last function to Function Buffer
+                            // Add last function to Routine List into current namespace
                             if (!LastRoutineIsScriptHeader)
                             {
-                                Functions_Data.Add(Copyied);
-                                Functions_Keys.Add(LastFuncLineName);
-                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Sucefully added function [" + LastFuncLineName + "]");
+                                TaiyouRoutine routineObj = new TaiyouRoutine(Copyied, LastFuncLineName, LastRoutineAccessLevel);
+                                NamespacesDictionary[InstanceNamespace].RoutineList.Add(routineObj);
+                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Sucefully added Routine [" + LastFuncLineName + "]");
                                   
-                            }else{ // Add last script header to ScriptHeader Buffer
+                            }else{ // Add last script header to ScriptHeader
                                 ScriptHeaders_Data.Add(Copyied);
                                 ScriptHeaders_Keys.Add(ScriptName);
-                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionHeader", "Sucefully added function header.");
+                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionHeader", "Sucefully added Script Header.");
+                                 
                             }
 
 
@@ -255,7 +316,7 @@ namespace Fogoso.Taiyou
                         {
                             string EditedLine = line;
                             EditedLine = EditedLine.Trim().TrimEnd();
-                            // If line is less than 3 Characters or a commentary line, ignore it
+                            // If line is less than 3 Characters or is a commentary line, ignore it
                             if (EditedLine.Length < 3 || EditedLine.StartsWith(TaiyouGlobal.TaiyouToken_LINE_COMMENT, StringComparison.Ordinal))
                             {
                                 continue;
@@ -263,17 +324,17 @@ namespace Fogoso.Taiyou
 
                             // Run Line Revision
                             EditedLine = LineRevision(EditedLine, ScriptName, line, LineNumber);
- 
+   
                             // Add to final FunctionCode list
-                            RoutineCode.Add(new TaiyouLine(EditedLine, ScriptName, LineNumber));
+                            RoutineCode.Add(new TaiyouLine(EditedLine, ScriptName, LineNumber, ImportedNamespaces, InstanceNamespace));
  
                             Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Added Instruction [" + EditedLine + "] to function block");
 
                         }
                     }
  
-
-                    // Check the Routine Reading
+ 
+                    // Check Routine Reading
                     if (line.StartsWith(TaiyouGlobal.TaiyouToken_COMMAND_BLOCK, StringComparison.Ordinal))
                     {
 
@@ -286,61 +347,93 @@ namespace Fogoso.Taiyou
                          
                         string LineRoutineTypeFiltred = line.Split(' ')[0].Remove(0, 1);
 
+                        ////////////////////////////
+                        // Read Namespace declaring 
+                        ////////////////////////////
+                        if (LineRoutineTypeFiltred.Equals(TaiyouGlobal.TaiyouToken_NAMESPACE_COMMAND_BLOCK))
+                        { 
+                            string NamespaceName = line.Split('"')[1];
+
+                            if (InstanceNamespace == null) { InstanceNamespace = NamespaceName; } else { throw new Exception(TaiyouParserError($"Namespace function called twice.\nAt Script {ScriptName}\nLine {line}")); }
+                        }
+
+
+                        ////////////////////
+                        // Read Import Flag
+                        ////////////////////
+                        if (LineRoutineTypeFiltred.Equals(TaiyouGlobal.TaiyouToken_IMPORT_COMMAND_BLOCK))
+                        {
+                            string NamespaceName = line.Split('"')[1];
+
+                            if (ImportedNamespaces.IndexOf(NamespaceName) != -1) { throw new Exception(TaiyouParserError($"Type Error!\nCannot import namespace ({NamespaceName}) because it does not exist.\nAt script ({ScriptName})\nLine: {line}")); }
+                            
+                            ImportedNamespaces.Add(NamespaceName);
+                            continue;
+                        }
+
+                        ///////////////////////////////
+                        // Read a Script Header Block
+                        ///////////////////////////////
+                        //$HEADER
+                        //
+                        if (LineRoutineTypeFiltred.Equals(TaiyouGlobal.TaiyouToken_SCRIPT_HEADER_DECLARING))
+                        {
+                            if (ScriptHeaderAlreadyDeclared) { throw new Exception(TaiyouParserError($"Type Error!\nScript Header declared twice!\nAt script ({ScriptName})\nLine: {line}")); }
+                            // Set variables for Script Header Reading
+                            LastRoutineIsScriptHeader = true;
+                            IsReadingCommandBlock = true;
+                            ScriptHeaderAlreadyDeclared = true;
+                            
+                            continue;
+                        }
+
+                        ////////////////////////
                         // Read a Routine Block
+                        // ---------------------
+                        // Example: Private Routine called main:
+                        // $ROUTINE private, main
+                        ////////////////////////
                         if (LineRoutineTypeFiltred.Equals(TaiyouGlobal.TaiyouToken_ROUTINE_DECLARING))
                         {
                             // Routine Name
-                            string RoutineName = line.Split('"')[1];
-     
-                            // Script Header Routine
-                            if (RoutineName.Equals("@HEADER"))
+                            string[] LineSplit = line.Split(',');
+                            string ArgumentRoutineAccessLevel = LineSplit[0].Replace("$ROUTINE", "").Trim();
+                            string RoutineName = LineSplit[1].Trim();
+
+                            // Output to console 
+                            Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutinedBlock", $"Routine {RoutineName} has been declared");
+
+                            // Set access modifier
+                            switch(ArgumentRoutineAccessLevel.ToLower())
                             {
-                                // Dont allow declaring script header twice
-                                if (ScriptHeaderAlreadyDeclared) { throw new Exception(TaiyouParserError("Type Error!\nScript Header declared twice\nAt Script [" + ScriptName + "]\nNear function [" + LastFuncLineName + "]\n\nTip: You probally tryied to declare script header twice"));  }
-                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutineBlock", "Routine is script header");
-                                RoutineName = $"{ScriptName}_HEADER";
-                                LastRoutineIsScriptHeader = true;
-         
-                                IsReadingCommandBlock = true;
-                                ScriptHeaderAlreadyDeclared = true;
+                                case "private":
+                                {
+                                    LastRoutineAccessLevel = RoutineAccessLevel.Private;
+                                    break;
+                                }
 
-                                LastFuncLineName = ScriptName;
-                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-ScriptHeader", "Header parse complete");
+                                case "public":
+                                {
+                                    LastRoutineAccessLevel = RoutineAccessLevel.Public;
+                                    break;
+                                }
 
-                                continue;
- 
-                            } 
-                            // Non-Global function
-                            else if (!RoutineName.StartsWith(TaiyouGlobal.TaiyouNaming_GlobalFunction, StringComparison.Ordinal))
-                            {
-                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutinedBlock", "Routined is not global, ScriptName tag included.");
-                                RoutineName = ScriptName + "_" + RoutineName;
-
-                                IsReadingCommandBlock = true;
-    
-                                LastFuncLineName = RoutineName;
-                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutineBlock", "Non-Global Routine Name[" + LastFuncLineName + "]");
-
-                                continue;
-    
-                            } 
-                            // Public Global Function
-                            else if (RoutineName.StartsWith(TaiyouGlobal.TaiyouNaming_GlobalFunction, StringComparison.Ordinal))
-                            {
-                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutineBlock", "Routine is not global, ScriptName tag included.");
-                                RoutineName = RoutineName.Replace(TaiyouGlobal.TaiyouNaming_GlobalFunction, "");
-    
-                                IsReadingCommandBlock = true;
-    
-                                LastFuncLineName = RoutineName;
-                                Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutineBlock", "Global Routine Name[" + LastFuncLineName + "]");
-        
-                                continue;
+                                default:
+                                {
+                                    throw new Exception(TaiyouParserError($"Type Error!\nInvalid routine access modifier\nAt Script [{ScriptName}]\nNear function [{LastFuncLineName}]\n\nTip: Valid access modifier are 'private', 'public'"));
+                                }
 
                             }
 
+                            // Set Variable
+                            IsReadingCommandBlock = true;
+                            LastFuncLineName = RoutineName;
+                            Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-RoutineBlock", "Non-Global Routine Name[" + LastFuncLineName + "]");
+                             
+                            continue;
                         }
-                    
+                        
+                        // Otherwise, continue
                         continue;
                     }
      
@@ -349,7 +442,7 @@ namespace Fogoso.Taiyou
                     {
                         if (line.StartsWith(TaiyouGlobal.TaiyouToken_ROUTINE_END, StringComparison.Ordinal))
                         { 
-                            Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "WARNING: Routine End Token Found but no Routine is being Currently Read.");
+                            Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", "WARNING: Routine End Token Found but no Routine is being Currently Read.Expect loss of code if you see that message.");
                             continue;
                         }
                         Utils.ConsoleWriteWithTitle("TaiyouParser_Step1", $"Added line ({line}) to next code revision");
@@ -396,7 +489,7 @@ namespace Fogoso.Taiyou
                     FinalLine = LineRevision(FinalLine, ScriptName, line, LineNumber);
 
                     Utils.ConsoleWriteWithTitle("TaiyouParser_Step4", "Added line [" + FinalLine + "] to TaiyouLine");
-                    ParsedCode.Add(new TaiyouLine(FinalLine, ScriptName, LineNumber));
+                    ParsedCode.Add(new TaiyouLine(FinalLine, ScriptName, LineNumber, ImportedNamespaces, InstanceNamespace));
                 }
   
                 // ##########################################
@@ -523,45 +616,18 @@ namespace Fogoso.Taiyou
  
         public static void SetVariable(VariableType VarType, string VarTag, object VarValue)
         {
-            // Var index
-            int VarIndex = VarList_Keys.IndexOf(VarTag);
-
-            // Variable doesn't exist
-            if (VarIndex == -1)
+            // Set value if variable exsits
+            foreach(Variable taiyouVar in NamespacesDictionary["System"].VarList)
             {
-                Variable newVar = new Variable(VarType, VarValue, VarTag);
-
-                VarList_Keys.Add(VarTag);
-                VarList.Add(newVar);
-                return;
-            }
+                if (taiyouVar.Tag == VarTag) { taiyouVar.SetValue(VarValue); return; }
+            }   
  
-            VarList[VarIndex].SetValue(VarValue);
+            // Create Variable if it doesn't exist
+            Variable newVar = new Variable(VarType, VarValue, VarTag);
+            NamespacesDictionary["System"].VarList.Add(newVar);
+            
+            return;
 
-        }
-
-        /// <summary>
-        /// Reloads everthing
-        /// </summary>
-        public static void Reload()
-        {
-            Console.WriteLine(" -- Taiyou --\nReloading everthing...");
-            //Game1.UpdateThread.Abort();
-
-            LoadedTaiyouScripts.Clear();
-            LoadedTaiyouScripts_Data.Clear();
-            VarList.Clear();
-            VarList_Keys.Clear();
-            Event.EventList.Clear();
-            Event.EventListNames.Clear();
-            Functions_Keys.Clear();
-            Functions_Data.Clear();
-
-            // Re-Load all scripts
-            LoadTaiyouScripts();
-            Event.RegisterEvent("init", "initial");
-            Event.TriggerEvent("init");
-   
         }
 
     }

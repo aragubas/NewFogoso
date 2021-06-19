@@ -1,6 +1,6 @@
 ﻿/*
    ####### BEGIN APACHE 2.0 LICENSE #######
-   Copyright 2020 Aragubas
+   Copyright 2021 Aragubas
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -51,12 +51,14 @@ namespace Fogoso.Taiyou
 
         }
 
-        //Overriding the Message property
+        // Override the Message property
         public override string Message
         {
             get
             {
-                return ErrorTitle + "\nat Script [" + ScriptOfOrigin + "]\nin Function [" + CommandTitle + "]\n\n" + ErrorDescription;
+                string message = ErrorTitle + "\nat Script [" + ScriptOfOrigin + "]\nin Function [" + CommandTitle + "]\n\n" + ErrorDescription;
+                Utils.ConsoleWriteWithTitle("TaiyouExecutionError!", message);
+                return message;
             }
         }
     }

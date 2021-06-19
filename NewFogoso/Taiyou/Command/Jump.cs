@@ -1,6 +1,6 @@
 ﻿/*
    ####### BEGIN APACHE 2.0 LICENSE #######
-   Copyright 2020 Aragubas
+   Copyright 2021 Aragubas
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -50,48 +50,36 @@ namespace Fogoso.Taiyou.Command
 
         }
 
-        bool FunctionInited = false;
-        InterpreterInstance FunctionToRun;
+        bool RoutineInited = false;
+        InterpreterInstance RoutineToRun;
 
         public override object Call()
         {
             string[] Arguments = ReplaceVarLiterals();
 
-            if (!FunctionInited)
+            if (!RoutineInited)
             {
-                FunctionInited = true;
+                RoutineInited = true;
 
-                string FunctionName = GetArgument(Arguments, 0);
+                string RoutineName = GetArgument(Arguments, 0);
 
-                // Set the right function name
-                if (!FunctionName.StartsWith("global_", StringComparison.Ordinal))
-                {
-                    FunctionName = ScriptCaller + "_" + FunctionName;
-                }
-                if (FunctionName.StartsWith("global_", StringComparison.Ordinal))
-                {
-                    FunctionName = FunctionName.Replace("global_", "");
-                }
-   
+                List<TaiyouLine> AllCode = RootTaiyouLine.GetRoutineInAvailableNamespaces(RoutineName);
 
-                int FunctionIndex = Global.Functions_Keys.IndexOf(FunctionName);
+                if (AllCode == null) { throw new TaiyouExecutionError(this, "Type Error at Runtime", $"Cannot find Routine ({RoutineName})"); }
 
-                if (FunctionIndex == -1) { throw new TaiyouExecutionError(this, "Type Error!", "Cannot find function [" + FunctionName + "]"); }
-
-                List<TaiyouLine> AllCode = Global.Functions_Data[FunctionIndex];
-
+ 
                 // Create a Temporary Script
-                FunctionToRun = new InterpreterInstance("", true, Global.Functions_Data[FunctionIndex]);
+                RoutineToRun = new InterpreterInstance("", true, AllCode);
 
             }
 
-            // Run the Function
-            bool FunctionDone = false;
+            // Run the Routine
+            bool RoutineDone = false;
             object Return = null;
-            while(!FunctionDone)
+            while(!RoutineDone)
             {
-                Return = FunctionToRun.Interpret();
-                if (ReturnCodes.RoutineJumpStart.Equals(Return)) { FunctionDone = false; } else{ FunctionDone = true; }
+                Return = RoutineToRun.Interpret();
+                if (ReturnCodes.RoutineJumpStart.Equals(Return)) { RoutineDone = false; } else{ RoutineDone = true; }
             }
             return Return;
 

@@ -89,10 +89,6 @@ namespace Fogoso.Taiyou.Command
                     Main.Reference.Window.IsBorderless = Convert.ToBoolean(OptionValue);
                     return null;
 
-                case "RELOAD":
-                    Global.Reload();
-                    return null;
-
                 case "CURSOR_IMAGE":
                     GameInput.CursorImage = OptionValue;
                     return null;

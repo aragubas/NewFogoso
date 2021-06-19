@@ -33,6 +33,8 @@
 */
 
 using System;
+using System.Collections.Generic;
+ 
 namespace Fogoso.Taiyou
 {
     public enum VariableType : byte
@@ -130,11 +132,13 @@ namespace Fogoso.Taiyou
             Tag = VarTag;
             Type = varType;
             SearchPattern = "$" + VarTag + "$";
-   
+ 
             // Set the variable Generic Type
             GenericVarType = VariableToVarGenericType(varType);
     
             // Check for VarCopy
+            // TODO: Var copy feature temporary disabled.
+            /*
             try{
                 if (Convert.ToString(varValue).StartsWith("$", StringComparison.Ordinal))
                 { 
@@ -149,19 +153,11 @@ namespace Fogoso.Taiyou
                 }
  
             }catch(ArgumentException) {throw new Exception("INTERNAL ERROR!\nError in literal conversion (Cannot convert value to string).");}
-   
+            */
+
             SetValue(varValue);
         }
  
-        /// <summary>
-        /// Returns the value
-        /// </summary>
-        /// <returns>The value.</returns>
-        public dynamic GetValue()
-        {
-            return Value;
-        }
-
         public override string ToString()
         {
             return Value.ToString();

@@ -54,14 +54,14 @@ namespace Fogoso.Taiyou.Command
             string[] Arguments = ReplaceVarLiterals();
 
             string VarToDebug = GetArgument(Arguments, 0);
-            int VarIndex = Global.VarList_Keys.IndexOf(VarToDebug);
+            Variable varObj = RootTaiyouLine.GetVariableInAvailableNamespaces(VarToDebug);
 
-            if (VarIndex == -1)
+            if (varObj == null)
             {
-                Debug.DebugThing("Error", "null");
-
+                return null;
             }
-            Debug.DebugThing(Global.VarList[VarIndex].Tag, Global.VarList[VarIndex].ToString());
+
+            Debug.DebugThing(varObj.Tag, varObj.ToString());
 
             return null;
         }
