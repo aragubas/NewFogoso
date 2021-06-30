@@ -11,22 +11,21 @@ namespace Fogoso.Taiyou
 
     public class TaiyouNamespace
     {
-        public string NamespaceName = "default";
-        
+        // Namespace Name
+        public string NamespaceName;
+          
         // Variables
-        public List<Variable> VarList = new List<Variable>();
+        //public List<Variable> VarList = new List<Variable>();
+        public Dictionary<string, Variable> VariableDict = new Dictionary<string, Variable>();
 
         // Routines
-        //public List<string> Routines_Keys = new List<string>();
-        //public List<List<TaiyouLine>> Routines_Data = new List<List<TaiyouLine>>();
-
         public List<TaiyouRoutine> RoutineList = new List<TaiyouRoutine>();
 
         public TaiyouNamespace(string pNamespaceName)
         {
             pNamespaceName = NamespaceName;
         }
-
+ 
     }
 
 

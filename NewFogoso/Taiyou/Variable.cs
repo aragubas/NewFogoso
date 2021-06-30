@@ -59,7 +59,6 @@ namespace Fogoso.Taiyou
         public VariableType Type;
         public string Tag;
         public object Value;
-        public string SearchPattern;
         public VariableGenericType GenericVarType;
 
         public static VariableType StringToVarType(string VarTypeString)
@@ -131,30 +130,10 @@ namespace Fogoso.Taiyou
         {
             Tag = VarTag;
             Type = varType;
-            SearchPattern = "$" + VarTag + "$";
- 
+  
             // Set the variable Generic Type
             GenericVarType = VariableToVarGenericType(varType);
     
-            // Check for VarCopy
-            // TODO: Var copy feature temporary disabled.
-            /*
-            try{
-                if (Convert.ToString(varValue).StartsWith("$", StringComparison.Ordinal))
-                { 
-                    int VarIndex = Global.VarList_Keys.IndexOf(varValue.ToString().Remove(0, 1));
-                    if (VarIndex == -1) { throw new Exception($"Cannot find variable for copy operation. {varValue}"); }
-                    Variable varWax = Global.VarList[VarIndex];
-  
-                    if (varWax.GenericVarType != GenericVarType) { throw new Exception("Cannot copy destination variable to current variable since they are different types of variable."); }
-
-                    Value = Global.VarList[VarIndex].Value;
-                    return;
-                }
- 
-            }catch(ArgumentException) {throw new Exception("INTERNAL ERROR!\nError in literal conversion (Cannot convert value to string).");}
-            */
-
             SetValue(varValue);
         }
  

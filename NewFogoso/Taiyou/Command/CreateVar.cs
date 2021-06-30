@@ -80,9 +80,9 @@ namespace Fogoso.Taiyou.Command
 
             if (Var != null) { return null; }
 
-             
-            Global.NamespacesDictionary[RootTaiyouLine.instanceNamespace].VarList.Add(new Variable(Variable.StringToVarType(VarType), VarDefaultValue, VarTag));
-            //RootTaiyouLine.instanceNamespace.VarList_Keys.Add(VarTag);
+            // Add variable to list             
+            Global.NamespacesDictionary[RootTaiyouLine.instanceNamespace].VariableDict.Add(VarTag, new Variable(Variable.StringToVarType(VarType), VarDefaultValue, VarTag));
+            
             return null;
         }
 

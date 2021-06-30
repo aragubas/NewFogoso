@@ -43,9 +43,10 @@ namespace Fogoso
     {
 
         // Sprites Variables
-        public static List<string> AllSpritedLoaded_Names = new List<string>();
-        public static List<Texture2D> AllSpritedLoaded_Content = new List<Texture2D>();
-
+        //public static List<string> AllSpritedLoaded_Names = new List<string>();
+        //public static List<Texture2D> AllSpritedLoaded_Content = new List<Texture2D>();
+        public static Dictionary<string, Texture2D> LoadedSprites = new Dictionary<string, Texture2D>();
+        public static Texture2D MissingTexture;
 
         #region Load Functions
         // Load Sprite From File
@@ -56,20 +57,6 @@ namespace Fogoso
             fileStream.Dispose();
 
             return ValToReturn;
-        }
-
-        // Load Custom Sprite
-        public static void LoadCustomSprite(string FileLocation)
-        {
-            string SpriteFiltedName = Path.GetFileName(FileLocation);
-            Console.WriteLine(SpriteFiltedName);
-
-            if (!File.Exists(FileLocation)) { return; }
-
-            AllSpritedLoaded_Content.Add(LoadTexture2D_FromFile(FileLocation));
-            AllSpritedLoaded_Names.Add(SpriteFiltedName);
-
-
         }
         #endregion
 
@@ -83,16 +70,14 @@ namespace Fogoso
             foreach (var file in AllSprites)
             {
                 FileInfo info = new FileInfo(file);
+                if (info.Extension != ".png") { continue; }
                 string FileFullName = info.FullName;
                 string SpriteFiltedName = FileFullName.Replace(Environment.CurrentDirectory, "");
-                SpriteFiltedName = SpriteFiltedName.Replace(Global.IMAGE_SourceFolder + Global.OSSlash, "");
+                SpriteFiltedName = SpriteFiltedName.Replace(Global.IMAGE_SourceFolder + Global.OSSlash, "").Replace(Global.OSSlash, "/");
 
-                int SpriteID = AllSpritedLoaded_Names.IndexOf(SpriteFiltedName);
-
-                if (SpriteID == -1 && info.Extension == ".png")
+                if (!LoadedSprites.ContainsKey(SpriteFiltedName))
                 {
-                    AllSpritedLoaded_Content.Add(LoadTexture2D_FromFile(FileFullName));
-                    AllSpritedLoaded_Names.Add(SpriteFiltedName.Replace(Global.OSSlash, "/"));
+                    LoadedSprites.Add(SpriteFiltedName, LoadTexture2D_FromFile(FileFullName));
 
                     Utils.ConsoleWriteWithTitle("SpriteLoader", "Found [" + SpriteFiltedName + "].");
 
@@ -100,6 +85,9 @@ namespace Fogoso
 
             }
 
+            Utils.ConsoleWriteWithTitle("SpriteLoader", "Loading missing texture");
+            MissingTexture = LoadTexture2D_FromFile($"{Global.IMAGE_SourceFolder}{Global.OSSlash}{Registry.ReadKeyValue("/missing_texture")}");
+ 
             Utils.ConsoleWriteWithTitle("SpriteLoader", "Operation Completed");
 
         }
@@ -107,19 +95,10 @@ namespace Fogoso
 
         public static Texture2D GetSprite(string SpriteName)
         {
-            if (SpriteName.EndsWith(".png")) { SpriteName.Insert(SpriteName.Length - 1, ".png"); }
-            if (AllSpritedLoaded_Names.IndexOf(SpriteName) == -1)
-            {
-                // Check if error sprite exists
-                if (AllSpritedLoaded_Names.IndexOf("/error.png") == -1)
-                {
-                    throw new Exception("Cannot find i: \n" + SpriteName);
-                }
-
-                return GetSprite(Registry.ReadKeyValue("/missing_texture"));
-            }
-            return AllSpritedLoaded_Content[AllSpritedLoaded_Names.IndexOf(SpriteName)]; // Return the correct sprite
+            if (!SpriteName.EndsWith(".png")) { SpriteName.Insert(SpriteName.Length - 1, ".png"); }
+            if (!LoadedSprites.ContainsKey(SpriteName)) { return MissingTexture; }
  
+            return LoadedSprites[SpriteName];
         }
 
 

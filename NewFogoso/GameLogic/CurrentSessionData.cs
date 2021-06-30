@@ -26,5 +26,6 @@ namespace Fogoso.GameLogic
 
             UserItems.Add(new AutoClicker());
         }
+
     }
 }

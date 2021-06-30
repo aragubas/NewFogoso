@@ -10,10 +10,10 @@ $IMPORT "Core.Update"
 
 $HEADER
     # Set Window Title
-    JumpIf "#Internal.Environment.DebugMode$", "==", "True", "DebugModeUpdate", "NonDebugModeUpdate"; 
+    SetOption "WINDOW_TITLE", "Fogoso - June 19 2021";    
  
 $END
- 
+
 # Update Internal Variables
 InternalRoutine "UPDATE_INTERNAL_VARIABLES";
 
@@ -34,18 +34,4 @@ InternalRoutine "UPDATE_KEYBOARD_OBJ";
 
 # Update Sound System
 InternalRoutine "UPDATE_SOUND_SYSTEM";
-
-
-######################################
-# Routines for changing window title
-######################################
-$ROUTINE private, DebugModeUpdate
-    SetOption "WINDOW_TITLE", "Fogoso(Debug Mode)";    
-
-$END
-     
-$ROUTINE private, NonDebugModeUpdate
-    SetOption "WINDOW_TITLE", "Fogoso - June 2021";
-
-$END
    

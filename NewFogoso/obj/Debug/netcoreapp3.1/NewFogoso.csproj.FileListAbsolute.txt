@@ -58,7 +58,6 @@
 /home/notrunda/Documents/Projects/NewFogoso/Publish/NewFogoso.dll
 /home/notrunda/Documents/Projects/NewFogoso/Publish/NewFogoso.pdb
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/obj/Debug/netcoreapp3.1/NewFogoso.csproj.AssemblyReference.cache
-/home/notrunda/Documents/Projects/NewFogoso/NewFogoso/obj/Debug/netcoreapp3.1/NewFogoso.GeneratedMSBuildEditorConfig.editorconfig
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/obj/Debug/netcoreapp3.1/NewFogoso.AssemblyInfoInputs.cache
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/obj/Debug/netcoreapp3.1/NewFogoso.AssemblyInfo.cs
 /home/notrunda/Documents/Projects/NewFogoso/NewFogoso/obj/Debug/netcoreapp3.1/NewFogoso.csproj.CoreCompileInputs.cache
@@ -130,3 +129,5 @@
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/source/reg/item_info/autoClicker/icon.data
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/source/reg/item_info/autoClicker/name.data
 /home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/scripts/InitialTasks/PrecacheFonts.tiy
+/home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/taiyou/scripts/GameItems/AutoClicker/actuate.tiy
+/home/notrunda/Documents/Projects/NewFogoso/Output/Fogoso_data/source/image/background_patterns/01.png

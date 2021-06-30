@@ -150,20 +150,19 @@ namespace Fogoso.Taiyou
         {
 
             // First, check for variable in Current Namespace
-            foreach(Variable taiyouVar in Global.NamespacesDictionary[instanceNamespace].VarList)
+            if (Global.NamespacesDictionary[instanceNamespace].VariableDict.ContainsKey(VarTag))
             {
-                if (taiyouVar.Tag == VarTag) { return taiyouVar; }
+                return Global.NamespacesDictionary[instanceNamespace].VariableDict[VarTag];
             }
  
             // If not found check for variable in imported namespaces
             foreach(string name in ImportedNamespaces)
             {
-                foreach(Variable taiyouVar in Global.NamespacesDictionary[name].VarList)
-                {
-                    if (taiyouVar.Tag == VarTag) { return taiyouVar; }
-                }
+                // Skip namespace if it doesn't contain variable
+                if (!Global.NamespacesDictionary[name].VariableDict.ContainsKey(VarTag)) { continue; }
+                return Global.NamespacesDictionary[name].VariableDict[VarTag];
             }
- 
+  
             return null;
         }   
 
@@ -187,48 +186,6 @@ namespace Fogoso.Taiyou
   
             return null;
         }   
-
-        public bool RoutineExists(string pRoutineName)
-        {
-            // First, check for variable in Current Namespace
-            foreach(TaiyouRoutine routine in Global.NamespacesDictionary[instanceNamespace].RoutineList)
-            {
-                if (routine.RoutineName == pRoutineName) { return true; }
-            }
- 
-            // If not found check for variable in imported namespaces
-            foreach(string name in ImportedNamespaces)
-            {
-                foreach(TaiyouRoutine routine in Global.NamespacesDictionary[name].RoutineList)
-                {
-                    if (routine.AccessLevel == RoutineAccessLevel.Private) { continue; }
-                    if (routine.RoutineName == pRoutineName) { return true; }
-                }
-            }
-            
-            return false;
-        }
-
-        public bool VariableExists(string pVariableTag)
-        {
-            // First, check for variable in Current Namespace
-            foreach(Variable taiyouVar in Global.NamespacesDictionary[instanceNamespace].VarList)
-            {
-                if (taiyouVar.Tag == pVariableTag) { return true; }
-            }
- 
-            // If not found check for variable in imported namespaces
-            foreach(string name in ImportedNamespaces)
-            {
-                foreach(Variable taiyouVar in Global.NamespacesDictionary[name].VarList)
-                {
-                    if (taiyouVar.Tag == pVariableTag) { return true; }
-                }
-
-            }
- 
-            return false;
-        }
 
 
         public object call()

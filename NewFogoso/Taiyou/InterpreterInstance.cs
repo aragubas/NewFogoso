@@ -67,10 +67,9 @@ namespace Fogoso.Taiyou
 
                 return;
             }
-            int ScriptIndex = Global.LoadedTaiyouScripts.IndexOf(ScriptName);
-            if (ScriptIndex == -1) { throw new EntryPointNotFoundException("the Taiyou Script (" + ScriptName + ") does not exist."); }
+            if (!Global.LoadedTaiyouScriptsDict.ContainsKey(ScriptName)) { throw new EntryPointNotFoundException("the Taiyou Script (" + ScriptName + ") does not exist."); }
 
-            SetCode(Global.LoadedTaiyouScripts_Data[ScriptIndex]);
+            SetCode(Global.LoadedTaiyouScriptsDict[ScriptName]);
   
         }
    

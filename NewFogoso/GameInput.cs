@@ -217,8 +217,7 @@ namespace Fogoso
     public class GameInput
     {
         public static KeyboardState oldState;
-        public static List<InputKeyArgument> InputKeyArguments = new List<InputKeyArgument>();
-        public static List<string> InputKeyArguments_key = new List<string>();
+        public static Dictionary<string, InputKeyArgument> LoadedInputKeys = new Dictionary<string, InputKeyArgument>();
         public static int ReservedModeID = -1;
 
         // Cursor
@@ -253,10 +252,9 @@ namespace Fogoso
  
                 string ActionName = LineSplit[0].Trim();
                 Utils.ConsoleWriteWithTitle("GameInput", "Loaded {" + ActionName + "}");
-                
-                InputKeyArguments_key.Add(ActionName);
+                 
                 InputKeyArgument NewWax = new InputKeyArgument(ActionName, LineSplit[1].Trim());
-                InputKeyArguments.Add(NewWax);
+                LoadedInputKeys.Add(ActionName, NewWax);
 
             }
 
@@ -267,9 +265,7 @@ namespace Fogoso
         private static string LastInputContextFindError = "";
         public static InputKeyArgument GetInputKeyArg(string InputContext)
         {
-            int InpContxtIndex = InputKeyArguments_key.IndexOf(InputContext);
-
-            if (InpContxtIndex == -1)
+            if (!LoadedInputKeys.ContainsKey(InputContext))
             {
                 if (LastInputContextFindError != InputContext)
                 {
@@ -279,8 +275,7 @@ namespace Fogoso
                 }
                 return null;
             }
-
-            return InputKeyArguments[InpContxtIndex];
+            return LoadedInputKeys[InputContext];
         }
 
         public static bool GetInputState(string KeyactionArg, bool KeyDown = false, bool ShowInViewer = false)

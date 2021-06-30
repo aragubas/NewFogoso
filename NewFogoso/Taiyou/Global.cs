@@ -42,12 +42,14 @@ namespace Fogoso.Taiyou
 {
     public static class Global
     {
-        public static List<string> LoadedTaiyouScripts = new List<string>();
-        public static List<List<TaiyouLine>> LoadedTaiyouScripts_Data = new List<List<TaiyouLine>>();
+        //public static List<string> LoadedTaiyouScripts = new List<string>();
+        //public static List<List<TaiyouLine>> LoadedTaiyouScripts_Data = new List<List<TaiyouLine>>();
+        public static Dictionary<string, List<TaiyouLine>> LoadedTaiyouScriptsDict = new Dictionary<string, List<TaiyouLine>>();
 
         // Function Headers List
-        public static List<string> ScriptHeaders_Keys = new List<string>();
-        public static List<List<TaiyouLine>> ScriptHeaders_Data = new List<List<TaiyouLine>>();
+        //public static List<string> ScriptHeaders_Keys = new List<string>();
+        //public static List<List<TaiyouLine>> ScriptHeaders_Data = new List<List<TaiyouLine>>();
+        public static Dictionary<string, List<TaiyouLine>> ScriptHeadersDict = new Dictionary<string, List<TaiyouLine>>();
    
         // TSCN and TSUP lists
         static List<string> TSCN = new List<string>();
@@ -60,35 +62,27 @@ namespace Fogoso.Taiyou
         // Namespaces Dictionary
         public static Dictionary<string, TaiyouNamespace> NamespacesDictionary = new Dictionary<string, TaiyouNamespace>();
 
-        public static TaiyouNamespace AddNamespace(string NamespaceName)
-        {
-            
-            return NamespacesDictionary[NamespaceName];
-        }
-        
-
         public static List<TaiyouLine> GetScript(string ScriptName)
         {
-            int ScriptIndex = LoadedTaiyouScripts.IndexOf(ScriptName);
-            if (ScriptIndex == -1) { return null; }
+            if (!LoadedTaiyouScriptsDict.ContainsKey(ScriptName)) { return null; }
 
-            return LoadedTaiyouScripts_Data[ScriptIndex];
+            // Call script header
+            CallScriptHeader(ScriptName);
+
+            return LoadedTaiyouScriptsDict[ScriptName];
         }
 
         public static void CallScriptHeader(string ScriptName)
         {
-            int HeaderIndex = ScriptHeaders_Keys.IndexOf(ScriptName);
-
-            if (HeaderIndex == -1){ return; }
-
+            if (!ScriptHeadersDict.ContainsKey(ScriptName)) { return; }
+ 
             // Create a temporary script
-            InterpreterInstance FunctionToRun = new InterpreterInstance($"{TaiyouGlobal.TaiyouReservedNames_SCRIPT_HEADER}_{ScriptName}", true, ScriptHeaders_Data[HeaderIndex]);
+            InterpreterInstance FunctionToRun = new InterpreterInstance($"{TaiyouGlobal.TaiyouReservedNames_SCRIPT_HEADER}_{ScriptName}", true, ScriptHeadersDict[ScriptName]);
             FunctionToRun.Interpret();
 
             // Remove Header from Memory
-            ScriptHeaders_Data.RemoveAt(HeaderIndex);
-            ScriptHeaders_Keys.RemoveAt(HeaderIndex);
-              
+            ScriptHeadersDict.Remove(ScriptName);
+
         }
  
         public static string LiteralReplacer(string Input, TaiyouLine RootTaiyouLine)
@@ -123,10 +117,6 @@ namespace Fogoso.Taiyou
 
         public static void LoadTaiyouScripts()
         {
-            // Clear the lists
-            LoadedTaiyouScripts.Clear();
-            LoadedTaiyouScripts_Data.Clear();
- 
             // Load the Dictionary File
             Utils.ConsoleWriteWithTitle("TaiyouInit", "Loading Dictionary File...");
 
@@ -182,7 +172,7 @@ namespace Fogoso.Taiyou
                 // Set the Script Name
                 string ScriptName = AllScripts[i].Replace(Fogoso.Global.TaiyouScriptsDirectory, "");
                 ScriptName = ScriptName.Replace(".tiy", "").Replace(Fogoso.Global.OSSlash, ".");
-                LoadedTaiyouScripts.Add(ScriptName);
+                //LoadedTaiyouScripts.Add(ScriptName);
 
                 // Debug
                 Utils.ConsoleWriteWithTitle("TaiyouParser_NamespaceDeclaring", "Reading Script [" + ScriptName + "]");
@@ -236,7 +226,7 @@ namespace Fogoso.Taiyou
                 // Set the Script Name
                 string ScriptName = AllScripts[i].Replace(Fogoso.Global.TaiyouScriptsDirectory, "");
                 ScriptName = ScriptName.Replace(".tiy", "").Replace(Fogoso.Global.OSSlash, ".");
-                LoadedTaiyouScripts.Add(ScriptName);
+                //LoadedTaiyouScripts.Add(ScriptName);
 
                 // ##########################################
                 // ######### -- Parser Step 1 - #############
@@ -296,8 +286,8 @@ namespace Fogoso.Taiyou
                                 Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionBlock", "Sucefully added Routine [" + LastFuncLineName + "]");
                                   
                             }else{ // Add last script header to ScriptHeader
-                                ScriptHeaders_Data.Add(Copyied);
-                                ScriptHeaders_Keys.Add(ScriptName);
+                                ScriptHeadersDict.Add(ScriptName, Copyied);
+
                                 Utils.ConsoleWriteWithTitle("TaiyouParser_Step1-FunctionHeader", "Sucefully added Script Header.");
                                  
                             }
@@ -498,7 +488,8 @@ namespace Fogoso.Taiyou
 
                 Utils.ConsoleWriteWithTitle("TaiyouParser_Step5", "Add Taiyou Line to LoadedScriptData list");
 
-                LoadedTaiyouScripts_Data.Add(ParsedCode);
+                //LoadedTaiyouScripts_Data.Add(ParsedCode);
+                LoadedTaiyouScriptsDict.Add(ScriptName, ParsedCode);
 
             }
             Utils.ConsoleWriteWithTitle("TaiyouInit", "Sucefully loaded all scripts.");
@@ -547,10 +538,6 @@ namespace Fogoso.Taiyou
             {
                 throw new Exception(TaiyouParserError("LineRevision: Instruction is less than 3 characters.\nInstructions TSUP file contains invalid data."));
             }
-
-            // If the line does not ends with ';' token, throw an error
-            Utils.ConsoleWriteWithTitle("TaiyouLineRevision", "Checking for EndLine Character Type Error");
-            if (!Pass1.EndsWith(";", StringComparison.Ordinal)) { throw new Exception(TaiyouParserError($"Type Error!\nLine Ending expected.\n\nat Script [{KeyNameFiltred}]\nIn Line [{ line }]\nLine Number {lineNumber}\nTip: You missed an end like token ';' at the end of a command.")); }
  
             // Remove the ';' token
             string Pass2 = Pass1.Remove(Pass1.Length - 1, 1);
@@ -616,16 +603,16 @@ namespace Fogoso.Taiyou
  
         public static void SetVariable(VariableType VarType, string VarTag, object VarValue)
         {
-            // Set value if variable exsits
-            foreach(Variable taiyouVar in NamespacesDictionary["System"].VarList)
+            // Create variable if it doesn't exist
+            if (!NamespacesDictionary["System"].VariableDict.ContainsKey(VarTag))
             {
-                if (taiyouVar.Tag == VarTag) { taiyouVar.SetValue(VarValue); return; }
-            }   
+                // Create Variable if it doesn't exist
+                NamespacesDictionary["System"].VariableDict.Add(VarTag, new Variable(VarType, VarValue, VarTag));
+                return;
+            }
  
-            // Create Variable if it doesn't exist
-            Variable newVar = new Variable(VarType, VarValue, VarTag);
-            NamespacesDictionary["System"].VarList.Add(newVar);
-            
+            // Variable Exists, Set its value
+            NamespacesDictionary["System"].VariableDict[VarTag].SetValue(VarValue);             
             return;
 
         }

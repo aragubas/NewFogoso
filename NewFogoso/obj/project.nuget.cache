@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/fgXNbt622kFM1mtQCAiYqJMK85Gfv+EzYgvdPYv5EwvfjN6UuImMxAyYRoXuOshgieJIb5bPlEm2lVp7hf64w==",
+  "dgSpecHash": "KkHrApBJYcR/W6X7JNzVma8AEzn8RVazmJMaoBBPkyhOS8fgHttJGEzGZJLr5mB8W9a2elj4SxQMXuq5LR2kFg==",
   "success": true,
   "projectFilePath": "/home/notrunda/Documents/Projects/NewFogoso/NewFogoso/NewFogoso.csproj",
   "expectedPackageFiles": [
@@ -11,12 +11,14 @@
     "/home/notrunda/.nuget/packages/spritefontplus/0.9.2/spritefontplus.0.9.2.nupkg.sha512",
     "/home/notrunda/.nuget/packages/stbimagesharp/2.22.4/stbimagesharp.2.22.4.nupkg.sha512",
     "/home/notrunda/.nuget/packages/stbtruetypesharp/1.24.7/stbtruetypesharp.1.24.7.nupkg.sha512",
-    "/home/notrunda/.nuget/packages/microsoft.netcore.app.runtime.linux-x64/3.1.12/microsoft.netcore.app.runtime.linux-x64.3.1.12.nupkg.sha512",
-    "/home/notrunda/.nuget/packages/microsoft.netcore.app.runtime.win-x64/3.1.12/microsoft.netcore.app.runtime.win-x64.3.1.12.nupkg.sha512",
-    "/home/notrunda/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-x64/3.1.12/microsoft.aspnetcore.app.runtime.linux-x64.3.1.12.nupkg.sha512",
-    "/home/notrunda/.nuget/packages/microsoft.aspnetcore.app.runtime.win-x64/3.1.12/microsoft.aspnetcore.app.runtime.win-x64.3.1.12.nupkg.sha512",
-    "/home/notrunda/.nuget/packages/microsoft.netcore.app.host.linux-x64/3.1.12/microsoft.netcore.app.host.linux-x64.3.1.12.nupkg.sha512",
-    "/home/notrunda/.nuget/packages/microsoft.netcore.app.host.win-x64/3.1.12/microsoft.netcore.app.host.win-x64.3.1.12.nupkg.sha512"
+    "/home/notrunda/.nuget/packages/microsoft.netcore.app.ref/3.1.0/microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
+    "/home/notrunda/.nuget/packages/microsoft.netcore.app.runtime.win-x64/3.1.16/microsoft.netcore.app.runtime.win-x64.3.1.16.nupkg.sha512",
+    "/home/notrunda/.nuget/packages/microsoft.netcore.app.runtime.linux-x64/3.1.16/microsoft.netcore.app.runtime.linux-x64.3.1.16.nupkg.sha512",
+    "/home/notrunda/.nuget/packages/microsoft.aspnetcore.app.runtime.win-x64/3.1.16/microsoft.aspnetcore.app.runtime.win-x64.3.1.16.nupkg.sha512",
+    "/home/notrunda/.nuget/packages/microsoft.aspnetcore.app.runtime.linux-x64/3.1.16/microsoft.aspnetcore.app.runtime.linux-x64.3.1.16.nupkg.sha512",
+    "/home/notrunda/.nuget/packages/microsoft.netcore.app.host.linux-x64/3.1.16/microsoft.netcore.app.host.linux-x64.3.1.16.nupkg.sha512",
+    "/home/notrunda/.nuget/packages/microsoft.netcore.app.host.win-x64/3.1.16/microsoft.netcore.app.host.win-x64.3.1.16.nupkg.sha512",
+    "/home/notrunda/.nuget/packages/microsoft.aspnetcore.app.ref/3.1.10/microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512"
   ],
   "logs": []
 }

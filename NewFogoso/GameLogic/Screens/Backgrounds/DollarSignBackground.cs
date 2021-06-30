@@ -11,7 +11,6 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
     class DollarSignBackground : GameScreen
     {
         Random RandomMizer;
-        float EffectMultiplier = 35f;
         Matrix ScreenTransform;
         SpriteFont Font;
         UtilsObjects.ValueSmoother ColorRSmooth;
@@ -20,6 +19,8 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
         UtilsObjects.ValueSmoother BGXSmooth;
         UtilsObjects.ValueSmoother BGYSmooth;
         UtilsObjects.ValueSmoother BGZSmooth;
+        string CurrentBackgroundPattern = "01";
+        Texture2D BackgroundFill;
 
         int SinasTimer;
         int SinasTimerMax = 5;
@@ -41,8 +42,13 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {  
+            // Draw Static Background
+            spriteBatch.Begin();
+            spriteBatch.Draw(BackgroundFill, new Rectangle(0, 0, Global.WindowWidth, Global.WindowHeight), Color.FromNonPremultiplied((int)ColorRSmooth.GetValue(), (int)ColorGSmooth.GetValue(), (int)ColorBSmooth.GetValue(), 255));
+            spriteBatch.End();
+
+            // Draw Moving Part
             spriteBatch.Begin(transformMatrix:ScreenTransform);
-    
             for (int x = 0; x < Global.WindowWidth / 13; x++)
             {
                 for (int y = 0; y < Global.WindowHeight / 13; y++)
@@ -75,15 +81,15 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
                 SinasTimerMax = RandomMizer.Next(RandomMizer.Next(0, 25), RandomMizer.Next(26, 500));
 
                 // Set Smooth Target Value
-                ColorRSmooth.SetTargetValue(RandomMizer.Next(0, 150));
-                ColorGSmooth.SetTargetValue(RandomMizer.Next(0, 150));
-                ColorBSmooth.SetTargetValue(RandomMizer.Next(0, 150));
+                ColorRSmooth.SetTargetValue(RandomMizer.Next(20, 150));
+                ColorGSmooth.SetTargetValue(RandomMizer.Next(20, 150));
+                ColorBSmooth.SetTargetValue(RandomMizer.Next(28, 150));
 
                 // Set Smooth Target Value
-                BGXSmooth.SetTargetValue((GameInput.CursorPosition.X / 2 - Global.WindowWidth / 2) / EffectMultiplier - RandomMizer.Next(5, 40));
-                BGYSmooth.SetTargetValue((GameInput.CursorPosition.Y / 2 - Global.WindowHeight / 2) / EffectMultiplier - RandomMizer.Next(5, 40));
-                BGZSmooth.SetTargetValue(GameInput.CursorPosition.X / Global.WindowWidth / RandomMizer.Next(50, 80));
-
+                BGXSmooth.SetTargetValue((RandomMizer.Next(0, Global.WindowWidth) / 2 - Global.WindowWidth / 2) / 40 - RandomMizer.Next(5, 40));
+                BGYSmooth.SetTargetValue((RandomMizer.Next(0, Global.WindowHeight) / 2 - Global.WindowHeight / 2) / 40 - RandomMizer.Next(5, 40));
+                BGZSmooth.SetTargetValue(RandomMizer.Next(0, Global.WindowWidth) / Global.WindowWidth / RandomMizer.Next(50, 80));
+ 
             }
         }
 
@@ -91,6 +97,8 @@ namespace Fogoso.GameLogic.Screens.Backgrounds
         {
             base.Initialize(); 
             Font = Fonts.GetSpriteFont(Fonts.GetFontDescriptor("PressStart2P", 18));
+            BackgroundFill = Sprites.GetSprite($"/background_patterns/{CurrentBackgroundPattern}.png");
+             
         }
     }
 }

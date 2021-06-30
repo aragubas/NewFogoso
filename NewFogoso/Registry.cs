@@ -41,32 +41,15 @@ namespace Fogoso
 {
     public static class Registry
     {
-        public static List<string> LoadedKeysNames = new List<string>();
-        public static List<string> LoadedKeysValues = new List<string>();
-
+        public static Dictionary<string, string> LoadedKeys = new Dictionary<string, string>();
 
         public static string ReadKeyValue(string KeyName)
         {
             if (!KeyName.StartsWith("/", StringComparison.Ordinal)) { KeyName = KeyName.Insert(0, Global.OSSlash); };
-            int KeyIndex = LoadedKeysNames.IndexOf(KeyName);
-
-            try
-            {
-                string ValToReturn = LoadedKeysValues[KeyIndex];
-
-                return ValToReturn;
-            }
-            catch (Exception) { throw new FileNotFoundException("Key:" + KeyName + " does not exist."); }
+            if (!LoadedKeys.ContainsKey(KeyName)) { throw new KeyNotFoundException($"Cannot find key ({KeyName})"); }
+            return LoadedKeys[KeyName];
         }
-
-        public static bool KeyExists(string KeyName)
-        {
-            int KeyIndex = LoadedKeysNames.IndexOf(KeyName);
-
-            if (KeyIndex == -1) { return false; }
-            return true;
-        }
-
+        
         public static void WriteKey(string KeyName, string KeyValue)
         {
             File.WriteAllText(Global.REGISTRY_SourceFolder + Global.OSSlash + KeyName + ".data", KeyValue, new System.Text.UTF8Encoding());
@@ -75,8 +58,7 @@ namespace Fogoso
 
         public static void Initialize()
         {
-            LoadedKeysNames.Clear();
-            LoadedKeysValues.Clear();
+            LoadedKeys.Clear();
 
             Console.WriteLine("Registry.Initialize : Start");
 
@@ -87,24 +69,26 @@ namespace Fogoso
                 string KeyNameFiltred = AllKeys[i].Replace(Global.REGISTRY_SourceFolder, "");
                 KeyNameFiltred = KeyNameFiltred.Replace(".data", "");
 
-                LoadedKeysNames.Add(KeyNameFiltred.Replace(Global.OSSlash, "/"));
-                LoadedKeysValues.Add(File.ReadAllText(Global.REGISTRY_SourceFolder + Global.OSSlash + KeyNameFiltred + ".data").Trim());
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%n", Environment.NewLine);
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%usr", Environment.UserName);
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%current_dir", Environment.CurrentDirectory);
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%machine_name", Environment.MachineName);
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%processor_count", Environment.ProcessorCount.ToString());
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%source_dir", Global.SourceDirectory.ToString());
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%bgm_source_dir", Global.BGM_SourceFolder.ToString());
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%font_source_dir", Global.FONT_SourceFolder.ToString());
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%image_source_dir", Global.IMAGE_SourceFolder.ToString());
-                LoadedKeysValues[i] = LoadedKeysValues[i].Replace("%sound_source_dir", Global.SOUND_SourceFolder.ToString());
+                string key = KeyNameFiltred.Replace(Global.OSSlash, "/");
+                string value = File.ReadAllText(Global.REGISTRY_SourceFolder + Global.OSSlash + KeyNameFiltred + ".data").Trim();
 
-                Console.WriteLine("Found Key: [" + LoadedKeysNames[i] + "]");
+                value = value.Replace("%n", Environment.NewLine);
+                value = value.Replace("%usr", Environment.UserName);
+                value = value.Replace("%current_dir", Environment.CurrentDirectory);
+                value = value.Replace("%machine_name", Environment.MachineName);
+                value = value.Replace("%processor_count", Environment.ProcessorCount.ToString());
+                value = value.Replace("%source_dir", Global.SourceDirectory.ToString());
+                value = value.Replace("%bgm_source_dir", Global.BGM_SourceFolder.ToString());
+                value = value.Replace("%font_source_dir", Global.FONT_SourceFolder.ToString());
+                value = value.Replace("%image_source_dir", Global.IMAGE_SourceFolder.ToString());
+                value = value.Replace("%sound_source_dir", Global.SOUND_SourceFolder.ToString());
+
+                LoadedKeys.Add(key, value);
+
+                Utils.ConsoleWriteWithTitle("RegistryInitialize", $"Loaded key {key}");
 
             }
-
-            Console.WriteLine("Registry.Initialize : Operation Completed");
+            Utils.ConsoleWriteWithTitle("RegistryInitialize", "Operation Completed.");
 
 
         }

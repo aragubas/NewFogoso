@@ -288,7 +288,7 @@ namespace Fogoso.GameLogic.OverlayScreens
 
             // Toggle Clicker Viewer Key
             if (GameInput.GetInputState("TOGGLE_CLICKVIEWER", false)) { ToggleMinimized(); }
-   
+            
             if (Visible)
             {
                 CurrentMoneyValueSmoother.Update();

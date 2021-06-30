@@ -12,7 +12,7 @@ namespace Fogoso.GameLogic.Items
         public override void UpdateLogic()
         { 
             if (!ActivationTime.TimeTriggered()){ return; }
-  
+            
             
         }
  

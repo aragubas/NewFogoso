@@ -34,7 +34,7 @@
 
 using System;
 using Fogoso.Taiyou;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Fogoso.Taiyou.Command
 {
@@ -55,18 +55,9 @@ namespace Fogoso.Taiyou.Command
             if (ScriptToCall == null)
             {
                 string ScriptName = GetArgument(ReplaceVarLiterals(), 0);
- 
-                try
-                {
-                    int LinesIndex = Global.LoadedTaiyouScripts.IndexOf(ScriptName);
-                     
-                    ScriptToCall = new InterpreterInstance(ScriptName, false, Global.LoadedTaiyouScripts_Data[LinesIndex]);
-                     
-                }catch (ArgumentOutOfRangeException)
-                {
-                    throw new Exception($"Type Error in Execution!\nCannot find Taiyou Script {ScriptName}.");
-                }
-                 
+                
+                if (!Global.LoadedTaiyouScriptsDict.ContainsKey(ScriptName)) { throw new Exception($"Type Error in Execution!\nCannot find Taiyou Script {ScriptName}."); }
+                ScriptToCall = new InterpreterInstance(ScriptName, false, Global.LoadedTaiyouScriptsDict[ScriptName]);                 
             }
   
             return ScriptToCall.Interpret();

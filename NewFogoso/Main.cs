@@ -77,19 +77,8 @@ namespace Fogoso
               
             // Create the Sprite Batch
             spriteBatch = new SpriteBatch(GraphicsDevice);
-             
-            // Start Initial Video
-            /*
-            try
-            {
-                Taiyou.CallScript.Call("initial");
-                Console.WriteLine("Initial Script started sucefully.");
- 
-            }catch (Exception)
-            {
-                Console.WriteLine("FATAL ERROR: Initial script failed to run. Game Engine may be stable.");
-            }
-            */
+              
+            // Start Initial Script
             Taiyou.CallScript.Call("initial");
             
             // Load Content
@@ -101,9 +90,9 @@ namespace Fogoso
         private new void LoadContent()
         {
             // Load all Sprites, Sounds and Registry Keys
+            Registry.Initialize();
             Sprites.FindAllSprites();
             Sound.Initialize();
-            Registry.Initialize();
 
             // Set Window Static Reference
             Global.GameWindowReference = Window;

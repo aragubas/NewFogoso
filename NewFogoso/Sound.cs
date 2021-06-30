@@ -42,11 +42,13 @@ namespace Fogoso
     public class Sound
     {
 
-        public static List<SoundEffect> soundEffects = new List<SoundEffect>();
-        public static List<string> soundEffects_name = new List<string>();
+        //public static List<SoundEffect> soundEffects = new List<SoundEffect>();
+        //public static List<string> soundEffects_name = new List<string>();
+        public static Dictionary<string, SoundEffect> LoadedSounds = new Dictionary<string, SoundEffect>();
+         
         public static List<SoundEffectInstance> SoundInstances = new List<SoundEffectInstance>();
-        public static List<SoundEffectInstance> DisposableSoundInstances = new List<SoundEffectInstance>();
         public static List<int> SoundInstancesID = new List<int>();
+        public static List<SoundEffectInstance> DisposableSoundInstances = new List<SoundEffectInstance>();
 
         public static SoundEffect LoadSoundFromFile(string FileName)
         {
@@ -67,19 +69,17 @@ namespace Fogoso
 
         public static void Initialize()
         {
+            Utils.ConsoleWriteWithTitle("SoundInitialize", "Loading all sounds...");
             string[] AllSounds = Directory.GetFiles(Global.SOUND_SourceFolder, "*.wav", SearchOption.AllDirectories);
 
             foreach (var sound in AllSounds)
             {
-                System.Console.WriteLine("Loading sound: {" + sound + "}");
-                soundEffects.Add(LoadSoundFromFile(sound));
-
-                string FileName = sound.Replace(Global.SOUND_SourceFolder, "").Remove(0, 1).Replace(".wav", "");
-                System.Console.WriteLine(FileName);
-                soundEffects_name.Add(FileName.Replace("\\", "/"));
+                string FileName = sound.Replace(Global.SOUND_SourceFolder, "").Remove(0, 1).Replace(".wav", "").Replace("\\", "/");
+                LoadedSounds.Add(FileName, LoadSoundFromFile(sound));
+                Utils.ConsoleWriteWithTitle("SoundInitialize", $"Loaded sound ({FileName})");
             }
 
-            System.Console.WriteLine("All sounds loaded sucefully.");
+            Utils.ConsoleWriteWithTitle("SoundInitialize", "Operation completed.");
 
         }
 
@@ -180,16 +180,8 @@ namespace Fogoso
 
         public static SoundEffect GetSoundEffect(string SoundKeyName)
         {
-            int AudioIndex = soundEffects_name.IndexOf(SoundKeyName);
-
-            // When sound resouce was not found.
-            if (AudioIndex == -1)
-            {
-                return null;
-            }
-
-            return soundEffects[AudioIndex];
-
+            if (!LoadedSounds.ContainsKey(SoundKeyName)) { return null; }
+            return LoadedSounds[SoundKeyName];
         }
 
         public static void Update()
