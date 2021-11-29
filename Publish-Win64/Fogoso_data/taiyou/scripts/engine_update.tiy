@@ -9,34 +9,22 @@ $FUNCTION "@HEADER";
  
 $END
  
-# Update Internal Variables
 InternalRoutine "UPDATE_INTERNAL_VARIABLES";
 
-# Don't allow cursor to go offscreen
 Call "Update.RestoreCursor";
 
-# Update Time System
 InternalRoutine "UPDATE_ARAGUBAS_TIME";
  
-# Update Current Active Screen
 InternalRoutine "UPDATE_SCREEN_SELECTOR";
 
-# Update Input System
 InternalRoutine "UPDATE_GAME_INPUT";
 
-# Update Keyboard Obj
 InternalRoutine "UPDATE_KEYBOARD_OBJ";
 
-# Update Sound System
 InternalRoutine "UPDATE_SOUND_SYSTEM";
 
 DebugValue "", "";
 
-
-# /\ /\ Only the functions above will be called
-#############################################
-# These functions should not be overwritten #
-#############################################
 $FUNCTION "DebugModeUpdate";
     SetOption "WINDOW_TITLE", "Fogoso(Debug Mode)";    
 $END
