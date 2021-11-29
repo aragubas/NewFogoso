@@ -11,10 +11,8 @@ $END
 # Restore Cursor Image
 JumpIf "#Internal.GameInput.Cursor.ReservedID$", "==", "-1", "RestoreCursor";
 
-# Set CursorPosVariable
 SetVar "RestoreCursor.CursorX", "Int", "#Internal.Raw.CursorX$";
 SetVar "RestoreCursor.CursorY", "Int", "#Internal.Raw.CursorY$";
-
  
 # Set cursor position to Zero if less than 0
 JumpIf "#RestoreCursor.CursorX$", "<=", "0", "SetXToZero";
@@ -26,9 +24,8 @@ JumpIf "#RestoreCursor.CursorY$", ">=", "#Internal.GameWindow.Height$", "SetYToH
 
 SetOption "CURSOR_X", "#RestoreCursor.CursorX$";
 SetOption "CURSOR_Y", "#RestoreCursor.CursorY$";
-
  
-# Set cursor to default one
+# Set cursor to default cursor
 $FUNCTION "RestoreCursor";
     SetOption "CURSOR_IMAGE", "#Internal.GameInput.Cursor.Default$";
 $END
